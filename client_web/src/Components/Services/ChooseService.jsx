@@ -1,5 +1,6 @@
 import React from 'react'
 import styles from './ChooseService.module.css'
+import { Link } from 'react-router-dom'
 
 const listServices = [
     {
@@ -161,12 +162,14 @@ function DescriptionWidget({ hidden, onLeft, action, reaction }) {
 }
 
 function ServiceWidget({ service, onLeft }) {
-    const [clicked, setClicked] = React.useState(false)
+    const [hover, setHover] = React.useState(false)
 
     return (
         <div>
-            <DescriptionWidget hidden={!clicked} onLeft={onLeft} action={service?.action} reaction={service?.reaction}></DescriptionWidget>    
-            <img onMouseEnter={() => {setClicked(true)}} onMouseLeave={() => {setClicked(false)}} className={`${styles.serviceLogo} ${clicked ? styles.logoGoCenter : null}`} src={service?.imgUrl} alt={service?.imgUrl}></img>
+            <DescriptionWidget hidden={!hover} onLeft={onLeft} action={service?.action} reaction={service?.reaction}></DescriptionWidget>
+            <Link to={`/services/${service.id}`}>
+            <img onMouseEnter={() => {setHover(true)}} onMouseLeave={() => {setHover(false)}} className={`${styles.serviceLogo} ${hover ? styles.logoGoCenter : null}`} src={service?.imgUrl} alt={service?.imgUrl}></img>
+            </Link>  
         </div>
     )
 }

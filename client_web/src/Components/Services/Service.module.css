@@ -1,0 +1,24 @@
+.servicePage {
+    background: linear-gradient(to top, rgb(0, 0, 0), rgb(0, 13, 77));
+    min-height: 165vh;
+    padding: 5vw 0 0 0;
+}
+
+.littleTitle {
+    font-size: 2.5vw;
+    padding: 1vw 0;
+}
+
+.littleElem {
+    font-size: 1.5vw;
+    padding: 0.5vw 0;
+}
+
+.subDescription {
+    text-align: center;
+    color: #849ee6;
+}
+
+.logoGoCenter {
+    margin: auto;
+}
