@@ -1,0 +1,43 @@
+.home {
+    cursor: none;
+}
+
+.backgroundHomeImg {
+    width: 100%;
+    position: absolute;
+    z-index: -2;
+}
+
+.buttonArea {
+    position: absolute;
+    width: 200px;
+    height: 75px;
+    top: calc(50% - 75px / 2);
+    left: calc(50% - 200px / 2);
+    font-size: 20px;
+    font-family: 'Luxurious Roman', cursive;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    background-color: rgba(255, 255, 255, 0);
+    /* border: 1px white solid; */
+    box-shadow: white 0px 0px 10px 10px;
+    transition: 0.5s;
+}
+
+.buttonArea:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+    box-shadow: white 0px 0px 7px 7px;
+    transition: 1s;
+    /* border: 1px whitesmoke solid; */
+}
+
+.followMouse {
+    border-radius: 20px;
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    box-shadow: white 0px 0px 10px 10px;
+    z-index: -1;
+}
