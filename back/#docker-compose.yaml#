@@ -1,0 +1,37 @@
+version: "3.9"
+services:
+  back:
+      image: "node:14.0.0-alpine"
+          command: sh -c "npm i && npm run start:dev"
+              working_dir: /app
+                  ports:
+                        - "127.0.0.1:${BACKEND_PORT}:${BACKEND_PORT}"
+                            volumes:
+                                  - ./back:/app
+
+  postgres:
+      image: "postgres:12-alpine"
+          volumes:
+                - postgres-data:/var/lib/postgresql/data/
+                    environment:
+                          - POSTGRES_USER=root
+                                - POSTGRES_PASSWORD=root
+                                    ports:
+                                          - "127.0.0.1:5432:5432"
+                                            webapp:
+                                                image: node:16.0.0
+                                                    # command: sh -c "npm install && npm run build && npx serve -s build -l 4000"
+                                                        command: sh -c "npm install && npm start"
+                                                            working_dir: /usr/app
+                                                                stdin_open: true
+                                                                    environment:
+                                                                          - BACKEND_BASE_URL
+                                                                                - PORT=3051
+                                                                                    ports:
+                                                                                          - 4000:3051
+                                                                                              volumes:
+                                                                                                    - ./front:/usr/app:delegated
+
+volumes:
+  postgres-data: null
+  

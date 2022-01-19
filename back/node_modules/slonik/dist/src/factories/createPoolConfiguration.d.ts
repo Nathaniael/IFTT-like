@@ -1,0 +1,3 @@
+import type { PoolConfig } from 'pg';
+import type { ClientConfiguration } from '../types';
+export declare const createPoolConfiguration: (dsn: string, clientConfiguration: ClientConfiguration) => PoolConfig;
