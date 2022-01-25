@@ -26,10 +26,8 @@ let UserService = class UserService {
         (username, password, email)
         values
         (${usr.username}, ${bcrypt.hashSync(usr.password, 10)}, ${usr.email})`);
-        console.log('henlo');
     }
     async getUser(usr) {
-        console.log('henlo');
         const res = await this.pool.query((0, slonik_1.sql) `SELECT email,
          username,
          id,

@@ -24,13 +24,10 @@ let AuthController = class AuthController {
     }
     async registerUser(body, res) {
         await this.userService.registerUser(body);
-        console.log("henlo2");
         const user = await this.userService.getUser(body);
         const payload = { userId: user.id, username: user.username };
-        console.log(process.env.JWT_SECRET);
-        console.log(payload);
-        console.log(this.jwtService.sign(payload));
-        res.cookie('access_token', {}, {
+        const signed_payload = this.jwtService.sign(payload);
+        res.cookie('access_token', signed_payload, {
             httpOnly: true,
             domain: 'localhost',
             expires: new Date(Date.now() + 1000 * 60 * 60 * 24),

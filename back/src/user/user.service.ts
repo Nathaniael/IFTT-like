@@ -17,11 +17,9 @@ export class UserService {
         (username, password, email)
         values
         (${usr.username}, ${bcrypt.hashSync(usr.password, 10)}, ${usr.email})`)
-        console.log('henlo')
     }
 
     async getUser(usr: UserCreationDto) {
-        console.log('henlo')
         const res = await this.pool.query(sql`SELECT email,
          username,
          id,
