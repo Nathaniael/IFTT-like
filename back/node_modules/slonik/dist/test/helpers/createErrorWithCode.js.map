@@ -1,0 +1,1 @@
+{"version":3,"file":"createErrorWithCode.js","sourceRoot":"","sources":["../../../test/helpers/createErrorWithCode.ts"],"names":[],"mappings":";;;AAAO,MAAM,mBAAmB,GAAG,CAAC,IAAY,EAAE,EAAE;IAClD,MAAM,KAAK,GAAG,IAAI,KAAK,CAAC,KAAK,CAAC,CAAC;IAE/B,mBAAmB;IACnB,KAAK,CAAC,IAAI,GAAG,IAAI,CAAC;IAElB,OAAO,KAAK,CAAC;AACf,CAAC,CAAC;AAPW,QAAA,mBAAmB,uBAO9B"}
