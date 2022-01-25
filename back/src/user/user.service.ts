@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectPool } from 'nestjs-slonik';
 import { DatabasePool, sql } from 'slonik'
-import { UserCreationDto, UserDto } from './user.dto';
+import { UserCreationDto, UserDto, UserRegistrationDto } from './user.dto';
 import * as bcrypt from 'bcrypt';
 
 
@@ -19,13 +19,25 @@ export class UserService {
         (${usr.username}, ${bcrypt.hashSync(usr.password, 10)}, ${usr.email})`)
     }
 
-    async getUser(usr: UserCreationDto) {
-        const res = await this.pool.query(sql`SELECT email,
-         username,
-         id,
-         created_at,
-         password
-         FROM usr WHERE email = ${usr.email}`)
+    async getUser(usr: UserRegistrationDto) {
+        let res
+        if (usr.email)
+            res = await this.pool.query(sql`SELECT email,
+             username,
+             id,
+             created_at,
+             password
+             FROM usr WHERE email = ${usr.email}`)
+        else if (usr.username)
+            res = await this.pool.query(sql`SELECT email,
+             username,
+             id,
+             created_at,
+             password
+             FROM usr WHERE username = ${usr.username}`)
+        if (!res) {
+            throw new NotFoundException("User not found")
+        }
         return res.rows[0]
     }
 }

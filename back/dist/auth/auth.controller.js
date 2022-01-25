@@ -33,6 +33,21 @@ let AuthController = class AuthController {
             expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
         }).send({ success: true });
     }
+    async loginUser(body, res) {
+        if (body.email || body.username) {
+            const user = await this.userService.getUser(body);
+            const payload = { userId: user.id, username: user.username };
+            const signed_payload = this.jwtService.sign(payload);
+            res.cookie('access_token', signed_payload, {
+                httpOnly: true,
+                domain: 'localhost',
+                expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+            }).send({ success: true });
+        }
+        else {
+            throw new common_1.UnauthorizedException("You should provide an username or an email");
+        }
+    }
 };
 __decorate([
     (0, common_1.Post)('register'),
@@ -42,6 +57,14 @@ __decorate([
     __metadata("design:paramtypes", [user_dto_1.UserCreationDto, Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "registerUser", null);
+__decorate([
+    (0, common_1.Get)('login'),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [user_dto_1.UserRegistrationDto, Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "loginUser", null);
 AuthController = __decorate([
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [user_service_1.UserService,
