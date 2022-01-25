@@ -1,0 +1,22 @@
+version: '3.7'
+services:
+  server:
+    container_name: server
+    build: back/
+    ports:
+      - 8080:8080
+    environment:
+      - PORT=8080
+  client_web:
+    container_name: client_web
+    build: front_web/
+    ports:
+      - '8081:8081'
+    environment:
+    - PORT=8081
+  client_mobile:
+    container_name: client_mobile
+    build: mobile/
+
+volumes:
+  app-volume:
