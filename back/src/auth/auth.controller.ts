@@ -25,7 +25,7 @@ export class AuthController {
 
     }
 
-    @Get('login')
+    @Post('login')
     async loginUser(@Body() body: UserRegistrationDto, @Res() res: Response) {
         if (body.email || body.username) {
             const user = await this.userService.getUser(body)

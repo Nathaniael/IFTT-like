@@ -43,7 +43,7 @@ let UserService = class UserService {
              created_at,
              password
              FROM usr WHERE username = ${usr.username}`);
-        if (!res) {
+        if (!res || res.rows.length === 0) {
             throw new common_1.NotFoundException("User not found");
         }
         return res.rows[0];
