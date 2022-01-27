@@ -1,14 +1,5 @@
 version: "3.9"
 services:
-  back:
-    image: "node:14.0.0-alpine"
-    command: sh -c "yarn run start:dev"
-    working_dir: /app
-    ports:
-      - "127.0.0.1:3030:3030"
-    volumes:
-      - ./back:/app
-
   postgres:
     image: "postgres:12-alpine"
     volumes:
@@ -18,5 +9,37 @@ services:
       - POSTGRES_PASSWORD=root
     ports:
       - "127.0.0.1:5432:5432"
+
+  server:
+    depends_on:
+      - "postgres"
+    image: "node:14.0.0-alpine"
+    command: sh -c "yarn run start:dev"
+    working_dir: /app
+    ports:
+      - "127.0.0.1:3030:3030"
+    volumes:
+      - ./back:/app
+
+  client_mobile:
+    build: client_mobile/
+    container_name: client_mobile
+    volumes:
+      - apk:/build/app/outputs/flutter-apk
+
+  client_web:
+    depends_on:
+      - "server"
+      - "client_mobile"
+    build: client_web/
+    container_name: client_web
+    ports:
+      - '8081:8081'
+    environment:
+      - PORT=8081
+    volumes:
+      - apk:/public
+
 volumes:
   postgres-data: null
+  apk: null

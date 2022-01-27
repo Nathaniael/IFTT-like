@@ -1,0 +1,36 @@
+Attaching to client_mobile, area_postgres_1, area_server_1, client_web
+[36mpostgres_1       |[0m 
+[36mpostgres_1       |[0m PostgreSQL Database directory appears to contain a database; Skipping initialization
+[36mpostgres_1       |[0m 
+[33mserver_1         |[0m yarn run v1.22.4
+[36mpostgres_1       |[0m 2022-01-27 13:19:49.558 UTC [1] LOG:  starting PostgreSQL 12.9 on x86_64-pc-linux-musl, compiled by gcc (Alpine 10.3.1_git20211027) 10.3.1 20211027, 64-bit
+[33mserver_1         |[0m $ nest start --watch
+[36mpostgres_1       |[0m 2022-01-27 13:19:49.558 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+[36mpostgres_1       |[0m 2022-01-27 13:19:49.558 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+[36mpostgres_1       |[0m 2022-01-27 13:19:49.563 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+[36mpostgres_1       |[0m 2022-01-27 13:19:49.576 UTC [21] LOG:  database system was interrupted; last known up at 2022-01-27 13:18:59 UTC
+[32mclient_mobile exited with code 0
+[0m[36mpostgres_1       |[0m 2022-01-27 13:19:49.872 UTC [21] LOG:  database system was not properly shut down; automatic recovery in progress
+[36mpostgres_1       |[0m 2022-01-27 13:19:49.874 UTC [21] LOG:  invalid record length at 0/164EA78: wanted 24, got 0
+[36mpostgres_1       |[0m 2022-01-27 13:19:49.874 UTC [21] LOG:  redo is not required
+[36mpostgres_1       |[0m 2022-01-27 13:19:49.892 UTC [1] LOG:  database system is ready to accept connections
+[35mclient_web       |[0m INFO: Accepting connections at http://localhost:8081
+[33mserver_1         |[0m c[[90m1:19:51 PM[0m] Starting compilation in watch mode...
+[33mserver_1         |[0m 
+[33mserver_1         |[0m [[90m1:19:54 PM[0m] Found 0 errors. Watching for file changes.
+[33mserver_1         |[0m 
+[33mserver_1         |[0m [32m[Nest] 39  - [39m01/27/2022, 1:19:55 PM [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[33mserver_1         |[0m [32m[Nest] 39  - [39m01/27/2022, 1:19:55 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mSlonikModule dependencies initialized[39m[38;5;3m +52ms[39m
+[33mserver_1         |[0m [32m[Nest] 39  - [39m01/27/2022, 1:19:55 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigHostModule dependencies initialized[39m[38;5;3m +1ms[39m
+[33mserver_1         |[0m [32m[Nest] 39  - [39m01/27/2022, 1:19:55 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +0ms[39m
+[33mserver_1         |[0m [32m[Nest] 39  - [39m01/27/2022, 1:19:55 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +1ms[39m
+[33mserver_1         |[0m [32m[Nest] 39  - [39m01/27/2022, 1:19:55 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mJwtModule dependencies initialized[39m[38;5;3m +0ms[39m
+[33mserver_1         |[0m [32m[Nest] 39  - [39m01/27/2022, 1:19:55 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mSlonikCoreModule dependencies initialized[39m[38;5;3m +18ms[39m
+[33mserver_1         |[0m [32m[Nest] 39  - [39m01/27/2022, 1:19:55 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mUserModule dependencies initialized[39m[38;5;3m +1ms[39m
+[33mserver_1         |[0m [32m[Nest] 39  - [39m01/27/2022, 1:19:55 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAuthModule dependencies initialized[39m[38;5;3m +0ms[39m
+[33mserver_1         |[0m [32m[Nest] 39  - [39m01/27/2022, 1:19:55 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAppController {/}:[39m[38;5;3m +20ms[39m
+[33mserver_1         |[0m [32m[Nest] 39  - [39m01/27/2022, 1:19:55 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/, GET} route[39m[38;5;3m +4ms[39m
+[33mserver_1         |[0m [32m[Nest] 39  - [39m01/27/2022, 1:19:55 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAuthController {/auth}:[39m[38;5;3m +0ms[39m
+[33mserver_1         |[0m [32m[Nest] 39  - [39m01/27/2022, 1:19:55 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/register, POST} route[39m[38;5;3m +1ms[39m
+[33mserver_1         |[0m [32m[Nest] 39  - [39m01/27/2022, 1:19:55 PM [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +3ms[39m
+Gracefully stopping... (press Ctrl+C again to force)
