@@ -61,11 +61,6 @@ To do this, you must implement a software suite that functions similar to that o
 - End Game
 - Reach X Rank
 
-### Intra Epitech
-
-- Check Activity
-- Check update grade
-
 ### Spotify
 
 - Launch music
