@@ -10,3 +10,8 @@ export declare class UserDto {
     username: string;
     created_at: string;
 }
+export declare class UserLoginDto {
+    username?: string;
+    email?: string;
+    password: string;
+}

@@ -28,12 +28,29 @@ let UserService = class UserService {
         (${usr.username}, ${bcrypt.hashSync(usr.password, 10)}, ${usr.email})`);
     }
     async getUser(usr) {
-        const res = await this.pool.query((0, slonik_1.sql) `SELECT email,
-         username,
-         id,
-         created_at,
-         password
-         FROM usr WHERE email = ${usr.email}`);
+        let res;
+        if (usr.email) {
+            res = await this.pool.query((0, slonik_1.sql) `SELECT email,
+                username,
+                id,
+                created_at,
+                password
+                FROM usr WHERE email = ${usr.email}`);
+        }
+        else if (usr.username) {
+            res = await this.pool.query((0, slonik_1.sql) `SELECT email,
+            username,
+            id,
+            created_at,
+            password
+            FROM usr WHERE username = ${usr.username}`);
+        }
+        else {
+            throw new common_1.UnauthorizedException("User not found sheesh");
+        }
+        if (!res || res.rows.length <= 0) {
+            throw new common_1.UnauthorizedException("User not found");
+        }
         return res.rows[0];
     }
 };

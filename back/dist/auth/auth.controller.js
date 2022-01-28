@@ -33,6 +33,16 @@ let AuthController = class AuthController {
             expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
         }).send({ success: true });
     }
+    async loginUser(body, res) {
+        const user = await this.userService.getUser(body);
+        const payload = { userId: user.id, username: user.username };
+        const signed_payload = this.jwtService.sign(payload);
+        res.cookie('access_token', signed_payload, {
+            httpOnly: true,
+            domain: 'localhost',
+            expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+        }).send({ success: true });
+    }
 };
 __decorate([
     (0, common_1.Post)('register'),
@@ -42,6 +52,14 @@ __decorate([
     __metadata("design:paramtypes", [user_dto_1.UserCreationDto, Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "registerUser", null);
+__decorate([
+    (0, common_1.Post)('login'),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [user_dto_1.UserLoginDto, Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "loginUser", null);
 AuthController = __decorate([
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [user_service_1.UserService,
