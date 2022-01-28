@@ -1,21 +1,25 @@
-name: Check docker compose
-
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
-
+name: remote ssh command
+on: [push]
 jobs:
-
-  build:
-
+  test:
+    name: Test build and deploy
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
+    - name: Check out repository code before deployment
+      uses: actions/checkout@v2
+    - run: docker-compose build
+    - name: Connection to ssh and executing deployment script
+      uses: appleboy/ssh-action@master
       with:
-        lfs: 'true'
-    - 
-      name: Build the Docker image
-      run: docker-compose build
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        key: ${{ secrets.KEY }}
+        script: |
+          docker stop $(docker ps -a -q)
+          docker rm $(docker ps -a -q)
+          rm -rf area
+          git clone git@github.com:Nathaniael/area.git
+          cd area
+          docker-compose up --build -d
