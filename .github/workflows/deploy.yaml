@@ -7,7 +7,7 @@ jobs:
     steps:
     - name: Check out repository code before deployment
       uses: actions/checkout@v2
-    - run: docker-compose build
+    #- run: docker-compose build
     - name: Connection to ssh and executing deployment script
       uses: appleboy/ssh-action@master
       with:
