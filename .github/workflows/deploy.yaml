@@ -14,10 +14,10 @@ jobs:
         command: |
           docker stop $(docker ps -a -q)
           docker rm $(docker ps -a -q)
-          rm -rf area
-          git clone git@github.com:Nathaniael/area.git
-          cd area
+          rm -rf fake-area
+          git clone git@github.com:Nathaniael/fake-area.git
+          cd fake-area
           docker-compose up --build -d
         host: ${{ secrets.HOST }}
-        user: debian
+        user: ${{ secrets.USER }}
         pass: ${{ secrets.PASSWORD}}
