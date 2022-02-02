@@ -5,15 +5,15 @@ jobs:
     name: Test build and deploy
     runs-on: ubuntu-latest
     steps:
-    - name: Check out repository code before deployment
-      uses: actions/checkout@v2
+    #- name: Check out repository code before deployment
+     # uses: actions/checkout@v2
     #- run: docker-compose build
     - name: Connection to ssh and executing deployment script
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.KEY }}
+        password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
         script: |
           docker stop $(docker ps -a -q)
