@@ -10,7 +10,6 @@ jobs:
     steps:
     - name: Check out repository code
       uses: actions/checkout@v2
-    - name: Running docker-compose build
     - run: docker-compose build
     - name: Connection to remote SSH and deployment
       uses: fifsky/ssh-action@master
