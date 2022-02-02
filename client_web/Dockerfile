@@ -8,7 +8,6 @@ RUN ls nginx/
 
 FROM nginx:alpine
 COPY --from=build /app/build/ /usr/share/nginx/html
-RUN ls
 RUN rm /etc/nginx/conf.d/default.conf
 COPY --from=build /app/nginx/nginx.conf /etc/nginx/conf.d
 

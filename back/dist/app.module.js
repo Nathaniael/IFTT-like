@@ -21,7 +21,7 @@ AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
             nestjs_slonik_1.SlonikModule.forRoot({
-                connectionUri: 'postgres://root:root@postgres/postgres',
+                connectionUri: 'postgres://root:root@postgres/root',
             }),
             config_1.ConfigModule.forRoot({
                 isGlobal: true,

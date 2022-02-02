@@ -11,7 +11,7 @@ import { UserModule } from './user/user.module';
 @Module({
   imports: [
     SlonikModule.forRoot({
-      connectionUri: 'postgres://root:root@postgres/postgres',
+      connectionUri: 'postgres://root:root@postgres/root',
     }),
     ConfigModule.forRoot({
       isGlobal: true,
