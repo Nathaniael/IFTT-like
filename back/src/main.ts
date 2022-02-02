@@ -5,7 +5,7 @@ import * as cookieParser from 'cookie-parser';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(cookieParser());
-  await app.listen(3030);
+  await app.listen(8080);
   app.use(cookieParser());
 }
 bootstrap();
