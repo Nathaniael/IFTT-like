@@ -1,4 +1,4 @@
-name: remote ssh command
+name: Test and deploy with docker-compose
 on:
   push:
     branches:
@@ -16,8 +16,6 @@ jobs:
       uses: fifsky/ssh-action@master
       with:
         command: |
-          docker stop $(docker ps -a -q)
-          docker rm $(docker ps -a -q)
           rm -rf fake-area
           git clone git@github.com:Nathaniael/fake-area.git
           cd fake-area
