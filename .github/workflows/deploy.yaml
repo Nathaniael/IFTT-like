@@ -1,14 +1,18 @@
 name: remote ssh command
-on: [push]
+on:
+  push:
+    branches:
+      - main
 jobs:
   test:
-    name: Test build and deploy
+    name: Test docker-compose build & Deploy
     runs-on: ubuntu-latest
     steps:
-    #- name: Check out repository code before deployment
-     # uses: actions/checkout@v2
-    #- run: docker-compose build
-    - name: Connection to remite
+    - name: Check out repository code
+      uses: actions/checkout@v2
+    - name: Running docker-compose build
+    - run: docker-compose build
+    - name: Connection to remote SSH and deployment
       uses: fifsky/ssh-action@master
       with:
         command: |
