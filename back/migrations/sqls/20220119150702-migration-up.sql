@@ -3,8 +3,8 @@ if not exists pgcrypto;
 
 CREATE TABLE usr (
     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-    username TEXT NOT NULL,
-    email TEXT NOT NULL,
+    username TEXT NOT NULL UNIQUE,
+    email TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
@@ -12,6 +12,9 @@ CREATE TABLE usr (
 
 CREATE TABLE oauth (
     id SERIAL PRIMARY KEY,
+    token TEXT NOT NULL,
+    duration TEXT NOT NULL,
+    generated_at TEXT NOT NULL,
     usr_id uuid NOT NULL,
     CONSTRAINT fk_usr FOREIGN KEY(usr_id) REFERENCES usr(id)
 );
