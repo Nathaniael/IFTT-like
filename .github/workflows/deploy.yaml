@@ -18,6 +18,7 @@ jobs:
           sudo rm -rf fake-area
           git clone git@github.com:Nathaniael/fake-area.git
           cd fake-area
+          docker-compose down
           docker-compose up --build -d
         host: ${{ secrets.HOST }}
         user: ${{ secrets.USER }}
