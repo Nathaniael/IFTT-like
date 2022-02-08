@@ -1,0 +1,10 @@
+.input {
+    width: 35.715vw;
+    font-size: 3.571vw;
+    border: #c86597 solid 5px;
+    outline: none;
+}
+
+.input:focus {
+    border-color: #ff83c8;
+}
