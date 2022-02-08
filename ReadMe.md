@@ -9,6 +9,9 @@ Use Docker to launch
 Ici tu écris comment lancer docker
 ```
 
+Launch dev mode:
+docker-compose -f docker-compose.dev.yaml up --build
+
 ### Back end
 
 Use Node.js with the framework Nest

@@ -7,6 +7,7 @@ import { validateEnvironmentVariables } from './config';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { OauthModule } from './oauth/oauth.module';
+import { WebhooksModule } from './webhooks/webhooks.module';
 
 
 @Module({
@@ -21,7 +22,8 @@ import { OauthModule } from './oauth/oauth.module';
     }),
     AuthModule,
     UserModule,
-    OauthModule,],
+    OauthModule,
+    WebhooksModule,],
   controllers: [AppController],
   providers: [AppService],
 })

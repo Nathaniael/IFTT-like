@@ -6,6 +6,6 @@ export declare class AuthController {
     private readonly userService;
     private readonly jwtService;
     constructor(userService: UserService, jwtService: JwtService);
-    registerUser(body: UserCreationDto, res: Response): Promise<void>;
-    loginUser(body: UserLoginDto, res: Response): Promise<void>;
+    registerUser(body: UserCreationDto, res: Response): any;
+    loginUser(body: UserLoginDto, res: Response): any;
 }
