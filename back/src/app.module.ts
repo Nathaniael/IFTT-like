@@ -6,12 +6,13 @@ import { ConfigModule } from '@nestjs/config';
 import { validateEnvironmentVariables } from './config';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
+import { OauthModule } from './oauth/oauth.module';
 
 
 @Module({
   imports: [
     SlonikModule.forRoot({
-      connectionUri: 'postgres://root:root@postgres/root',
+      connectionUri: 'postgres://root:root@postgres/postgres',
     }),
     ConfigModule.forRoot({
       isGlobal: true,
@@ -19,7 +20,8 @@ import { UserModule } from './user/user.module';
       envFilePath: './.env',
     }),
     AuthModule,
-    UserModule,],
+    UserModule,
+    OauthModule,],
   controllers: [AppController],
   providers: [AppService],
 })

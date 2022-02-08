@@ -9,6 +9,18 @@ CREATE TABLE usr (
     created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
+CREATE TABLE oauth_dictionnary (
+    id SERIAL PRIMARY KEY,
+    service TEXT NOT NULL,
+    query_code TEXT NOT NULL,
+    query_token TEXT NOT NULL,
+    logo TEXT NOT NULL,
+    client_id TEXT NOT NULL,
+    client_secret TEXT NOT NULL,
+    redirect_uri TEXT NOT NULL,
+    scope TEXT NOT NULL
+
+);
 
 CREATE TABLE oauth (
     id SERIAL PRIMARY KEY,
@@ -48,3 +60,5 @@ CREATE TABLE reaction (
     dico_id INT NOT NULL,
     CONSTRAINT fk_dictionnary FOREIGN KEY(dico_id) REFERENCES dictionnary(id)
 );
+
+INSERT INTO oauth_dictionnary (service, query_code, query_token, logo, client_id, client_secret, redirect_uri, scope) values ('github', 'https://github.com/login/oauth/authorize', 'https://github.com/login/oauth/access_token', '', '07ffe0c7a5f5148909e2', '4d758dd8b4e8fcfe9aaf30e353ebc87ad9a069ce', 'http://localhost:8081', '')
