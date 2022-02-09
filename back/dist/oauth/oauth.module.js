@@ -10,10 +10,12 @@ exports.OauthModule = void 0;
 const common_1 = require("@nestjs/common");
 const oauth_service_1 = require("./oauth.service");
 const oauth_controller_1 = require("./oauth.controller");
+const axios_1 = require("@nestjs/axios");
 let OauthModule = class OauthModule {
 };
 OauthModule = __decorate([
     (0, common_1.Module)({
+        imports: [axios_1.HttpModule],
         providers: [oauth_service_1.OauthService],
         controllers: [oauth_controller_1.OauthController]
     })
