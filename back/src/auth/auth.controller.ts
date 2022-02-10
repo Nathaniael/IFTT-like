@@ -5,6 +5,13 @@ import { Response } from 'express';
 import { JwtService } from '@nestjs/jwt';
 import { AuthGuard } from '@nestjs/passport';
 
+export class UserJWT {
+    userId: string
+    username: string
+    constructor(data: UserJWT) {
+        Object.assign(this, data)
+    }
+}
 @Controller('auth')
 export class AuthController {
     constructor(
@@ -29,7 +36,7 @@ export class AuthController {
     @Post('login')
     async loginUser(@Body() body: UserLoginDto, @Res() res: Response) {
         const user = await this.userService.getUser(body)
-        const payload = { userId: user.id, username: user.username };
+        const payload = new UserJWT({ userId: user.id, username: user.username });
         const signed_payload = this.jwtService.sign(payload)
         res.cookie('access_token', signed_payload, {
             httpOnly: true,
