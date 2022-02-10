@@ -25,6 +25,7 @@ CREATE TABLE oauth_dictionnary (
 CREATE TABLE oauth (
     id SERIAL PRIMARY KEY,
     token TEXT NOT NULL,
+    refresh_token TEXT NOT NULL,
     duration TEXT NOT NULL,
     generated_at TEXT NOT NULL,
     usr_id uuid NOT NULL,
