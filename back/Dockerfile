@@ -3,6 +3,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
+RUN chown -R root /app/dist
 RUN chown -R root ~/.npm
 RUN chown -R root /usr/local/lib/node_modules
 RUN npm run build
