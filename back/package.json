@@ -21,6 +21,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@nestjs/axios": "^0.0.5",
     "@nestjs/common": "^8.0.0",
     "@nestjs/config": "^1.1.6",
     "@nestjs/core": "^8.0.0",
@@ -34,6 +35,7 @@
     "cookie-parser": "^1.4.6",
     "db-migrate": "^0.11.13",
     "db-migrate-pg": "^1.2.2",
+    "jwt-decode": "^3.1.2",
     "nestjs-slonik": "^1.0.2",
     "passport": "^0.5.2",
     "passport-jwt": "^4.0.0",

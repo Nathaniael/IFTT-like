@@ -15,6 +15,7 @@ const config_1 = require("@nestjs/config");
 const config_2 = require("./config");
 const auth_module_1 = require("./auth/auth.module");
 const user_module_1 = require("./user/user.module");
+const oauth_module_1 = require("./oauth/oauth.module");
 const webhooks_module_1 = require("./webhooks/webhooks.module");
 let AppModule = class AppModule {
 };
@@ -22,7 +23,7 @@ AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
             nestjs_slonik_1.SlonikModule.forRoot({
-                connectionUri: 'postgres://root:root@postgres/root',
+                connectionUri: 'postgres://root:root@postgres/postgres',
             }),
             config_1.ConfigModule.forRoot({
                 isGlobal: true,
@@ -31,6 +32,7 @@ AppModule = __decorate([
             }),
             auth_module_1.AuthModule,
             user_module_1.UserModule,
+            oauth_module_1.OauthModule,
             webhooks_module_1.WebhooksModule,
         ],
         controllers: [app_controller_1.AppController],

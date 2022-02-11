@@ -40,3 +40,17 @@ export class UserLoginDto {
     @IsString()
     password: string
 }
+
+export class OauthCreationDto {
+    @IsString()
+    token: string
+
+    @IsString()
+    refresh_token: string
+
+    @IsString()
+    duration: string
+
+    @IsString()
+    generated_at: string
+}

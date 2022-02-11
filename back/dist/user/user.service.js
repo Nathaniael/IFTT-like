@@ -53,6 +53,18 @@ let UserService = class UserService {
         }
         return res.rows[0];
     }
+    async addOauthToUsr(usr, body) {
+        console.log(body.token, body.refresh_token, body.duration, body.generated_at, usr);
+        try {
+            await this.pool.query((0, slonik_1.sql) `INSERT INTO oauth (
+                token, refresh_token, duration, generated_at, usr_id
+                ) values (${body.token}, ${body.refresh_token}, ${body.duration}, ${body.generated_at}, ${usr.userId})`);
+        }
+        catch (error) {
+            console.log('hello');
+            throw error;
+        }
+    }
 };
 UserService = __decorate([
     (0, common_1.Injectable)(),
