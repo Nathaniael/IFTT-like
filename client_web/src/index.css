@@ -16,11 +16,11 @@ code {
 }
 
 .firstTitle {
+  cursor: pointer;
   position: absolute;
-  width: 30vw;
-  height: 10vw;
-  line-height: 8vw;
+  width: 100vw;
+  height: 100vh;
   text-align: center;
-  top: calc(50% - 5vw);
-  left: calc(50% - 15vw);
+  padding-top: 45vh;
+  z-index: -1;
 }

@@ -1,10 +1,17 @@
 import * as THREE from "three";
 
 const texturesPathList = [
-    "three/baptiste.jpg",
-    "three/emile.jpg",
-    "three/nathaniael.jpg",
-    "three/kilian.jpg",
+    "three/baptiste.png",
+    "three/emile.png",
+    "three/nathaniael.png",
+    "three/kilian.png",
+    "three/chrome.png",
+    "three/clashroyale.png",
+    "three/discord.png",
+    "three/facebook.png",
+    "three/fortnite.png",
+    "three/reddit.png",
+    "three/tft.png",
 ]
 
 export function texturesParticules() {

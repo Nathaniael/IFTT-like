@@ -13,7 +13,9 @@ function App() {
         <Login></Login>
         :
         <div onClick={() => {setHome(!home)}}>
-          <h1 className="firstTitle">THIS IS AREA</h1>
+          <div className="firstTitle">
+            <h1>THIS IS AREA</h1>
+          </div>
           <HomeTree></HomeTree>
         </div>
       }
