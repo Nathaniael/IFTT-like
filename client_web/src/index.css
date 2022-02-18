@@ -14,3 +14,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.firstTitle {
+  position: absolute;
+  width: 30vw;
+  height: 10vw;
+  line-height: 8vw;
+  text-align: center;
+  top: calc(50% - 5vw);
+  left: calc(50% - 15vw);
+}

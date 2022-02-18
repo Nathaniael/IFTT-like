@@ -1,0 +1,14 @@
+.homeThree {
+    background: linear-gradient(to top, rgb(0, 0, 0), rgb(0, 4, 24));
+    min-height: 100vh;
+    margin: 0;
+    cursor: pointer;
+    transition: 1.5s;
+    opacity: 0;
+    z-index: 1;
+}
+
+.homeThree:hover {
+    transition: 2s;
+    opacity: 1;
+}
