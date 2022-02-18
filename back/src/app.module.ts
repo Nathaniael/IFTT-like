@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { validateEnvironmentVariables } from './config';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
+import { OauthModule } from './oauth/oauth.module';
 import { WebhooksModule } from './webhooks/webhooks.module';
 
 
@@ -21,6 +22,7 @@ import { WebhooksModule } from './webhooks/webhooks.module';
     }),
     AuthModule,
     UserModule,
+    OauthModule,
     WebhooksModule,],
   controllers: [AppController],
   providers: [AppService],

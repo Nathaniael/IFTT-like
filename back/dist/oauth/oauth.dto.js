@@ -9,80 +9,53 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.OauthCreationDto = exports.UserLoginDto = exports.UserDto = exports.UserCreationDto = void 0;
+exports.TokenCreationDto = exports.OauthDictionnaryDto = void 0;
 const class_validator_1 = require("class-validator");
-class UserCreationDto {
+class OauthDictionnaryDto {
 }
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], UserCreationDto.prototype, "username", void 0);
+], OauthDictionnaryDto.prototype, "service", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], UserCreationDto.prototype, "email", void 0);
+], OauthDictionnaryDto.prototype, "query_code", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], UserCreationDto.prototype, "password", void 0);
-exports.UserCreationDto = UserCreationDto;
-class UserDto {
-}
+], OauthDictionnaryDto.prototype, "query_token", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], UserDto.prototype, "id", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], UserDto.prototype, "email", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], UserDto.prototype, "password", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], UserDto.prototype, "username", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], UserDto.prototype, "created_at", void 0);
-exports.UserDto = UserDto;
-class UserLoginDto {
-}
-__decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], UserLoginDto.prototype, "username", void 0);
-__decorate([
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], UserLoginDto.prototype, "email", void 0);
+], OauthDictionnaryDto.prototype, "logo", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], UserLoginDto.prototype, "password", void 0);
-exports.UserLoginDto = UserLoginDto;
-class OauthCreationDto {
+], OauthDictionnaryDto.prototype, "client_id", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], OauthDictionnaryDto.prototype, "client_secret", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], OauthDictionnaryDto.prototype, "redirect_uri", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], OauthDictionnaryDto.prototype, "scope", void 0);
+exports.OauthDictionnaryDto = OauthDictionnaryDto;
+class TokenCreationDto {
 }
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], OauthCreationDto.prototype, "token", void 0);
+], TokenCreationDto.prototype, "code", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], OauthCreationDto.prototype, "refresh_token", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], OauthCreationDto.prototype, "duration", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], OauthCreationDto.prototype, "generated_at", void 0);
-exports.OauthCreationDto = OauthCreationDto;
-//# sourceMappingURL=user.dto.js.map
+], TokenCreationDto.prototype, "serviceName", void 0);
+exports.TokenCreationDto = TokenCreationDto;
+//# sourceMappingURL=oauth.dto.js.map

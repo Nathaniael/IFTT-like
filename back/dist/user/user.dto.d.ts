@@ -15,3 +15,9 @@ export declare class UserLoginDto {
     email?: string;
     password: string;
 }
+export declare class OauthCreationDto {
+    token: string;
+    refresh_token: string;
+    duration: string;
+    generated_at: string;
+}

@@ -12,11 +12,17 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthController = void 0;
+exports.AuthController = exports.UserAuth = void 0;
 const common_1 = require("@nestjs/common");
 const user_dto_1 = require("../user/user.dto");
 const user_service_1 = require("../user/user.service");
 const jwt_1 = require("@nestjs/jwt");
+class UserAuth {
+    constructor(data) {
+        Object.assign(this, data);
+    }
+}
+exports.UserAuth = UserAuth;
 let AuthController = class AuthController {
     constructor(userService, jwtService) {
         this.userService = userService;
@@ -35,7 +41,7 @@ let AuthController = class AuthController {
     }
     async loginUser(body, res) {
         const user = await this.userService.getUser(body);
-        const payload = { userId: user.id, username: user.username };
+        const payload = new UserAuth({ userId: user.id, username: user.username });
         const signed_payload = this.jwtService.sign(payload);
         res.cookie('access_token', signed_payload, {
             httpOnly: true,
