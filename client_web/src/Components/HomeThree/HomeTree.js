@@ -52,6 +52,9 @@ export default class HomeTree extends Component {
             renderer.render(scene, camera)
         }
         tick()
+      }
+    componentWillUnmount() {
+      this.mount = null
     }
     render() {
         return <div className={styles.homeThree} ref={ref => (this.mount = ref)} />;

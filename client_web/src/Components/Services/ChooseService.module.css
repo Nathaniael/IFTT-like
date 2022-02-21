@@ -1,10 +1,17 @@
 .servicePage {
     background: linear-gradient(to top, rgb(0, 0, 0), rgb(0, 13, 77));
-    min-height: 165vh;
-    padding: 5vw 0 0 0;
+    min-height: 230vh;
+}
+
+.titlePage {
+    margin-top: 3vw;
+    font-size: 5vw;
+    text-align: center;
+    color: white;
 }
 
 .listServices {
+    padding: 5vw 0 0 0;
     margin: auto;
     width: 40vw;
     display: flex;

@@ -1,25 +1,11 @@
-import React, { Component } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
-import * as THREE from "three";
-import HomeTree from "./Components/HomeThree/HomeTree";
 import Service from "./Components/Services/Service";
 import './index.css'
 import Login from "./Components/Login/Login"
 import ChooseService from "./Components/Services/ChooseService";
-import { Routes, Route, Link, BrowserRouter as Router} from 'react-router-dom';
-
-function Home() {
-  return (
-    <div>
-        <Link to="/Services">
-          <div className="firstTitle">
-            <h1>THIS IS AREA</h1>
-          </div>
-          <HomeTree></HomeTree>
-        </Link>
-    </div>
-  )
-}
+import { Routes, Route, BrowserRouter as Router} from 'react-router-dom';
+import Home from "./Components/Home/Home";
 
 function App() {
   return (

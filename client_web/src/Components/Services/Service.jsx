@@ -1,5 +1,6 @@
 import React, { useState }from 'react'
 import styles from './Service.module.css'
+import AppBar from '../AppBar/AppBar'
 
 const service = {
       "id": 1,
@@ -31,6 +32,7 @@ function Service() {
     const [hover, setHover] = React.useState(false)
     return (
         <div className={styles.servicePage}>
+            <AppBar></AppBar>
             <div className={styles.subDescriptionAction}>
                 <div className={styles.littleTitle}>
                     Actions

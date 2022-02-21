@@ -1,0 +1,74 @@
+.appBar {
+    width: 100vw;
+    height: 6vw;
+    background-color: rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.appBar > a {
+    position: relative;
+    height: 6vw;
+    width: 10vw;
+    text-decoration: none;
+    color: white;
+}
+
+.linkText {
+    height: 6vw;
+    width: 100%;
+    text-align: center;
+    line-height: 6vw;
+    vertical-align: middle;
+    font-size: 2vw;
+    opacity: 1;
+    transition: 0.5s;
+}
+
+.linkImg {
+    position: absolute;
+    width: 5vw;
+    height: 5vw;
+    top: 0.5vw;
+    left: 2.5vw;
+    opacity: 0;
+}
+
+.animateImg {
+    animation: appearSpin 0.8s;
+    opacity: 1;
+}
+
+.animateText {
+    opacity: 0; 
+    animation: disapearSpin 0.8s;
+}
+
+@keyframes appearSpin {
+    0% {
+        -webkit-transform: scale(0%);
+        opacity: 0;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: scale(100%);
+        opacity: 1;
+    }
+}
+
+@keyframes disapearSpin {
+    0% {
+        -webkit-transform: scale(100%);
+        opacity: 1;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        -webkit-transform: scale(30%);
+        opacity: 0;
+    }
+}

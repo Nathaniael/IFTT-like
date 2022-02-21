@@ -1,0 +1,10 @@
+.firstTitle {
+  cursor: pointer;
+  position: absolute;
+  width: 100vw;
+  height: 55vh;
+  text-align: center;
+  padding-top: 45vh;
+  z-index: -1;
+  color: black;
+}

@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './ChooseService.module.css'
 import { Link } from 'react-router-dom'
+import AppBar from "../AppBar/AppBar";
 
 const listServices = [
     {
@@ -177,12 +178,16 @@ function ServiceWidget({ service, onLeft }) {
 function ChooseService() {
   return (
     <div className={styles.servicePage}>
-        <div className={styles.listServices}>
-            {listServices?.map((elem, index) => {
-                return (
-                    <ServiceWidget key={elem?.id} service={elem} onLeft={index % 2 == 0 ? true : false}></ServiceWidget>
-                )
-            })}
+        <AppBar></AppBar>
+        <div className={styles.servicePageBody}>
+            <div className={styles.titlePage}>Services</div>
+            <div className={styles.listServices}>
+                {listServices?.map((elem, index) => {
+                    return (
+                        <ServiceWidget key={elem?.id} service={elem} onLeft={index % 2 === 0 ? true : false}></ServiceWidget>
+                    )
+                })}
+            </div>
         </div>
     </div>
   )

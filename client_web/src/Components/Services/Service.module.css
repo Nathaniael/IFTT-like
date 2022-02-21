@@ -1,7 +1,9 @@
 .servicePage {
     background: linear-gradient(to top, rgb(0, 0, 0), rgb(0, 13, 77));
     min-height: 90.6vh;
-    padding: 5vw 0 0 0;
+}
+
+.servicePageBody {
     display: grid;
 }
 
@@ -10,6 +12,7 @@
     opacity: 80%;
     margin: auto;
     cursor: pointer;
+    padding: 5vw 0 0 0;
 }
 
 .serviceLogo:hover {
