@@ -1,0 +1,57 @@
+.listServices {
+    margin: auto;
+    width: 40vw;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.serviceLogo {
+    transform: scale(80%);
+    opacity: 80%;
+    width: 15vw;
+    height: 15vw;
+    cursor: pointer;
+}
+
+.serviceLogo:hover {
+    opacity: 100%;
+    transform: scale(100%);
+    animation: rotating 1s;
+    transform-style: preserve-3d;
+}
+
+.logoGoCenter {
+    top: 50%;
+    left: 50%;
+    transition: 1s;
+}
+
+@keyframes rotating {
+    50% {
+        -webkit-transform: scale(150%) rotateY(360deg);
+    }
+    100% {
+        -webkit-transform: rotateY(720deg);
+    }
+}
+
+.descriptionService {
+    position: absolute;
+    width: 30vw;
+    height: 50vh;
+    background-color: aqua;
+}
+
+.descriptionLeft {
+    transform: translateX(-30vw);
+}
+
+.descriptionRight {
+    transform: translateX(15vw);
+}
+
+.hidden {
+    opacity: 0;
+}
