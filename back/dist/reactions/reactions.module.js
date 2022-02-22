@@ -6,20 +6,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WebhooksModule = void 0;
-const axios_1 = require("@nestjs/axios");
+exports.ReactionsModule = void 0;
 const common_1 = require("@nestjs/common");
-const areas_service_1 = require("../areas/areas.service");
-const webhooks_controller_1 = require("./webhooks.controller");
-const webhooks_service_1 = require("./webhooks.service");
-let WebhooksModule = class WebhooksModule {
+const reactions_controller_1 = require("./reactions.controller");
+let ReactionsModule = class ReactionsModule {
 };
-WebhooksModule = __decorate([
+ReactionsModule = __decorate([
     (0, common_1.Module)({
-        imports: [axios_1.HttpModule],
-        controllers: [webhooks_controller_1.WebhooksController],
-        providers: [webhooks_service_1.WebhooksService, areas_service_1.AreasService]
+        controllers: [reactions_controller_1.ReactionsController]
     })
-], WebhooksModule);
-exports.WebhooksModule = WebhooksModule;
-//# sourceMappingURL=webhooks.module.js.map
+], ReactionsModule);
+exports.ReactionsModule = ReactionsModule;
+//# sourceMappingURL=reactions.module.js.map

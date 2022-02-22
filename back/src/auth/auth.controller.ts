@@ -4,6 +4,7 @@ import { UserService } from '../user/user.service';
 import { Response } from 'express';
 import { JwtService } from '@nestjs/jwt';
 import { AuthGuard } from '@nestjs/passport';
+import { ConfigService } from '@nestjs/config';
 
 export class UserAuth {
     userId: string
@@ -16,7 +17,8 @@ export class UserAuth {
 export class AuthController {
     constructor(
         private readonly userService: UserService,
-        private readonly jwtService: JwtService
+        private readonly jwtService: JwtService,
+        private configService: ConfigService
     ) { }
 
     @Post('register')
@@ -35,9 +37,10 @@ export class AuthController {
 
     @Post('login')
     async loginUser(@Body() body: UserLoginDto, @Res() res: Response) {
+
         const user = await this.userService.getUser(body)
         const payload = new UserAuth({ userId: user.id, username: user.username });
-        const signed_payload = this.jwtService.sign(payload)
+        const signed_payload = this.jwtService.sign({ payload })
         res.cookie('access_token', signed_payload, {
             httpOnly: true,
             domain: 'localhost',

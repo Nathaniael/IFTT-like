@@ -8,6 +8,10 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { OauthModule } from './oauth/oauth.module';
 import { WebhooksModule } from './webhooks/webhooks.module';
+import { AreasService } from './areas/areas.service';
+import { AreasController } from './areas/areas.controller';
+import { AreasModule } from './areas/areas.module';
+import { ReactionsModule } from './reactions/reactions.module';
 
 
 @Module({
@@ -23,7 +27,9 @@ import { WebhooksModule } from './webhooks/webhooks.module';
     AuthModule,
     UserModule,
     OauthModule,
-    WebhooksModule,],
+    WebhooksModule,
+    AreasModule,
+    ReactionsModule,],
   controllers: [AppController],
   providers: [AppService],
 })

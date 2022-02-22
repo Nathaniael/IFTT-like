@@ -5,3 +5,4 @@ DROP TABLE service;
 DROP TABLE oauth;
 DROP TABLE usr;
 DROP TABLE oauth_dictionnary;
+DROP TABLE area;

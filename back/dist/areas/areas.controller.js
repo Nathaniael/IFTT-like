@@ -12,33 +12,28 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserController = void 0;
+exports.AreasController = void 0;
 const common_1 = require("@nestjs/common");
-const passport_1 = require("@nestjs/passport");
-const auth_controller_1 = require("../auth/auth.controller");
-const user_decorator_1 = require("./user.decorator");
-const user_dto_1 = require("./user.dto");
-const user_service_1 = require("./user.service");
-let UserController = class UserController {
-    constructor(usersService) {
-        this.usersService = usersService;
+const areas_dto_1 = require("./areas.dto");
+const areas_service_1 = require("./areas.service");
+let AreasController = class AreasController {
+    constructor(areasServices) {
+        this.areasServices = areasServices;
     }
-    async addOauthToUsr(usr, body) {
-        return this.usersService.addOauthToUsr(usr, body);
+    async createArea(body) {
+        this.areasServices.createArea(body);
     }
 };
 __decorate([
-    (0, common_1.Post)('addOAuth'),
-    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
-    __param(0, (0, user_decorator_1.User)()),
-    __param(1, (0, common_1.Body)()),
+    (0, common_1.Post)('/create'),
+    __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [auth_controller_1.UserAuth, user_dto_1.OauthCreationDto]),
+    __metadata("design:paramtypes", [areas_dto_1.AreaCreationDto]),
     __metadata("design:returntype", Promise)
-], UserController.prototype, "addOauthToUsr", null);
-UserController = __decorate([
-    (0, common_1.Controller)('user'),
-    __metadata("design:paramtypes", [user_service_1.UserService])
-], UserController);
-exports.UserController = UserController;
-//# sourceMappingURL=user.controller.js.map
+], AreasController.prototype, "createArea", null);
+AreasController = __decorate([
+    (0, common_1.Controller)('areas'),
+    __metadata("design:paramtypes", [areas_service_1.AreasService])
+], AreasController);
+exports.AreasController = AreasController;
+//# sourceMappingURL=areas.controller.js.map

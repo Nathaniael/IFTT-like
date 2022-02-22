@@ -44,7 +44,8 @@
     "rimraf": "^3.0.2",
     "rxjs": "^6.0.0",
     "slonik": "^27.1.0",
-    "slonik-interceptor-field-name-transformation": "^1.6.4"
+    "slonik-interceptor-field-name-transformation": "^1.6.4",
+    "smee-client": "^1.2.2"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",

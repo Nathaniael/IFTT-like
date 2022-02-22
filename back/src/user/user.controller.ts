@@ -11,12 +11,6 @@ export class UserController {
         private readonly usersService: UserService
     ) { }
 
-    @Get('hello')
-    @UseGuards(AuthGuard('jwt'))
-    async test(@User() user: UserAuth) {
-        console.log(user)
-    }
-
     @Post('addOAuth')
     @UseGuards(AuthGuard('jwt'))
     async addOauthToUsr(@User() usr: UserAuth, @Body() body: OauthCreationDto) {
