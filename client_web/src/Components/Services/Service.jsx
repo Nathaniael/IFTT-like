@@ -33,33 +33,35 @@ function Service() {
     return (
         <div className={styles.servicePage}>
             <AppBar></AppBar>
-            <div className={styles.subDescriptionAction}>
-                <div className={styles.littleTitle}>
-                    Actions
+            <div className={styles.pagination}>
+                <div className={styles.subDescriptionAction}>
+                    <div className={styles.littleTitle}>
+                        Actions
+                    </div>
+                    <div>
+                        {service?.action?.map((elem, index) => {
+                            return (
+                                  <ButtonService key={index} elem={elem}></ButtonService> 
+                            )
+                        })}
+                    </div>
                 </div>
-                <div>
-                    {service?.action?.map((elem, index) => {
-                        return (
-                              <ButtonService key={index} elem={elem}></ButtonService> 
-                        )
-                    })}
+                <img onMouseEnter={() => {setHover(true)}} onMouseLeave={() => {setHover(false)}} className={`${styles.serviceLogo} ${hover ? styles.logoGoCenter : null}`} src={service?.imgUrl} alt={service?.imgUrl}></img>
+                <div className={styles.subDescriptionReAction}>
+                    <div className={styles.littleTitle}>
+                        ReActions
+                    </div>
+                    <div>
+                        {service?.reaction?.map((elem, index) => {
+                            return (
+                                <div key={index}>
+                                    <ButtonService key={index} elem={elem}></ButtonService>
+                                </div>
+                            )
+                        })}
+                    </div> 
                 </div>
-            </div>
-            <img onMouseEnter={() => {setHover(true)}} onMouseLeave={() => {setHover(false)}} className={`${styles.serviceLogo} ${hover ? styles.logoGoCenter : null}`} src={service?.imgUrl} alt={service?.imgUrl}></img>
-            <div className={styles.subDescriptionReAction}>
-                <div className={styles.littleTitle}>
-                    ReActions
-                </div>
-                <div>
-                    {service?.reaction?.map((elem, index) => {
-                        return (
-                            <div key={index}>
-                                <ButtonService key={index} elem={elem}></ButtonService>
-                            </div>
-                        )
-                    })}
-                </div> 
-            </div>
+            </div>    
         </div>
   )
 }

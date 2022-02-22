@@ -1,10 +1,10 @@
 .servicePage {
     background: linear-gradient(to top, rgb(0, 0, 0), rgb(0, 13, 77));
-    min-height: 90.6vh;
+    min-height: 100vh;
 }
 
-.servicePageBody {
-    display: grid;
+.pagination {
+    display: flex;
 }
 
 .serviceLogo {
@@ -32,8 +32,6 @@
 }
 
 .logoGoCenter {
-    grid-column: 2;
-    grid-row: 1;
     margin: auto;
     transition: 1s;
     transform: scale(80%);
@@ -48,14 +46,14 @@
     border-radius: 15px;
     font-size: 1.5vw;
     padding: 16px 32px;
-    background-color: rgb(114, 235, 154); 
+    background-color: #D9DBF1; 
     color: rgb(0, 13, 77); 
-    border: 2px solid #2c54c0;
+    border: 2px solid #007EA7;
     transition : 0.4s;
 }
 
 .button:hover{
-    background-color: #2c54c0;
+    background-color: #007EA7;
     color: Black;
 }
 
@@ -63,22 +61,18 @@
     border-radius: 15px;
     font-size: 1.5vw;
     padding: 16px 32px;
-    background-color: #2c54c0;
+    background-color: #007EA7;
     color: Black;
 }
 
 .subDescriptionAction {
-    grid-column: 1;
-    grid-row: 1;
     text-align: center;
-    color: #5b85ee;
+    color: #007EA7;
 }
 
 .subDescriptionReAction {
-    grid-column: 3;
-    grid-row: 1;
-    text-align: center;  
-    color: #5b85ee;
+    text-align: center;
+    color: #007EA7;
 }
 
 .buttonPadding {
