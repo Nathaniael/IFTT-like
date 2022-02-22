@@ -1,5 +1,5 @@
 .servicePage {
-    background: linear-gradient(to top, rgb(0, 0, 0), rgb(0, 13, 77));
+    background: linear-gradient(to top, rgb(0, 13, 77), rgb(0, 126, 167));
     min-height: 100vh;
 }
 
@@ -67,12 +67,12 @@
 
 .subDescriptionAction {
     text-align: center;
-    color: #007EA7;
+    color: #D9DBF1;
 }
 
 .subDescriptionReAction {
     text-align: center;
-    color: #007EA7;
+    color: #D9DBF1;
 }
 
 .buttonPadding {

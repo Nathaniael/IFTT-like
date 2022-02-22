@@ -6,7 +6,7 @@ import styles from './Home.module.css'
 function Home() {
   return (
     <div>
-        <Link to="/services">
+        <Link to="/login">
         <div className={styles.firstTitle}>
             <h1>THIS IS AREA</h1>
         </div>

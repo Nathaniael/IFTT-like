@@ -1,14 +1,20 @@
 .logWidget {
     position: absolute;
-    top: calc(50% - 21.429vw);
+    top: calc(55% - 21.429vw);
     left: calc(50% - 21.429vw);
     border-radius: 30px;
-    background-color: #f1f7fe;
+    background-color: #D9DBF1;
+    opacity: 80%;
     width: 42.857vw;
     height: 42.857vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+.background {
+    background: linear-gradient(to top, rgb(0, 13, 77), rgb(0, 126, 167));
+    min-height: 100vh;
 }
 
 .title {
