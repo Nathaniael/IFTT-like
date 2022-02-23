@@ -12,6 +12,7 @@ import { AreasService } from './areas/areas.service';
 import { AreasController } from './areas/areas.controller';
 import { AreasModule } from './areas/areas.module';
 import { ReactionsModule } from './reactions/reactions.module';
+import { AboutModule } from './about/about.module';
 
 
 @Module({
@@ -29,7 +30,8 @@ import { ReactionsModule } from './reactions/reactions.module';
     OauthModule,
     WebhooksModule,
     AreasModule,
-    ReactionsModule,],
+    ReactionsModule,
+    AboutModule,],
   controllers: [AppController],
   providers: [AppService],
 })
