@@ -8,48 +8,24 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReactionsController = void 0;
 const common_1 = require("@nestjs/common");
 let ReactionsController = class ReactionsController {
-    sendMail(username, subject, body, recipient) {
-        const mailjet = require('node-mailjet')
-            .connect('95d7f3e348ada34e2587a04a86442e33', 'ea353c779dbd2fa1d3d4372b194a6f95');
-        const request = mailjet
-            .post("send", { 'version': 'v3.1' })
-            .request({
-            "Messages": [
-                {
-                    "From": {
-                        "Email": "nathtris95@gmail.com",
-                        "Name": "Pantharea"
-                    },
-                    "To": [
-                        {
-                            "Email": recipient,
-                            "Name": username
-                        }
-                    ],
-                    "Subject": subject,
-                    "TextPart": body
-                }
-            ]
-        });
-        request
-            .then((result) => {
-            console.log(result.body);
-        })
-            .catch((err) => {
-            console.log(err.statusCode);
-        });
+    async printstp(body) {
+        console.log("hello");
     }
 };
 __decorate([
-    (0, common_1.Post)('mail'),
+    (0, common_1.Post)('/mail'),
+    __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, String, String]),
-    __metadata("design:returntype", void 0)
-], ReactionsController.prototype, "sendMail", null);
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ReactionsController.prototype, "printstp", null);
 ReactionsController = __decorate([
     (0, common_1.Controller)('reactions')
 ], ReactionsController);

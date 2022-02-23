@@ -40,26 +40,44 @@ CREATE TABLE service (
     CONSTRAINT fk_auth FOREIGN KEY(auth_id) REFERENCES oauth(id)
 );
 
-CREATE TABLE dictionnary (
-    id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL,
-    description TEXT NOT NULL,
-    base_url TEXT NOT NULL,
-    service_id INT NOT NULL,
-    CONSTRAINT fk_service FOREIGN KEY(service_id) REFERENCES service(id)
-);
+--CREATE TABLE dictionnary (
+--    id SERIAL PRIMARY KEY,
+--    name TEXT NOT NULL,
+--    description TEXT NOT NULL,
+--    base_url TEXT NOT NULL,
+--    service_id INT NOT NULL,
+--    CONSTRAINT fk_service FOREIGN KEY(service_id) REFERENCES service(id)
+--);
 
 
 CREATE TABLE action (
     id SERIAL PRIMARY KEY,
-    dico_id INT NOT NULL,
-    CONSTRAINT fk_dictionnary FOREIGN KEY(dico_id) REFERENCES dictionnary(id)
+    service_name TEXT NOT NULL,
+    action_type TEXT NOT NULL,
+    params TEXT NOT NULL
+    --dico_id INT NOT NULL,
+    --CONSTRAINT fk_dictionnary FOREIGN KEY(dico_id) REFERENCES dictionnary(id)
 );
 
 CREATE TABLE reaction (
     id SERIAL PRIMARY KEY,
-    dico_id INT NOT NULL,
-    CONSTRAINT fk_dictionnary FOREIGN KEY(dico_id) REFERENCES dictionnary(id)
+    service_name TEXT NOT NULL,
+    reaction_type TEXT NOT NULL,
+    params TEXT NOT NULL,
+    reaction_route TEXT NOT NULL
+    --dico_id INT NOT NULL,
+    --CONSTRAINT fk_dictionnary FOREIGN KEY(dico_id) REFERENCES dictionnary(id)
+);
+
+CREATE TABLE area (
+    id SERIAL PRIMARY KEY,
+    r_service TEXT NOT NULL,
+    r_type TEXT NOT NULL,
+    r_params TEXT NOT NULL,
+    id_act INT NOT NULL,
+    id_react INT NOT NULL,
+    CONSTRAINT fk_action FOREIGN KEY(id_act) REFERENCES action(id),
+    CONSTRAINT fk_reaction FOREIGN KEY(id_react) REFERENCES reaction(id)  
 );
 
 INSERT INTO oauth_dictionnary (service, query_code, query_token, logo, client_id, client_secret, redirect_uri, scope) values ('github', 'https://github.com/login/oauth/authorize', 'https://github.com/login/oauth/access_token', '', '07ffe0c7a5f5148909e2', '4d758dd8b4e8fcfe9aaf30e353ebc87ad9a069ce', 'http://localhost:8081', '')

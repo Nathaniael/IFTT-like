@@ -9,13 +9,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReactionsModule = void 0;
 const common_1 = require("@nestjs/common");
 const reactions_controller_1 = require("./reactions.controller");
-const reactions_service_1 = require("./reactions.service");
 let ReactionsModule = class ReactionsModule {
 };
 ReactionsModule = __decorate([
     (0, common_1.Module)({
-        controllers: [reactions_controller_1.ReactionsController],
-        providers: [reactions_service_1.ReactionsService]
+        controllers: [reactions_controller_1.ReactionsController]
     })
 ], ReactionsModule);
 exports.ReactionsModule = ReactionsModule;

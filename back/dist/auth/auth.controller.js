@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const user_dto_1 = require("../user/user.dto");
 const user_service_1 = require("../user/user.service");
 const jwt_1 = require("@nestjs/jwt");
+const config_1 = require("@nestjs/config");
 class UserAuth {
     constructor(data) {
         Object.assign(this, data);
@@ -24,9 +25,10 @@ class UserAuth {
 }
 exports.UserAuth = UserAuth;
 let AuthController = class AuthController {
-    constructor(userService, jwtService) {
+    constructor(userService, jwtService, configService) {
         this.userService = userService;
         this.jwtService = jwtService;
+        this.configService = configService;
     }
     async registerUser(body, res) {
         await this.userService.registerUser(body);
@@ -42,7 +44,7 @@ let AuthController = class AuthController {
     async loginUser(body, res) {
         const user = await this.userService.getUser(body);
         const payload = new UserAuth({ userId: user.id, username: user.username });
-        const signed_payload = this.jwtService.sign(payload);
+        const signed_payload = this.jwtService.sign({ payload });
         res.cookie('access_token', signed_payload, {
             httpOnly: true,
             domain: 'localhost',
@@ -69,7 +71,8 @@ __decorate([
 AuthController = __decorate([
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [user_service_1.UserService,
-        jwt_1.JwtService])
+        jwt_1.JwtService,
+        config_1.ConfigService])
 ], AuthController);
 exports.AuthController = AuthController;
 //# sourceMappingURL=auth.controller.js.map
