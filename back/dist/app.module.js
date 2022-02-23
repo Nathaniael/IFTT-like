@@ -17,6 +17,9 @@ const auth_module_1 = require("./auth/auth.module");
 const user_module_1 = require("./user/user.module");
 const oauth_module_1 = require("./oauth/oauth.module");
 const webhooks_module_1 = require("./webhooks/webhooks.module");
+const areas_module_1 = require("./areas/areas.module");
+const reactions_module_1 = require("./reactions/reactions.module");
+const about_module_1 = require("./about/about.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -34,6 +37,9 @@ AppModule = __decorate([
             user_module_1.UserModule,
             oauth_module_1.OauthModule,
             webhooks_module_1.WebhooksModule,
+            areas_module_1.AreasModule,
+            reactions_module_1.ReactionsModule,
+            about_module_1.AboutModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

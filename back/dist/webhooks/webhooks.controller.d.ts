@@ -1,4 +1,8 @@
-import { GithubDto } from './webhooks.dto';
+import { AreasService } from 'src/areas/areas.service';
+import { WebhooksService } from './webhooks.service';
 export declare class WebhooksController {
-    handleRequest(body: GithubDto): void;
+    private readonly webhooksServices;
+    private readonly areasServices;
+    constructor(webhooksServices: WebhooksService, areasServices: AreasService);
+    reactionGithub(body: any): Promise<void>;
 }

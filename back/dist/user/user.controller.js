@@ -23,21 +23,10 @@ let UserController = class UserController {
     constructor(usersService) {
         this.usersService = usersService;
     }
-    async test(user) {
-        console.log(user);
-    }
     async addOauthToUsr(usr, body) {
         return this.usersService.addOauthToUsr(usr, body);
     }
 };
-__decorate([
-    (0, common_1.Get)('hello'),
-    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
-    __param(0, (0, user_decorator_1.User)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [auth_controller_1.UserAuth]),
-    __metadata("design:returntype", Promise)
-], UserController.prototype, "test", null);
 __decorate([
     (0, common_1.Post)('addOAuth'),
     (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),

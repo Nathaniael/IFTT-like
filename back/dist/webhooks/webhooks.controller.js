@@ -14,21 +14,30 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.WebhooksController = void 0;
 const common_1 = require("@nestjs/common");
-const webhooks_dto_1 = require("./webhooks.dto");
+const areas_service_1 = require("../areas/areas.service");
+const webhooks_service_1 = require("./webhooks.service");
 let WebhooksController = class WebhooksController {
-    handleRequest(body) {
-        console.log(body.repository.full_name);
+    constructor(webhooksServices, areasServices) {
+        this.webhooksServices = webhooksServices;
+        this.areasServices = areasServices;
+    }
+    async reactionGithub(body) {
+        const type = this.webhooksServices.getGithubActionType(body);
+        const data = this.webhooksServices.getGithubActionData(body);
+        this.areasServices.callReaction('github', type, data);
     }
 };
 __decorate([
     (0, common_1.Post)('github'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [webhooks_dto_1.GithubDto]),
-    __metadata("design:returntype", void 0)
-], WebhooksController.prototype, "handleRequest", null);
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], WebhooksController.prototype, "reactionGithub", null);
 WebhooksController = __decorate([
-    (0, common_1.Controller)('webhooks')
+    (0, common_1.Controller)('webhooks'),
+    __metadata("design:paramtypes", [webhooks_service_1.WebhooksService,
+        areas_service_1.AreasService])
 ], WebhooksController);
 exports.WebhooksController = WebhooksController;
 //# sourceMappingURL=webhooks.controller.js.map
