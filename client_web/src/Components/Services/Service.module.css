@@ -1,28 +1,34 @@
 .servicePage {
-    background: linear-gradient(to top, rgb(0, 13, 77), rgb(0, 126, 167));
+    background: radial-gradient(rgb(0, 126, 167), rgb(0, 13, 77));
     min-height: 100vh;
 }
 
 .pagination {
     display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .serviceLogo {
-    transform: scale(70%);
+    width: 20vw;
+    height: 20vw;
+    transform: scale(80%);
     opacity: 80%;
-    margin: auto;
     cursor: pointer;
-    padding: 5vw 0 0 0;
 }
 
 .serviceLogo:hover {
     opacity: 100%;
-    transform: scale(80%);
+    transform: scale(100%);
     animation: rotating 1s;
     transform-style: preserve-3d;
 }
 
 @keyframes rotating {
+    0% {
+        -webkit-transform: scale(80%);
+    }
     50% {
         -webkit-transform: scale(80%) rotateY(360deg);
     }
@@ -31,36 +37,23 @@
     }
 }
 
-.logoGoCenter {
-    margin: auto;
-    transition: 1s;
-    transform: scale(80%);
-}
-
 .littleTitle {
     font-size: 2.5vw;
     padding: 1vw 0;
 }
 
 .button {
-    border-radius: 15px;
+    cursor: pointer;
+    border-radius: 1.071vw;
     font-size: 1.5vw;
-    padding: 16px 32px;
+    padding: 1.071vw 1.429vw;
     background-color: #D9DBF1; 
     color: rgb(0, 13, 77); 
-    border: 2px solid #007EA7;
+    border: 0.143vw solid #007EA7;
     transition : 0.4s;
 }
 
 .button:hover{
-    background-color: #007EA7;
-    color: Black;
-}
-
-.clicked{
-    border-radius: 15px;
-    font-size: 1.5vw;
-    padding: 16px 32px;
     background-color: #007EA7;
     color: Black;
 }
@@ -77,4 +70,8 @@
 
 .buttonPadding {
     padding: 0.5vw 0;
+}
+
+.draggable {
+    opacity: 1;
 }

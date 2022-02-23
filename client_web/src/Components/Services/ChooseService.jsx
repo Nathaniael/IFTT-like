@@ -2,6 +2,7 @@ import React from 'react'
 import styles from './ChooseService.module.css'
 import { Link } from 'react-router-dom'
 import AppBar from "../AppBar/AppBar";
+import ConfigArea from '../ConfigArea/ConfigArea';
 
 const listServices = [
     {
@@ -179,6 +180,7 @@ function ChooseService() {
   return (
     <div className={styles.servicePage}>
         <AppBar></AppBar>
+        <ConfigArea></ConfigArea>
         <div className={styles.servicePageBody}>
             <div className={styles.titlePage}>Services</div>
             <div className={styles.listServices}>

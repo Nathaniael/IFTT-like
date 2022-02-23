@@ -1,10 +1,5 @@
 .logWidget {
-    position: absolute;
-    top: calc(55% - 21.429vw);
-    left: calc(50% - 21.429vw);
-    border-radius: 30px;
-    background-color: #D9DBF1;
-    opacity: 80%;
+    margin: auto;
     width: 42.857vw;
     height: 42.857vw;
     display: flex;
@@ -13,12 +8,13 @@
 }
 
 .background {
-    background: linear-gradient(to top, rgb(0, 13, 77), rgb(0, 126, 167));
+    background: radial-gradient(rgb(0, 126, 167), rgb(0, 13, 77));
     min-height: 100vh;
 }
 
 .title {
     text-align: center;
+    color: white;
 }
 
 .form {
@@ -38,7 +34,7 @@
     border-radius: 10px;
     outline: none;
     border: none;
-    box-shadow: 0px 0px 30px 0px rgb(232, 232, 232);
+    box-shadow: 0px 0px 5px 0px rgb(232, 232, 232);
 }
 
 .input:hover {
@@ -73,6 +69,7 @@
     cursor: pointer;
     text-align: end;
     margin: 3vw;
+    color: white;
 }
 
 .gotAccount:hover {
