@@ -14,16 +14,45 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReactionsController = void 0;
 const common_1 = require("@nestjs/common");
+const reactions_dto_1 = require("./reactions.dto");
 let ReactionsController = class ReactionsController {
-    async printstp(body) {
-        console.log("hello");
+    async printstp(config) {
+        const mailjet = require('node-mailjet')
+            .connect('95d7f3e348ada34e2587a04a86442e33', 'ea353c779dbd2fa1d3d4372b194a6f95');
+        const request = mailjet
+            .post("send", { 'version': 'v3.1' })
+            .request({
+            "Messages": [
+                {
+                    "From": {
+                        "Email": "areakinaemba@gmail.com",
+                        "Name": "Pantharea"
+                    },
+                    "To": [
+                        {
+                            "Email": config.recipient,
+                            "Name": config.username
+                        }
+                    ],
+                    "Subject": config.subject,
+                    "TextPart": config.body
+                }
+            ]
+        });
+        request
+            .then((result) => {
+            console.log(result.body);
+        })
+            .catch((err) => {
+            console.log(err.statusCode);
+        });
     }
 };
 __decorate([
     (0, common_1.Post)('/mail'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [reactions_dto_1.MailReactionDto]),
     __metadata("design:returntype", Promise)
 ], ReactionsController.prototype, "printstp", null);
 ReactionsController = __decorate([

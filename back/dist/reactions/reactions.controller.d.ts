@@ -1,3 +1,4 @@
+import { MailReactionDto } from './reactions.dto';
 export declare class ReactionsController {
-    printstp(body: any): Promise<void>;
+    printstp(config: MailReactionDto): Promise<void>;
 }
