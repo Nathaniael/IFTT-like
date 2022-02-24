@@ -1,7 +1,7 @@
 FROM cirrusci/flutter
 # COPY RESSOURCES
-COPY . /app
 WORKDIR /app
+COPY . /app
 USER root
 RUN rm -f .packages
 # BUILD THE APK RELEASE FILE
