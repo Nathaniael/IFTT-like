@@ -40,25 +40,20 @@ let UserService = class UserService {
         return ret.rows[0];
     }
     async getUser(usr) {
-        console.log("usr:", usr);
-        let queryParam;
+        let res;
         if (usr.username)
-            queryParam = (0, slonik_1.sql) `SELECT * FROM usr WHERE username =  ${usr.username}`;
+            res = await this.pool.query((0, slonik_1.sql) `SELECT * FROM usr WHERE username =  ${usr.username}`);
         else if (usr.email)
-            queryParam = (0, slonik_1.sql) `SELECT * FROM usr WHERE email = ${usr.email}`;
-        else
-            throw new common_1.UnauthorizedException("Username or email are empty");
-        let res = await this.pool.query(queryParam);
+            res = await this.pool.query((0, slonik_1.sql) `SELECT * FROM usr WHERE email =  ${usr.email}`);
         if (res.rowCount != 1 && usr.password)
-            throw new common_1.UnauthorizedException("Invalid credentials");
-        return bcrypt.compare(usr.password, res.rows[0].password, function (err, res) {
+            throw new common_1.UnauthorizedException("User not found");
+        await bcrypt.compare(usr.password, res.rows[0].password, function (err, bres) {
             if (err)
                 throw new common_1.UnauthorizedException(err);
-            if (res)
-                return res.rows[0];
-            else
+            if (!bres)
                 throw new common_1.UnauthorizedException("Username/Password not matching");
         });
+        return res.rows[0];
     }
     async addOauthToUsr(usr, body) {
         console.log(body.token, body.refresh_token, body.duration, body.generated_at, usr);

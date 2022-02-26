@@ -33,25 +33,20 @@ export class UserService {
     }
 
     async getUser(usr: UserLoginDto) {
-        console.log("usr:",usr)
-        let queryParam;
+        let res: any;
         if(usr.username)
-            queryParam = sql`SELECT * FROM usr WHERE username =  ${usr.username}`
+            res = await this.pool.query(sql`SELECT * FROM usr WHERE username =  ${usr.username}`)
         else if (usr.email)
-            queryParam = sql`SELECT * FROM usr WHERE email = ${usr.email}`
-        else
-            throw new UnauthorizedException("Username or email are empty")
-        let res = await this.pool.query(queryParam)
+            res = await this.pool.query(sql`SELECT * FROM usr WHERE email =  ${usr.email}`)
         if (res.rowCount != 1 && usr.password)
-            throw new UnauthorizedException("Invalid credentials")
-        return bcrypt.compare(usr.password, res.rows[0].password, function(err, res) {
+            throw new UnauthorizedException("User not found")
+        await bcrypt.compare(usr.password, res.rows[0].password, function(err, bres) {
             if (err)
                 throw new UnauthorizedException(err)
-            if (res)
-                return res.rows[0]
-            else
+            if (!bres)
                 throw new UnauthorizedException("Username/Password not matching")
         })
+        return res.rows[0]
     }
 
     async addOauthToUsr(usr: UserAuth, body: OauthCreationDto) {
