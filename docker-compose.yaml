@@ -35,7 +35,7 @@ services:
     build: client_mobile/
     container_name: client_mobile
     volumes:
-      - 'apk:/app/build/app/outputs/flutter-apk/'
+      - 'apk:/app/mobile_app'
   client_web:
     restart: always
     depends_on:
