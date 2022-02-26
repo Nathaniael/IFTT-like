@@ -31,8 +31,7 @@ let AuthController = class AuthController {
         this.configService = configService;
     }
     async registerUser(body, res) {
-        await this.userService.registerUser(body);
-        const user = await this.userService.getUser(body);
+        const user = await this.userService.registerUser(body);
         const payload = { userId: user.id, username: user.username };
         const signed_payload = this.jwtService.sign(payload);
         res.cookie('access_token', signed_payload, {

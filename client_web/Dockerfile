@@ -2,7 +2,7 @@ FROM node:16-alpine3.14 as build
 WORKDIR /app
 COPY . /app
 RUN npm install --silent
-RUN mv /app/public/app-release.apk /app/public/client.apk
+# RUN mv /app/public/app-release.apk /app/public/client.apk
 RUN npm run build
 RUN ls nginx/
 

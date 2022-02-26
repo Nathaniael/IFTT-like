@@ -16,4 +16,10 @@ export class UserController {
     async addOauthToUsr(@User() usr: UserAuth, @Body() body: OauthCreationDto) {
         return this.usersService.addOauthToUsr(usr, body)
     }
+
+    @Get('profile')
+    @UseGuards(AuthGuard('jwt'))
+    async getUserProfile(@User() usr: UserAuth) {
+        return `ID: ${usr.userId} USERNAME: ${usr.username}`
+    }
 }

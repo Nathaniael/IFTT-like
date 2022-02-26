@@ -14,36 +14,44 @@ export class UserService {
     ) { }
 
     async registerUser(usr: UserCreationDto) {
+        if (!usr.email || !usr.username || !usr.password)
+            throw new UnauthorizedException("One or more of the required fields are missing")
+        let res = await this.pool.query(sql`SELECT *
+                FROM usr
+                WHERE email = ${usr.email}
+                OR username = ${usr.username}`)
+        if (res.rows.length != 0) {
+            throw new UnauthorizedException("Username or email already in use")
+        }
         await this.pool.query(sql`INSERT INTO usr
         (username, password, email)
-        values
-        (${usr.username}, ${bcrypt.hashSync(usr.password, 10)}, ${usr.email})`)
+        values (${usr.username}, ${bcrypt.hashSync(usr.password, 10)}, ${usr.email})`)
+        let ret = await this.pool.query(sql`SELECT *
+                FROM usr
+                WHERE email = ${usr.email}`)
+        return ret.rows[0]
     }
 
     async getUser(usr: UserLoginDto) {
-        let res
-        if (usr.email) {
-            res = await this.pool.query(sql`SELECT email,
-                username,
-                id,
-                created_at,
-                password
-                FROM usr WHERE email = ${usr.email}`)
-        } else if (usr.username) {
-            res = await this.pool.query(sql`SELECT email,
-            username,
-            id,
-            created_at,
-            password
-            FROM usr WHERE username = ${usr.username}`)
-        }
-        else {
-            throw new UnauthorizedException("User not found sheesh")
-        }
-        if (!res || res.rows.length <= 0) {
-            throw new UnauthorizedException("User not found")
-        }
-        return res.rows[0]
+        console.log("usr:",usr)
+        let queryParam;
+        if(usr.username)
+            queryParam = sql`SELECT * FROM usr WHERE username =  ${usr.username}`
+        else if (usr.email)
+            queryParam = sql`SELECT * FROM usr WHERE email = ${usr.email}`
+        else
+            throw new UnauthorizedException("Username or email are empty")
+        let res = await this.pool.query(queryParam)
+        if (res.rowCount != 1 && usr.password)
+            throw new UnauthorizedException("Invalid credentials")
+        return bcrypt.compare(usr.password, res.rows[0].password, function(err, res) {
+            if (err)
+                throw new UnauthorizedException(err)
+            if (res)
+                return res.rows[0]
+            else
+                throw new UnauthorizedException("Username/Password not matching")
+        })
     }
 
     async addOauthToUsr(usr: UserAuth, body: OauthCreationDto) {
