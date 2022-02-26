@@ -23,8 +23,8 @@ RUN flutter doctor --android-licenses
 USER root
 WORKDIR /app
 COPY . /app
-# Run basic check to download Dark SDK
+# Run basic check to download Dart SDK
 RUN flutter doctor
-RUN flutter pub get
 RUN flutter clean
+RUN flutter pub get
 RUN flutter build apk --release
