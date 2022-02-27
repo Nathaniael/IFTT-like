@@ -47,13 +47,13 @@ let UserService = class UserService {
             res = await this.pool.query((0, slonik_1.sql) `SELECT * FROM usr WHERE email =  ${usr.email}`);
         if (res.rowCount != 1 && usr.password)
             throw new common_1.UnauthorizedException("User not found");
-        await bcrypt.compare(usr.password, res.rows[0].password, function (err, bres) {
-            if (err)
-                throw new common_1.UnauthorizedException(err);
-            if (!bres)
-                throw new common_1.UnauthorizedException("Username/Password not matching");
-        });
-        return res.rows[0];
+        let match = bcrypt.compareSync(usr.password, res.rows[0].password);
+        if (match) {
+            return res.rows[0];
+        }
+        else {
+            throw new common_1.UnauthorizedException("Password doesn't match");
+        }
     }
     async addOauthToUsr(usr, body) {
         console.log(body.token, body.refresh_token, body.duration, body.generated_at, usr);

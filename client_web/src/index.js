@@ -1,12 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Service from "./Components/Services/Service";
+import { Routes, Route, BrowserRouter as Router} from 'react-router-dom';
+import { CookiesProvider } from 'react-cookie'
+
 import './index.css'
+
 import Login from "./Components/Login/Login"
 import ChooseService from "./Components/Services/ChooseService";
-import { Routes, Route, BrowserRouter as Router} from 'react-router-dom';
+import Service from "./Components/Services/Service";
 import Home from "./Components/Home/Home";
-import { CookiesProvider } from 'react-cookie'
+import Profile from "./Components/Profile/Profile";
 
 function App() {
   return (
@@ -17,6 +20,7 @@ function App() {
             <Route path="/services" element={<ChooseService/>}/>
             <Route path="/login" element={<Login/>}/>
             <Route path="/services/:serviceId" element={<Service/>}/>
+            <Route path="/profile" element={<Profile/>}/>
           </Routes>
       </Router>
     </CookiesProvider>

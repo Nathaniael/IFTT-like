@@ -2,7 +2,8 @@ import React from 'react';
 import styles from './Login.module.css';
 import Request from '../Request';
 
-function RegisterForm({ setLogged, setGotAccount, gotAccount }) {
+function RegisterForm({ setGotAccount, gotAccount }) {
+    const [errorMessage, setErrorMessage] = React.useState("")
 
     async function register(e) {
         e.preventDefault()
@@ -11,11 +12,13 @@ function RegisterForm({ setLogged, setGotAccount, gotAccount }) {
         const password = e.target.children.password.value
         
         Request.register(username, email, password).then((res) => {
-            console.log("res ", res)
-            setLogged(true)
+            if (res.success) {
+                window.location.href = window.location.href.split("/")[0] + "/profile"
+            } else {
+                setErrorMessage(res.message)
+            }
         }).catch((err) => {
-            console.log("error ", err)
-            setLogged(false)
+            setErrorMessage("Unexpected error")
         })
     }
 
@@ -28,6 +31,7 @@ function RegisterForm({ setLogged, setGotAccount, gotAccount }) {
                 <input className={styles.input} placeholder='Password' type='text' name='password'/>
                 <input className={styles.button} type='submit' value='Envoyer'/>
             </form>
+            <p>{errorMessage}</p>
             <p className={styles.gotAccount} onClick={() => {setGotAccount(!gotAccount)}}>Already got an account ?</p>
         </div>
     )

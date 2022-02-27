@@ -20,7 +20,7 @@ class RequestApi {
     }
 
     async login(usernameOrEmail, password) {
-        let data = {};
+        let data;
 
         if (usernameOrEmail.includes("@")) {
             data = {
@@ -33,8 +33,14 @@ class RequestApi {
                 "password": password
             }
         }
-        console.log(data)
-        const response = await axios.post(prefixUrlApi + "auth/login", data)
+        
+        console.log(prefixUrlApi + "auth/login/", data)
+        const response = await axios.post(prefixUrlApi + "auth/login/", data)
+        return response.data
+    }
+
+    async getProfile() {
+        const response = await axios.get(prefixUrlApi + "user/profile/")
         return response.data
     }
 }
