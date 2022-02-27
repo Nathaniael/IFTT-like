@@ -21,7 +21,7 @@ services:
     build:
       context: ./back
       target: development
-    command: npm run start:dev
+    command: npm run start:debug
     depends_on:
       postgres:
         condition: service_healthy

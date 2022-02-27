@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OauthService = void 0;
 const common_1 = require("@nestjs/common");
@@ -51,7 +50,7 @@ let OauthService = class OauthService {
 OauthService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, nestjs_slonik_1.InjectPool)()),
-    __metadata("design:paramtypes", [Object, typeof (_a = typeof axios_1.HttpService !== "undefined" && axios_1.HttpService) === "function" ? _a : Object])
+    __metadata("design:paramtypes", [Object, axios_1.HttpService])
 ], OauthService);
 exports.OauthService = OauthService;
 //# sourceMappingURL=oauth.service.js.map
