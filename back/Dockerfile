@@ -2,7 +2,7 @@ FROM node:lts-alpine3.14 AS development
 WORKDIR /app
 COPY package*.json ./
 
-RUN npm install --silent
+RUN npm install
 
 COPY . .
 RUN chown -R root /app/dist
