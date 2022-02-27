@@ -45,6 +45,14 @@ services:
     volumes:
       - ./client_web:/app
       - /app/node_modules
+  admin:
+    image: adminer
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - 8282:8080
 
 volumes:
   postgres-data: null
