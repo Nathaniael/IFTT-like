@@ -13,6 +13,9 @@ import { AreasController } from './areas/areas.controller';
 import { AreasModule } from './areas/areas.module';
 import { ReactionsModule } from './reactions/reactions.module';
 import { AboutModule } from './about/about.module';
+import { ServicesService } from './services/services.service';
+import { ServicesController } from './services/services.controller';
+import { ServicesModule } from './services/services.module';
 
 
 @Module({
@@ -31,8 +34,9 @@ import { AboutModule } from './about/about.module';
     WebhooksModule,
     AreasModule,
     ReactionsModule,
-    AboutModule,],
-  controllers: [AppController],
-  providers: [AppService],
+    AboutModule,
+    ServicesModule,],
+  controllers: [AppController, ServicesController],
+  providers: [AppService, ServicesService],
 })
 export class AppModule { }

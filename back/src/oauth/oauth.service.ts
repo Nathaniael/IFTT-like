@@ -13,7 +13,7 @@ export class OauthService {
     ) { }
 
     private async getService(serviceName: string) {
-        const res = await this.pool.query(sql<OauthDictionnaryDto>`SELECT * FROM oauth_dictionnary WHERE service = ${serviceName}`)
+        const res = await this.pool.query(sql<OauthDictionnaryDto>`SELECT * FROM service WHERE name = ${serviceName}`)
         const service = res.rows[0]
         return service
     }

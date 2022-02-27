@@ -20,6 +20,9 @@ const webhooks_module_1 = require("./webhooks/webhooks.module");
 const areas_module_1 = require("./areas/areas.module");
 const reactions_module_1 = require("./reactions/reactions.module");
 const about_module_1 = require("./about/about.module");
+const services_service_1 = require("./services/services.service");
+const services_controller_1 = require("./services/services.controller");
+const services_module_1 = require("./services/services.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -40,9 +43,10 @@ AppModule = __decorate([
             areas_module_1.AreasModule,
             reactions_module_1.ReactionsModule,
             about_module_1.AboutModule,
+            services_module_1.ServicesModule,
         ],
-        controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService],
+        controllers: [app_controller_1.AppController, services_controller_1.ServicesController],
+        providers: [app_service_1.AppService, services_service_1.ServicesService],
     })
 ], AppModule);
 exports.AppModule = AppModule;
