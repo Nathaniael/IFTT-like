@@ -26,8 +26,10 @@ let UserController = class UserController {
     async addOauthToUsr(usr, body) {
         return this.usersService.addOauthToUsr(usr, body);
     }
-    async getUserProfile(usr) {
-        return `ID: ${usr.userId} USERNAME: ${usr.username}`;
+    async getUserProfile(usr, res) {
+        res.status(200).json({
+            username: usr.username
+        });
     }
 };
 __decorate([
@@ -43,8 +45,9 @@ __decorate([
     (0, common_1.Get)('profile'),
     (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
     __param(0, (0, user_decorator_1.User)()),
+    __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [auth_controller_1.UserAuth]),
+    __metadata("design:paramtypes", [auth_controller_1.UserAuth, Object]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "getUserProfile", null);
 UserController = __decorate([

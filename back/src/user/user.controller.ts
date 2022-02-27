@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards, Res } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { UserAuth } from 'src/auth/auth.controller';
 import { User } from './user.decorator';
@@ -19,7 +19,9 @@ export class UserController {
 
     @Get('profile')
     @UseGuards(AuthGuard('jwt'))
-    async getUserProfile(@User() usr: UserAuth) {
-        return `ID: ${usr.userId} USERNAME: ${usr.username}`
+    async getUserProfile(@User() usr: UserAuth, @Res() res) {
+        res.status(200).json({
+            username: usr.username
+        })
     }
 }
