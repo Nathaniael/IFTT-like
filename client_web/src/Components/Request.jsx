@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const prefixUrlApi = "http://pantharea.fun:8080/"
+const prefixUrlApi = "http://localhost:8080/"
 
 const unexpectedError = {
     error: "Une erreur non expectée s'est produite - Contactez le support pour plus d'informations"
@@ -33,6 +33,7 @@ class RequestApi {
                 "password": password
             }
         }
+        console.log(data)
         const response = await axios.post(prefixUrlApi + "auth/login", data)
         return response.data
     }
