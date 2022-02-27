@@ -10,7 +10,6 @@ import { useCookies } from 'react-cookie'
 
 function Login() {
     const [gotAccount, setGotAccount] = React.useState(false)
-    const [cookies] = useCookies()
 
     return (
         <div className={styles.background}>

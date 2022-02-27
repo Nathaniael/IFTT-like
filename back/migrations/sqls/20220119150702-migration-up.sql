@@ -78,9 +78,9 @@ CREATE TABLE area (
 
 -- SERVICES
 INSERT INTO "service" ("name", "has_oauth", "query_code", "query_token", "logo", "client_id", "client_secret", "redirect_uri", "scope")
-VALUES ('Github', '1', 'https://github.com/login/oauth/authorize', 'https://github.com/login/oauth/access_token', '', '07ffe0c7a5f5148909e2', '4d758dd8b4e8fcfe9aaf30e353ebc87ad9a069ce', 'http://localhost:8081', ''); -- ID:1
+VALUES ('Github', '1', 'https://github.com/login/oauth/authorize', 'https://github.com/login/oauth/access_token', '/github.png', '07ffe0c7a5f5148909e2', '4d758dd8b4e8fcfe9aaf30e353ebc87ad9a069ce', 'http://localhost:8081', ''); -- ID:1
 INSERT INTO "service" ("name", "has_oauth", "query_code", "query_token", "logo", "client_id", "client_secret", "redirect_uri", "scope")
-VALUES ('Mailjet', '0', '', '', '', '', '', '', ''); -- ID:2
+VALUES ('Mailjet', '0', '', '', '/mail.png', '', '', '', ''); -- ID:2
 
 -- ACTIONS
 INSERT INTO adictionnary ("name", "description", "service_id")

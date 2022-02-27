@@ -11,7 +11,19 @@ export class ServicesService {
 
     async getServices() {
         let services = await this.pool.query(sql`SELECT * FROM service`)
-        return services.rows;
+        let res = []
+        let idService;
+        for (const service of services.rows) {
+            idService = service.id
+            res.push({
+                "id": service.id,
+                "name": service.name,
+                "logo": service.logo,
+                "actions": await this.getActionsByServiceId(idService),
+                "reactions": await this.getReactionsByServiceId(idService),
+            })
+        }
+        return res;
     }
 
     async getActionsByServiceId(id: number) {

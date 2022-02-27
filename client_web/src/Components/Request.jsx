@@ -34,14 +34,24 @@ class RequestApi {
             }
         }
         
-        console.log(prefixUrlApi + "auth/login/", data)
         const response = await axios.post(prefixUrlApi + "auth/login/", data)
+        console.log(response)
         return response.data
     }
 
     async getProfile() {
         const response = await axios.get(prefixUrlApi + "user/profile/")
         return response.data
+    }
+
+    async getServices(access_token) {
+        const response = await axios.get(prefixUrlApi + "services/",
+        {
+            headers: {
+                access_token: access_token
+            }
+        })
+        return response.data  
     }
 }
 
