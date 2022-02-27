@@ -26,6 +26,9 @@ let UserController = class UserController {
     async addOauthToUsr(usr, body) {
         return this.usersService.addOauthToUsr(usr, body);
     }
+    async getUserProfile(usr) {
+        return `ID: ${usr.userId} USERNAME: ${usr.username}`;
+    }
 };
 __decorate([
     (0, common_1.Post)('addOAuth'),
@@ -36,6 +39,14 @@ __decorate([
     __metadata("design:paramtypes", [auth_controller_1.UserAuth, user_dto_1.OauthCreationDto]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "addOauthToUsr", null);
+__decorate([
+    (0, common_1.Get)('profile'),
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
+    __param(0, (0, user_decorator_1.User)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [auth_controller_1.UserAuth]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "getUserProfile", null);
 UserController = __decorate([
     (0, common_1.Controller)('user'),
     __metadata("design:paramtypes", [user_service_1.UserService])

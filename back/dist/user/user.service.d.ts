@@ -4,7 +4,7 @@ import { UserAuth } from 'src/auth/auth.controller';
 export declare class UserService {
     private readonly pool;
     constructor(pool: DatabasePool);
-    registerUser(usr: UserCreationDto): Promise<void>;
+    registerUser(usr: UserCreationDto): Promise<import("slonik").QueryResultRow>;
     getUser(usr: UserLoginDto): Promise<any>;
     addOauthToUsr(usr: UserAuth, body: OauthCreationDto): Promise<void>;
 }

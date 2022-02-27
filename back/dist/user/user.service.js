@@ -22,35 +22,37 @@ let UserService = class UserService {
         this.pool = pool;
     }
     async registerUser(usr) {
+        if (!usr.email || !usr.username || !usr.password)
+            throw new common_1.UnauthorizedException("One or more of the required fields are missing");
+        let res = await this.pool.query((0, slonik_1.sql) `SELECT *
+                FROM usr
+                WHERE email = ${usr.email}
+                OR username = ${usr.username}`);
+        if (res.rows.length != 0) {
+            throw new common_1.UnauthorizedException("Username or email already in use");
+        }
         await this.pool.query((0, slonik_1.sql) `INSERT INTO usr
         (username, password, email)
-        values
-        (${usr.username}, ${bcrypt.hashSync(usr.password, 10)}, ${usr.email})`);
+        values (${usr.username}, ${bcrypt.hashSync(usr.password, 10)}, ${usr.email})`);
+        let ret = await this.pool.query((0, slonik_1.sql) `SELECT *
+                FROM usr
+                WHERE email = ${usr.email}`);
+        return ret.rows[0];
     }
     async getUser(usr) {
         let res;
-        if (usr.email) {
-            res = await this.pool.query((0, slonik_1.sql) `SELECT email,
-                username,
-                id,
-                created_at,
-                password
-                FROM usr WHERE email = ${usr.email}`);
-        }
-        else if (usr.username) {
-            res = await this.pool.query((0, slonik_1.sql) `SELECT email,
-            username,
-            id,
-            created_at,
-            password
-            FROM usr WHERE username = ${usr.username}`);
-        }
-        else {
-            throw new common_1.UnauthorizedException("User not found sheesh");
-        }
-        if (!res || res.rows.length <= 0) {
+        if (usr.username)
+            res = await this.pool.query((0, slonik_1.sql) `SELECT * FROM usr WHERE username =  ${usr.username}`);
+        else if (usr.email)
+            res = await this.pool.query((0, slonik_1.sql) `SELECT * FROM usr WHERE email =  ${usr.email}`);
+        if (res.rowCount != 1 && usr.password)
             throw new common_1.UnauthorizedException("User not found");
-        }
+        await bcrypt.compare(usr.password, res.rows[0].password, function (err, bres) {
+            if (err)
+                throw new common_1.UnauthorizedException(err);
+            if (!bres)
+                throw new common_1.UnauthorizedException("Username/Password not matching");
+        });
         return res.rows[0];
     }
     async addOauthToUsr(usr, body) {

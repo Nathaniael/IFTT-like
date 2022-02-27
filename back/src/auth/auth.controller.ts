@@ -23,8 +23,7 @@ export class AuthController {
 
     @Post('register')
     async registerUser(@Body() body: UserCreationDto, @Res() res: Response) {
-        await this.userService.registerUser(body)
-        const user = await this.userService.getUser(body)
+        const user = await this.userService.registerUser(body)
         const payload = { userId: user.id, username: user.username };
         const signed_payload = this.jwtService.sign(payload)
         res.cookie('access_token', signed_payload, {
@@ -32,12 +31,10 @@ export class AuthController {
             domain: 'localhost',
             expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
         }).send({ success: true });
-
     }
 
     @Post('login')
     async loginUser(@Body() body: UserLoginDto, @Res() res: Response) {
-
         const user = await this.userService.getUser(body)
         const payload = new UserAuth({ userId: user.id, username: user.username });
         const signed_payload = this.jwtService.sign({ payload })

@@ -23,10 +23,8 @@ let AreasService = class AreasService {
         this.httpService = httpService;
     }
     async callReaction(service, type, data) {
-        const test = await this.pool.query((0, slonik_1.sql) `SELECT * FROM area`);
         const areas = await this.pool.query((0, slonik_1.sql) `SELECT * FROM area WHERE r_service = ${service} AND r_type = ${type} AND r_params = ${JSON.stringify(data)}`);
         for (const elem of areas.rows) {
-            console.log("hello");
             let reaction = await this.pool.query((0, slonik_1.sql) `SELECT * FROM reaction WHERE id = ${elem.id_react}`);
             console.log(reaction.rows[0], "SHEESH");
             this.httpService.post(`http://localhost:8080/reactions/${reaction.rows[0].reaction_route}`).toPromise();
