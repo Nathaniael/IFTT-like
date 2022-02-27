@@ -56,6 +56,13 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
         }
+        applicationVariants.all{
+            variant ->
+                variant.outputs.each{
+                    output->
+                        output.outputFileName = "client.apk"
+                }
+        }
     }
 }
 

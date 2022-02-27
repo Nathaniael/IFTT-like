@@ -35,7 +35,7 @@ services:
     build: client_mobile/
     container_name: client_mobile
     volumes:
-      - 'apk:/app/mobile_app'
+      - 'apk:/app/build/app/outputs/apk/release'
   client_web:
     restart: always
     depends_on:
@@ -47,7 +47,7 @@ services:
     environment:
       - PORT=8081
     volumes:
-      - 'apk:/public'
+      - 'apk:/usr/share/nginx/html'
 volumes:
   postgres-data: null
   apk: null
