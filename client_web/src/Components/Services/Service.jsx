@@ -7,7 +7,7 @@ import MoveComp from '../MoveComp'
 import { useLocation } from 'react-router-dom'
 
 function ButtonService ({ aOrRea, imgUrl, isAction, indexDraggable }) {
-    const [,setCookies,] = useCookies()
+    const [,setCookies,] = useCookies(["action", "reaction"])
     const [willDrag, setWillDrag] = React.useState(false)
     const selectorDrag = "draggable_" + (isAction ? "action" : "reaction") + indexDraggable
 
@@ -19,13 +19,15 @@ function ButtonService ({ aOrRea, imgUrl, isAction, indexDraggable }) {
             setCookies('action', {
                 'id': aOrRea.id,
                 'title': aOrRea.name,
-                'imgUrl': imgUrl
+                'imgUrl': imgUrl,
+                'params': aOrRea.params
             })
         } else { // Is a reaction
             setCookies('reaction', {
                 'id': aOrRea.id,
                 'title': aOrRea.name,
-                'imgUrl': imgUrl
+                'imgUrl': imgUrl,
+                'params': aOrRea.params
             })
         }
     }
