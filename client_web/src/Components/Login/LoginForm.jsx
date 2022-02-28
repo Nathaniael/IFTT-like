@@ -1,9 +1,11 @@
 import React from 'react';
 import styles from './Login.module.css';
 import Request from '../Request';
+import { useCookies } from 'react-cookie';
 
 function LoginForm({ setGotAccount, gotAccount }) {
     const [errorMessage, setErrorMessage] = React.useState("")
+    const [cookies, setCookies] = useCookies()
 
     async function login(e) {
         e.preventDefault()
@@ -12,7 +14,12 @@ function LoginForm({ setGotAccount, gotAccount }) {
      
         Request.login(usernameOrEmail, password).then((res) => {
             if (res.success) {
-                window.location.href = window.location.href.split("/")[0] + "/profile"
+                console.log(res.access_token)
+                console.log(document.cookie)
+                setCookies('logged', true, { path: '/' })
+                setCookies('access_token', res.access_token, { path: '/' })
+                // setCookies('jwt', res.access_token)
+                // window.location.href = window.location.href.split("/")[0] + "/profile"
             } else {
                 setErrorMessage(res.message)
             }

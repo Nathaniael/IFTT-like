@@ -18,7 +18,7 @@ function AppBar() {
         <div className={styles.appBar}>
             <CustomLink title="Home" path="/" imgUrl="/three/emile.png"></CustomLink>
             <CustomLink title="Services" path="/services" imgUrl="/three/baptiste.png"></CustomLink>
-            <CustomLink title="Home" path="/" imgUrl="/three/nathaniael.png"></CustomLink>
+            <CustomLink title="Profile" path="/profile" imgUrl="/three/nathaniael.png"></CustomLink>
             <CustomLink title="Login" path="/login" imgUrl="/three/kilian.png"></CustomLink>
         </div>
     )

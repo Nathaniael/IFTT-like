@@ -4,8 +4,8 @@ import jwtDecode from 'jwt-decode';
 import { UserAuth } from 'src/auth/auth.controller';
 import { UserService } from './user.service';
 
-async function getUser(cookie: { access_token: string }) {
-    const jwt = await jwtDecode(cookie.access_token) as { userId: string, username: string }
+async function getUser(access_token: string) {
+    const jwt = await jwtDecode(access_token) as { userId: string, username: string }
     const usr = new UserAuth(jwt)
     return usr
 
@@ -14,5 +14,9 @@ async function getUser(cookie: { access_token: string }) {
 
 export const User = createParamDecorator(async (data: any, ctx: ExecutionContext) => {
     const request = ctx.switchToHttp().getRequest();
-    return getUser(request.cookies)
+    if (request.headers.access_token) {
+        return getUser(request.headers.access_token)
+    } else {
+        return undefined
+    }
 });

@@ -10,6 +10,10 @@
     align-items: center;
 }
 
+.pagination > div {
+    min-width: 30%;
+}
+
 .serviceLogo {
     width: 20vw;
     height: 20vw;

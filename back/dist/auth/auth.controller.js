@@ -35,10 +35,10 @@ let AuthController = class AuthController {
         const payload = { userId: user.id, username: user.username };
         const signed_payload = this.jwtService.sign(payload);
         res.cookie('access_token', signed_payload, {
-            httpOnly: true,
+            httpOnly: false,
             domain: 'localhost',
             expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
-        }).send({ success: true });
+        }).send({ success: true, access_token: signed_payload });
     }
     async loginUser(body, res) {
         try {
@@ -46,10 +46,10 @@ let AuthController = class AuthController {
             const payload = new UserAuth({ userId: user.id, username: user.username });
             const signed_payload = this.jwtService.sign({ payload });
             res.cookie('access_token', signed_payload, {
-                httpOnly: true,
+                httpOnly: false,
                 domain: 'localhost',
                 expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
-            }).send({ success: true });
+            }).send({ success: true, access_token: signed_payload });
         }
         catch (err) {
             res.send({ success: false, message: err.message });
@@ -67,7 +67,7 @@ __decorate([
 __decorate([
     (0, common_1.Post)('login'),
     __param(0, (0, common_1.Body)()),
-    __param(1, (0, common_1.Res)()),
+    __param(1, (0, common_1.Res)({ passthrough: true })),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [user_dto_1.UserLoginDto, Object]),
     __metadata("design:returntype", Promise)

@@ -11,20 +11,20 @@ function ImgTextContainer({ imgUrl, text }) {
     )
 }
 function ConfigArea() {
-    const [cookie, , removeCookies] = useCookies()
+    const [cookie, setCookies, removeCookies] = useCookies()
 
     let placeHolderUrl = "/areaPlaceHolder.png"
     let defaultActionTitle = "No action selected"
     let defaultReactionTitle = "No reaction selected"
     return (
         <div className={styles.configContainer}>
-            <div id="ImgTextContainerAction" onClick={() => {removeCookies('action')}}>
+            <div id="ImgTextContainerAction" onClick={() => {console.log("REMOVE"); setCookies('action', '')}}>
                 <ImgTextContainer
                     text={cookie?.action?.title ? cookie.action.title : defaultActionTitle}
                     imgUrl={cookie?.action?.imgUrl ? cookie.action.imgUrl : placeHolderUrl}></ImgTextContainer>
             </div>
             <div className={styles.arrow}>➡️</div>
-            <div id="ImgTextContainerReaction" onClick={() => {removeCookies('reaction')}}>
+            <div id="ImgTextContainerReaction" onClick={() => {setCookies('reaction', '')}}>
                 <ImgTextContainer
                     text={cookie?.reaction?.title ? cookie.reaction.title : defaultReactionTitle}
                     imgUrl={cookie?.reaction?.imgUrl ? cookie.reaction.imgUrl : placeHolderUrl}></ImgTextContainer>

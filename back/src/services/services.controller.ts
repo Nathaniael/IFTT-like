@@ -11,7 +11,6 @@ export class ServicesController {
     ) { }
 
     @Get()
-    @UseGuards(AuthGuard('jwt'))
     async getServices(@User() usr: UserAuth) {
         console.log(usr)
         return this.servicesService.getServices();
