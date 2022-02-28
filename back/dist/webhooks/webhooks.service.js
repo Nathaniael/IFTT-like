@@ -9,12 +9,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.WebhooksService = void 0;
 const common_1 = require("@nestjs/common");
 let WebhooksService = class WebhooksService {
-    getGithubActionType(body) {
-        return body.type;
-    }
-    getGithubActionData(body) {
-        return body.data;
-    }
 };
 WebhooksService = __decorate([
     (0, common_1.Injectable)()

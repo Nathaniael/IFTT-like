@@ -14,6 +14,6 @@ export class AreasController {
     @Post('/create')
     @UseGuards(AuthGuard('jwt'))
     async createArea(@User() user, @Body() body: AreaCreationDto) {
-        this.areasServices.createArea(user["payload"].userId, body)
+        this.areasServices.createArea(user.userId, body)
     }
 }

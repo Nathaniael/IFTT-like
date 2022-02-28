@@ -83,7 +83,7 @@ VALUES ('Mailjet', '0', '', '', '/mail.png', '', '', '', ''); -- ID:2
 
 -- ACTIONS DICO
 INSERT INTO "adictionnary" ("name", "description", "params", "service_id")
-VALUES ('Any new repository event', 'This trigger reaction every time a new event occurs in a repository.', '[{"number":"repoId"}]', '1');
+VALUES ('Any new repository event', 'This trigger reaction every time a new event occurs in a repository.', '[{"number":"repoId","string":"secret"}]', '1');
 
 -- REACTIONS DICO
 INSERT INTO "readictionnary" ("name", "description", "params","service_id")

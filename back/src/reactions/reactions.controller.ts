@@ -3,8 +3,9 @@ import { MailReactionDto } from './reactions.dto';
 @Controller('reactions')
 export class ReactionsController {
 
-    @Post('/mail')
+    @Post('/Mailjet')
     async printstp(@Body() config: MailReactionDto) {
+        console.log("config: ", config)
         const mailjet = require ('node-mailjet')
         .connect('95d7f3e348ada34e2587a04a86442e33', 'ea353c779dbd2fa1d3d4372b194a6f95')
         const request = mailjet
@@ -29,7 +30,7 @@ export class ReactionsController {
         })
         request
         .then((result) => {
-            console.log(result.body)
+            console.log("test: ", result.body)
         })
         .catch((err) => {
             console.log(err.statusCode)

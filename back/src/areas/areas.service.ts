@@ -11,22 +11,27 @@ export class AreasService {
         private readonly httpService: HttpService
     ) { }
 
-    async callReaction(reactionId: string) {
-            let reaction = await this.pool.query(sql`SELECT * FROM reaction WHERE r_params = ${reactionId}`)
-            console.log(reaction.rows[0], "SHEESH")
-            this.httpService.post(`http://localhost:8080/reactions/${reaction.rows[0].reaction_route}`).toPromise()
+    async callReaction(params: string) {
+        let action = await this.pool.query(sql`SELECT * FROM action WHERE params = ${params}`)
+        let area = await this.pool.query(sql`SELECT * FROM area WHERE id_act = ${action.rows[0].id}`)
+        let reaction = await this.pool.query(sql`SELECT * FROM reaction WHERE id = ${area.rows[0].id_react}`)
+        let data = JSON.parse(reaction.rows[0].params.toString())
+        console.log("data:", data)
+        this.httpService.post(`http://localhost:8080/reactions/${reaction.rows[0].reaction_route}`, data).toPromise()
     }
 
     async createArea(userId: string, body: AreaCreationDto) {
-        const action = await this.pool.query(sql`INSERT INTO action (service_name, action_type, params) VALUES (${body.action_service_name}, ${body.action_type}, ${JSON.stringify(body.action_params)}) RETURNING id;`)
-        const reaction = await this.pool.query(sql`INSERT INTO reaction (service_name, reaction_type, params, reaction_route) VALUES (${body.reaction_service_name}, ${body.reaction_type}, ${JSON.stringify(body.reaction_params)}, ${body.reaction_route}) RETURNING id;`)
+        const reaction_dico = await this.pool.query(sql`SELECT * FROM readictionnary WHERE id = ${body.reaction_id}`)
+        const reaction_service = await this.pool.query(sql`SELECT * FROM service WHERE id = ${reaction_dico.rows[0].service_id}`)
+        const action = await this.pool.query(sql`INSERT INTO action (params, dico_id)
+        VALUES (${JSON.stringify(body.action_params)}, ${body.action_id}) RETURNING id;`)
+        const reaction = await this.pool.query(sql`INSERT INTO reaction (params, reaction_route,dico_id)
+        VALUES (${JSON.stringify(body.reaction_params)}, ${reaction_service.rows[0].name} ,${body.reaction_id}) RETURNING id;`)
 
-        const area = await this.pool.query(sql`INSERT INTO area (r_service,
-            r_params,
+        const area = await this.pool.query(sql`INSERT INTO area (
             id_act,
             id_react,
-            usr_id) VALUES (${body.action_service_name},
-                ${JSON.stringify(body.action_params)},
+            usr_id) VALUES (
                 ${action.rows[0].id},
                 ${reaction.rows[0].id},
                 ${userId})`)

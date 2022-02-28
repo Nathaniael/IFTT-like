@@ -21,15 +21,17 @@ let WebhooksController = class WebhooksController {
         this.webhooksServices = webhooksServices;
         this.areasServices = areasServices;
     }
-    async reactionGithub(body) {
-        console.log(body);
+    async reactionGithub(req, body) {
+        let params = JSON.stringify({ repoId: body.repository.id, secret: req.headers["x-hub-signature"] });
+        this.areasServices.callReaction(params);
     }
 };
 __decorate([
-    (0, common_1.Post)('github'),
-    __param(0, (0, common_1.Body)()),
+    (0, common_1.Post)('Github'),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], WebhooksController.prototype, "reactionGithub", null);
 WebhooksController = __decorate([

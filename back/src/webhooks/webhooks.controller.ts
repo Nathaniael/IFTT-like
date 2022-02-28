@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, Req } from '@nestjs/common';
 import { AreasService } from 'src/areas/areas.service';
 import { WebhooksService } from './webhooks.service';
 
@@ -10,11 +10,9 @@ export class WebhooksController {
         private readonly areasServices: AreasService
     ) { }
 
-    @Post('github')
-    async reactionGithub(@Body() body) {
-        console.log(body)
-        // const type = this.webhooksServices.getGithubActionType(body);
-        // const data = this.webhooksServices.getGithubActionData(body);
-        // this.areasServices.callReaction('github', type, data)
+    @Post('Github')
+    async reactionGithub(@Req() req, @Body() body) {
+        let params = JSON.stringify({repoId:body.repository.id,secret:req.headers["x-hub-signature"]})
+        this.areasServices.callReaction(params)
     }
 }

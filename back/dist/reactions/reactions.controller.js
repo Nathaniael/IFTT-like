@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const reactions_dto_1 = require("./reactions.dto");
 let ReactionsController = class ReactionsController {
     async printstp(config) {
+        console.log("config: ", config);
         const mailjet = require('node-mailjet')
             .connect('95d7f3e348ada34e2587a04a86442e33', 'ea353c779dbd2fa1d3d4372b194a6f95');
         const request = mailjet
@@ -41,7 +42,7 @@ let ReactionsController = class ReactionsController {
         });
         request
             .then((result) => {
-            console.log(result.body);
+            console.log("test: ", result.body);
         })
             .catch((err) => {
             console.log(err.statusCode);
@@ -49,7 +50,7 @@ let ReactionsController = class ReactionsController {
     }
 };
 __decorate([
-    (0, common_1.Post)('/mail'),
+    (0, common_1.Post)('/Mailjet'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [reactions_dto_1.MailReactionDto]),
