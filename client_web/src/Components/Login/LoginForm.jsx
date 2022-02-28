@@ -15,9 +15,7 @@ function LoginForm({ setGotAccount, gotAccount }) {
         Request.login(usernameOrEmail, password).then((res) => {
             if (res.success) {
                 setCookies('logged', true, { path: '/' })
-                // setCookies('access_token', res.access_token, { path: '/' })
-                // setCookies('jwt', res.access_token)
-                // window.location.href = window.location.href.split("/")[0] + "/profile"
+                window.location.href = window.location.href.split("/")[0] + "/profile"
             } else {
                 setErrorMessage(res.message)
             }
@@ -34,7 +32,7 @@ function LoginForm({ setGotAccount, gotAccount }) {
                 <input className={styles.button} type='submit' value='Envoyer'/>
             </form>
             <p>{errorMessage}</p>
-            <p className={styles.gotAccount} onClick={() => {setGotAccount(!gotAccount)}}>Already got an account ?</p>
+            <p className={styles.gotAccount} onClick={() => {setGotAccount(!gotAccount)}}>Still don't have an account ?</p>
         </div>
     )
 }

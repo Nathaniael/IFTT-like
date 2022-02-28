@@ -57,7 +57,7 @@ function ChooseService() {
     const [cookies, setCookies] = useCookies()
 
     React.useEffect(() => {
-        Request.getServices(cookies.access_token).then((res) => {
+        Request.getServices().then((res) => {
             setListServices(res)
         }).catch((err) => {
             console.log(err)

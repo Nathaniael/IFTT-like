@@ -14,6 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
 const common_1 = require("@nestjs/common");
+const passport_1 = require("@nestjs/passport");
 const auth_controller_1 = require("../auth/auth.controller");
 const user_decorator_1 = require("./user.decorator");
 const user_dto_1 = require("./user.dto");
@@ -26,13 +27,12 @@ let UserController = class UserController {
         return this.usersService.addOauthToUsr(usr, body);
     }
     async getUserProfile(usr, res) {
-        res.status(200).json({
-            username: usr.username
-        });
+        res.status(200).json(usr["payload"]);
     }
 };
 __decorate([
     (0, common_1.Post)('addOAuth'),
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
     __param(0, (0, user_decorator_1.User)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -41,6 +41,7 @@ __decorate([
 ], UserController.prototype, "addOauthToUsr", null);
 __decorate([
     (0, common_1.Get)('profile'),
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
     __param(0, (0, user_decorator_1.User)()),
     __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),

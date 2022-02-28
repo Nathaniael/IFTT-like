@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 
 function Login() {
-    const [gotAccount, setGotAccount] = React.useState(false)
+    const [gotAccount, setGotAccount] = React.useState(true)
 
     return (
         <div className={styles.background}>

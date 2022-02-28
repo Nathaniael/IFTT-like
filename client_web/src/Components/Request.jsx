@@ -14,37 +14,47 @@ class RequestApi {
                 "username" : username,
                 "email": email,
                 "password": password
+            },
+            {
+                withCredentials: true
             }
         )
         return response.data
     }
 
     async login(usernameOrEmail, password) {
-        let data;
+        let loginField = usernameOrEmail.includes("@") ? "email" : "username";
 
-        if (usernameOrEmail.includes("@")) {
-            data = {
-                "email": usernameOrEmail,
-                "password": password
+        const response = await axios.post(
+            prefixUrlApi + "auth/login/",
+            {
+                [loginField]: usernameOrEmail,
+                "password": password 
+            },
+            {
+                withCredentials: true
             }
-        } else {
-            data = {
-                "username": usernameOrEmail,
-                "password": password
-            }
-        }
-        const response = await axios.post(prefixUrlApi + "auth/login/", data, {withCredentials:true })
-        console.log(response)
+        )
         return response.data
     }
 
     async getProfile() {
-        const response = await axios.get(prefixUrlApi + "user/profile/")
+        const response = await axios.get(
+            prefixUrlApi + "user/profile/",
+            {
+                withCredentials: true
+            }
+        )
         return response.data
     }
 
-    async getServices(access_token) {
-        const response = await axios.get(prefixUrlApi + "services/", {withCredentials:true})
+    async getServices() {
+        const response = await axios.get(
+            prefixUrlApi + "services/",
+            {
+                withCredentials: true
+            }
+        )
         return response.data
     }
 }

@@ -12,16 +12,14 @@ export class UserController {
     ) { }
 
     @Post('addOAuth')
-    // @UseGuards(AuthGuard('jwt'))
+    @UseGuards(AuthGuard('jwt'))
     async addOauthToUsr(@User() usr: UserAuth, @Body() body: OauthCreationDto) {
         return this.usersService.addOauthToUsr(usr, body)
     }
 
     @Get('profile')
-    // @UseGuards(AuthGuard('jwt'))
+    @UseGuards(AuthGuard('jwt'))
     async getUserProfile(@User() usr: UserAuth, @Res() res) {
-        res.status(200).json({
-            username: usr.username
-        })
+        res.status(200).json(usr["payload"])
     }
 }
