@@ -1,3 +1,4 @@
+import 'package:client_mobile/Login/LoginPage.dart';
 import 'package:flutter/material.dart';
 import 'Home/HomePage.dart';
 import 'package:client_mobile/Services/ServicesPage.dart';
@@ -13,7 +14,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(initialRoute: '/', routes: {
       '/': (context) => const HomePage(),
-      '/login': (context) => const ServicesPage(),
+      '/services': (context) => const ServicesPage(),
+      '/profile': (context) => const ServicesPage(),
+      '/login': (context) => const LoginPage(),
     });
   }
 }
