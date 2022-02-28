@@ -20,8 +20,6 @@ export class UserController {
     @Get('profile')
     @UseGuards(AuthGuard('jwt'))
     async getUserProfile(@User() usr: UserAuth, @Res() res) {
-        res.status(200).json({
-            username: usr.username
-        })
+        res.status(200).json(usr["payload"])
     }
 }
