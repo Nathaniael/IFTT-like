@@ -23,7 +23,7 @@ let OauthService = class OauthService {
         this.httpService = httpService;
     }
     async getService(serviceName) {
-        const res = await this.pool.query((0, slonik_1.sql) `SELECT * FROM oauth_dictionnary WHERE service = ${serviceName}`);
+        const res = await this.pool.query((0, slonik_1.sql) `SELECT * FROM service WHERE name = ${serviceName}`);
         const service = res.rows[0];
         return service;
     }

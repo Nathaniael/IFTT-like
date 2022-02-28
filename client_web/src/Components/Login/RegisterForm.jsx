@@ -1,18 +1,23 @@
 import React from 'react';
 import styles from './Login.module.css';
 import Request from '../Request';
+import { useCookies } from 'react-cookie';
 
 function RegisterForm({ setGotAccount, gotAccount }) {
     const [errorMessage, setErrorMessage] = React.useState("")
+    const [cookies, setCookies] = useCookies()
 
     async function register(e) {
         e.preventDefault()
         const username = e.target.children.username.value
         const email = e.target.children.email.value
         const password = e.target.children.password.value
-        
+
         Request.register(username, email, password).then((res) => {
             if (res.success) {
+                setCookies('logged', true, { path: '/' })
+                // setCookies('access_token', res.access_token, { path: '/' })
+                // setCookies('jwt', res.access_token)
                 window.location.href = window.location.href.split("/")[0] + "/profile"
             } else {
                 setErrorMessage(res.message)

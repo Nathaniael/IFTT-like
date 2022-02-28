@@ -6,5 +6,5 @@ export declare class AreasService {
     private readonly httpService;
     constructor(pool: DatabasePool, httpService: HttpService);
     callReaction(service: string, type: string, data: any): Promise<void>;
-    createArea(body: AreaCreationDto): Promise<void>;
+    createArea(userId: string, body: AreaCreationDto): Promise<void>;
 }

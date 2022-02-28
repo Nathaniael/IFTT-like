@@ -16,19 +16,23 @@ exports.AreasController = void 0;
 const common_1 = require("@nestjs/common");
 const areas_dto_1 = require("./areas.dto");
 const areas_service_1 = require("./areas.service");
+const passport_1 = require("@nestjs/passport");
+const user_decorator_1 = require("../user/user.decorator");
 let AreasController = class AreasController {
     constructor(areasServices) {
         this.areasServices = areasServices;
     }
-    async createArea(body) {
-        this.areasServices.createArea(body);
+    async createArea(user, body) {
+        this.areasServices.createArea(user.id, body);
     }
 };
 __decorate([
     (0, common_1.Post)('/create'),
-    __param(0, (0, common_1.Body)()),
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
+    __param(0, (0, user_decorator_1.User)()),
+    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [areas_dto_1.AreaCreationDto]),
+    __metadata("design:paramtypes", [Object, areas_dto_1.AreaCreationDto]),
     __metadata("design:returntype", Promise)
 ], AreasController.prototype, "createArea", null);
 AreasController = __decorate([

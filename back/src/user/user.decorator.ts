@@ -8,7 +8,6 @@ async function getUser(cookie: { access_token: string }) {
     const jwt = await jwtDecode(cookie.access_token) as { userId: string, username: string }
     const usr = new UserAuth(jwt)
     return usr
-
 }
 
 

@@ -1,18 +1,23 @@
 import React from 'react';
 import styles from './Login.module.css';
 import Request from '../Request';
+import { useCookies } from 'react-cookie';
 
 function LoginForm({ setGotAccount, gotAccount }) {
     const [errorMessage, setErrorMessage] = React.useState("")
+    const [cookies, setCookies] = useCookies()
 
     async function login(e) {
         e.preventDefault()
         const usernameOrEmail = e.target.children.usernameOrEmail.value
         const password = e.target.children.password.value
-     
+
         Request.login(usernameOrEmail, password).then((res) => {
             if (res.success) {
-                window.location.href = window.location.href.split("/")[0] + "/profile"
+                setCookies('logged', true, { path: '/' })
+                // setCookies('access_token', res.access_token, { path: '/' })
+                // setCookies('jwt', res.access_token)
+                // window.location.href = window.location.href.split("/")[0] + "/profile"
             } else {
                 setErrorMessage(res.message)
             }

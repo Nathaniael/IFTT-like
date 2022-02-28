@@ -1,6 +1,8 @@
 import { IsJSON, IsString } from "class-validator";
 
 export class AreaCreationDto {
+    @IsString()
+    user_id: string
 
     @IsString()
     action_service_name: string

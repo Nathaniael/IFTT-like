@@ -13,7 +13,7 @@ export class OauthService {
     ) { }
 
     private async getService(serviceName: string) {
-        const res = await this.pool.query(sql<OauthDictionnaryDto>`SELECT * FROM oauth_dictionnary WHERE service = ${serviceName}`)
+        const res = await this.pool.query(sql<OauthDictionnaryDto>`SELECT * FROM service WHERE name = ${serviceName}`)
         const service = res.rows[0]
         return service
     }
@@ -29,8 +29,6 @@ export class OauthService {
 
         return `${service.query_token}?client_id=${service.client_id}&client_secret=${service.client_secret}&redirect_uri=${service.redirect_uri}&code=${body.code}`
     }
-
-
     async getToken(body: TokenCreationDto): Promise<string> {
         const uri = await this.getTokenLink(body);
         const res = await this.httpService.post(uri).toPromise()

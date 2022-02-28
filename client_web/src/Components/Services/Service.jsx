@@ -4,25 +4,27 @@ import AppBar from '../AppBar/AppBar'
 import { useCookies } from 'react-cookie'
 import ConfigArea from '../ConfigArea/ConfigArea'
 import MoveComp from '../MoveComp'
+import { useParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
-const service = {
-      "id": 1,
-      "imgUrl": "/three/chrome.png",
-      "action": [
-          "See Post",
-          "Retweet",
-          "Fav Something",
-          "Receive Message"
-      ],
-      "reaction": [
-          "Post reaction",
-          "Retweet reaction",
-          "Fav Something reaction",
-          "Send Message reaction"
-      ]
-}
+// const service = {
+//       "id": 1,
+//       "imgUrl": "/three/chrome.png",
+//       "action": [
+//           "See Post",
+//           "Retweet",
+//           "Fav Something",
+//           "Receive Message"
+//       ],
+//       "reaction": [
+//           "Post reaction",
+//           "Retweet reaction",
+//           "Fav Something reaction",
+//           "Send Message reaction"
+//       ]
+// }
 
-function ButtonService ({ title, imgUrl, isAction, indexDraggable }) {
+function ButtonService ({ aOrRea, imgUrl, isAction, indexDraggable }) {
     const [cookie, setCookies, removeCookies] = useCookies()
     const [willDrag, setWillDrag] = React.useState(false)
     const selectorDrag = "draggable_" + (isAction ? "action" : "reaction") + indexDraggable
@@ -33,12 +35,14 @@ function ButtonService ({ title, imgUrl, isAction, indexDraggable }) {
         }
         if (isAction) {
             setCookies('action', {
-                'title': title,
+                'id': aOrRea.id,
+                'title': aOrRea.name,
                 'imgUrl': imgUrl
             })
         } else { // Is a reaction
             setCookies('reaction', {
-                'title': title,
+                'id': aOrRea.id,
+                'title': aOrRea.name,
                 'imgUrl': imgUrl
             })
         }
@@ -49,15 +53,14 @@ function ButtonService ({ title, imgUrl, isAction, indexDraggable }) {
                 <MoveComp selector={selectorDrag} addElemToArea={addElemToArea}></MoveComp>
             : null}
             <div onMouseEnter={() => {setWillDrag(true)}} className={`${styles.buttonPadding}`} id={selectorDrag}>
-                <button className={`${styles.button}`} onClick={() => {addElemToArea()}}>{title}</button>
+                <button className={`${styles.button}`}>{aOrRea.name}</button>
             </div>
         </div>
     )
 }
 
 function AorReaList({ title, service, isAction }) {
-    const list = isAction ? service?.action : service?.reaction
-    console.log(list)
+    const list = isAction ? service?.actions : service?.reactions
     return (
         <div className={styles.subDescriptionAction}>
             <div className={styles.littleTitle}>
@@ -68,8 +71,8 @@ function AorReaList({ title, service, isAction }) {
                     return (
                         <ButtonService
                             key={index}
-                            title={elem}
-                            imgUrl={service?.imgUrl}
+                            aOrRea={elem}
+                            imgUrl={service?.logo}
                             isAction={isAction}
                             indexDraggable={index}
                         ></ButtonService> 
@@ -81,13 +84,16 @@ function AorReaList({ title, service, isAction }) {
 }
 function Service() {
     const [hover, setHover] = React.useState(false)
+    const location = useLocation()
+    const { service } = location.state;
+
     return (
         <div className={styles.servicePage}>
             <AppBar></AppBar>
             <ConfigArea></ConfigArea>
             <div className={styles.pagination}>
                 <AorReaList title="Actions" service={service} isAction={true}></AorReaList>
-                <img onMouseEnter={() => {setHover(true)}} onMouseLeave={() => {setHover(false)}} className={`${styles.serviceLogo} ${hover ? styles.logoGoCenter : null}`} src={service?.imgUrl} alt={service?.imgUrl}></img>
+                <img onMouseEnter={() => {setHover(true)}} onMouseLeave={() => {setHover(false)}} className={`${styles.serviceLogo} ${hover ? styles.logoGoCenter : null}`} src={service?.logo} alt={service?.logo}></img>
                 <AorReaList title="Reactions" service={service} isAction={false}></AorReaList>
             </div>    
         </div>

@@ -1,6 +1,9 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { AreaCreationDto } from './areas.dto';
 import { AreasService } from './areas.service';
+import { AuthGuard } from '@nestjs/passport';
+import { User } from 'src/user/user.decorator';
+import { userInfo } from 'os';
 
 @Controller('areas')
 export class AreasController {
@@ -9,7 +12,8 @@ export class AreasController {
     ) { }
 
     @Post('/create')
-    async createArea(@Body() body: AreaCreationDto) {
-        this.areasServices.createArea(body)
+    @UseGuards(AuthGuard('jwt'))
+    async createArea(@User() user, @Body() body: AreaCreationDto) {
+        this.areasServices.createArea(user.id ,body)
     }
 }
