@@ -5,8 +5,6 @@ import LoginForm from './LoginForm';
 
 import styles from './Login.module.css';
 import AppBar from '../AppBar/AppBar'
-import { Link } from 'react-router-dom'
-import { useCookies } from 'react-cookie'
 
 function Login() {
     const [gotAccount, setGotAccount] = React.useState(true)

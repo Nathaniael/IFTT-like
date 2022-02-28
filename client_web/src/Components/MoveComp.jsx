@@ -28,12 +28,7 @@ function MoveComp({selector, addElemToArea}) {
             renderDirections={["nw", "n", "ne", "w", "e", "sw", "s", "se"]}
             onDrag={({
                 target,
-                beforeDelta, beforeDist,
-                left, top,
-                right, bottom,
-                delta, dist,
                 transform,
-                clientX, clientY,
             }) => {
                 if (initialPos == null) {
                     setInitialPos(transform)

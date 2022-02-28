@@ -11,7 +11,7 @@ function ImgTextContainer({ imgUrl, text }) {
     )
 }
 function ConfigArea() {
-    const [cookie, setCookies, removeCookies] = useCookies()
+    const [cookie, setCookies] = useCookies()
 
     let placeHolderUrl = "/areaPlaceHolder.png"
     let defaultActionTitle = "No action selected"

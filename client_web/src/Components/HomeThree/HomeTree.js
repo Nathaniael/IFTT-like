@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import * as THREE from "three";
-import { Group } from "three";
 import styles from './HomeThree.module.css'
 import { addParticules, texturesParticules } from "./Particules";
 

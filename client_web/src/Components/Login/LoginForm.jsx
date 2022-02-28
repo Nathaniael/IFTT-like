@@ -5,7 +5,7 @@ import { useCookies } from 'react-cookie';
 
 function LoginForm({ setGotAccount, gotAccount }) {
     const [errorMessage, setErrorMessage] = React.useState("")
-    const [cookies, setCookies] = useCookies()
+    const [,setCookies] = useCookies()
 
     async function login(e) {
         e.preventDefault()

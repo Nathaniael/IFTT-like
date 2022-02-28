@@ -2,10 +2,6 @@ import axios from 'axios'
 
 const prefixUrlApi = "http://localhost:8080/"
 
-const unexpectedError = {
-    error: "Une erreur non expectée s'est produite - Contactez le support pour plus d'informations"
-}
-
 class RequestApi {
     async register(username, email, password) {
         const response = await axios.post(

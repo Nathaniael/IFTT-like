@@ -1,36 +1,18 @@
-import React, { useState }from 'react'
+import React from 'react'
 import styles from './Service.module.css'
 import AppBar from '../AppBar/AppBar'
 import { useCookies } from 'react-cookie'
 import ConfigArea from '../ConfigArea/ConfigArea'
 import MoveComp from '../MoveComp'
-import { useParams } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
 
-// const service = {
-//       "id": 1,
-//       "imgUrl": "/three/chrome.png",
-//       "action": [
-//           "See Post",
-//           "Retweet",
-//           "Fav Something",
-//           "Receive Message"
-//       ],
-//       "reaction": [
-//           "Post reaction",
-//           "Retweet reaction",
-//           "Fav Something reaction",
-//           "Send Message reaction"
-//       ]
-// }
-
 function ButtonService ({ aOrRea, imgUrl, isAction, indexDraggable }) {
-    const [cookie, setCookies, removeCookies] = useCookies()
+    const [,setCookies,] = useCookies()
     const [willDrag, setWillDrag] = React.useState(false)
     const selectorDrag = "draggable_" + (isAction ? "action" : "reaction") + indexDraggable
 
     function addElemToArea(isActionDest) {
-        if (isAction != isActionDest) {
+        if (isAction !== isActionDest) {
             return
         }
         if (isAction) {

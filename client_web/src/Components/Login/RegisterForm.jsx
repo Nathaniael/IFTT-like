@@ -5,7 +5,7 @@ import { useCookies } from 'react-cookie';
 
 function RegisterForm({ setGotAccount, gotAccount }) {
     const [errorMessage, setErrorMessage] = React.useState("")
-    const [cookies, setCookies] = useCookies()
+    const [,setCookies] = useCookies()
 
     async function register(e) {
         e.preventDefault()

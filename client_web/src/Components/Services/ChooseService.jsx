@@ -9,7 +9,7 @@ import { useCookies } from 'react-cookie';
 function SubDescription({ title, list }) {
     return (
         <div className={styles.subDescription}>
-            {list.length == 0 ? null : 
+            {list.length === 0 ? null : 
                 <div className={styles.littleTitle}>
                     {title}
                 </div>
@@ -54,7 +54,7 @@ function ServiceWidget({ service, onLeft }) {
 
 function ChooseService() {
     const [listServices, setListServices] = React.useState([])
-    const [cookies, setCookies] = useCookies()
+    const [cookies] = useCookies()
 
     React.useEffect(() => {
         Request.getServices().then((res) => {
