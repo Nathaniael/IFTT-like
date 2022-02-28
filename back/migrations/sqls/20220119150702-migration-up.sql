@@ -36,6 +36,7 @@ CREATE TABLE adictionnary (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
     description TEXT NOT NULL,
+    params TEXT NOT NULL,
     service_id INT NOT NULL,
     CONSTRAINT fk_service FOREIGN KEY(service_id) REFERENCES service(id)
 );
@@ -44,6 +45,7 @@ CREATE TABLE readictionnary (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
     description TEXT NOT NULL,
+    params TEXT NOT NULL,
     service_id INT NOT NULL,
     CONSTRAINT fk_service FOREIGN KEY(service_id) REFERENCES service(id)
 );
@@ -52,7 +54,9 @@ CREATE TABLE action (
     id SERIAL PRIMARY KEY,
     service_name TEXT NOT NULL,
     action_type TEXT NOT NULL,
-    params TEXT NOT NULL
+    params TEXT NOT NULL,
+    dico_id INT NOT NULL,
+    CONSTRAINT fk_dico FOREIGN KEY(dico_id) REFERENCES adictionnary(id)
 );
 
 CREATE TABLE reaction (
@@ -60,13 +64,14 @@ CREATE TABLE reaction (
     service_name TEXT NOT NULL,
     reaction_type TEXT NOT NULL,
     params TEXT NOT NULL,
-    reaction_route TEXT NOT NULL
+    reaction_route TEXT NOT NULL,
+    dico_id INT NOT NULL,
+    CONSTRAINT fk_dico FOREIGN KEY(dico_id) REFERENCES readictionnary(id)
 );
 
 CREATE TABLE area (
     id SERIAL PRIMARY KEY,
     r_service TEXT NOT NULL,
-    r_type TEXT NOT NULL,
     r_params TEXT NOT NULL,
     id_act INT NOT NULL,
     CONSTRAINT fk_action FOREIGN KEY(id_act) REFERENCES action(id),
@@ -82,10 +87,10 @@ VALUES ('Github', '1', 'https://github.com/login/oauth/authorize', 'https://gith
 INSERT INTO "service" ("name", "has_oauth", "query_code", "query_token", "logo", "client_id", "client_secret", "redirect_uri", "scope")
 VALUES ('Mailjet', '0', '', '', '/mail.png', '', '', '', ''); -- ID:2
 
--- ACTIONS
-INSERT INTO adictionnary ("name", "description", "service_id")
-VALUES ('Any new repository event', 'This trigger reactuib every time a new event occurs in a repository.', '1');
+-- ACTIONS DICO
+INSERT INTO "adictionnary" ("name", "description", "params", "service_id")
+VALUES ('Any new repository event', 'This trigger reaction every time a new event occurs in a repository.', '{repoId:number}', '1');
 
--- REACTIONS
-INSERT INTO "readictionnary" ("name", "description", "service_id")
-VALUES ('Send an email', 'When triggered, send an email to a chosen recipient, a subject and a body', '2');
+-- REACTIONS DICO
+INSERT INTO "readictionnary" ("name", "description", "params","service_id")
+VALUES ('Send an email', 'When triggered, send an email to a chosen recipient, a subject and a body', '{username:string, recipient:string,subject:string, body:string}' , '2');

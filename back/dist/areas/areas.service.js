@@ -22,24 +22,19 @@ let AreasService = class AreasService {
         this.pool = pool;
         this.httpService = httpService;
     }
-    async callReaction(service, type, data) {
-        const areas = await this.pool.query((0, slonik_1.sql) `SELECT * FROM area WHERE r_service = ${service} AND r_type = ${type} AND r_params = ${JSON.stringify(data)}`);
-        for (const elem of areas.rows) {
-            let reaction = await this.pool.query((0, slonik_1.sql) `SELECT * FROM reaction WHERE id = ${elem.id_react}`);
-            console.log(reaction.rows[0], "SHEESH");
-            this.httpService.post(`http://localhost:8080/reactions/${reaction.rows[0].reaction_route}`).toPromise();
-        }
+    async callReaction(reactionId) {
+        let reaction = await this.pool.query((0, slonik_1.sql) `SELECT * FROM reaction WHERE r_params = ${reactionId}`);
+        console.log(reaction.rows[0], "SHEESH");
+        this.httpService.post(`http://localhost:8080/reactions/${reaction.rows[0].reaction_route}`).toPromise();
     }
     async createArea(userId, body) {
         const action = await this.pool.query((0, slonik_1.sql) `INSERT INTO action (service_name, action_type, params) VALUES (${body.action_service_name}, ${body.action_type}, ${JSON.stringify(body.action_params)}) RETURNING id;`);
         const reaction = await this.pool.query((0, slonik_1.sql) `INSERT INTO reaction (service_name, reaction_type, params, reaction_route) VALUES (${body.reaction_service_name}, ${body.reaction_type}, ${JSON.stringify(body.reaction_params)}, ${body.reaction_route}) RETURNING id;`);
         const area = await this.pool.query((0, slonik_1.sql) `INSERT INTO area (r_service,
-            r_type,
             r_params,
             id_act,
             id_react,
             usr_id) VALUES (${body.action_service_name},
-                ${body.action_type},
                 ${JSON.stringify(body.action_params)},
                 ${action.rows[0].id},
                 ${reaction.rows[0].id},

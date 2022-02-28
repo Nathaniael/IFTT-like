@@ -22,9 +22,7 @@ let WebhooksController = class WebhooksController {
         this.areasServices = areasServices;
     }
     async reactionGithub(body) {
-        const type = this.webhooksServices.getGithubActionType(body);
-        const data = this.webhooksServices.getGithubActionData(body);
-        this.areasServices.callReaction('github', type, data);
+        console.log(body);
     }
 };
 __decorate([

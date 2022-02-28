@@ -12,8 +12,9 @@ export class WebhooksController {
 
     @Post('github')
     async reactionGithub(@Body() body) {
-        const type = this.webhooksServices.getGithubActionType(body);
-        const data = this.webhooksServices.getGithubActionData(body);
-        this.areasServices.callReaction('github', type, data)
+        console.log(body)
+        // const type = this.webhooksServices.getGithubActionType(body);
+        // const data = this.webhooksServices.getGithubActionData(body);
+        // this.areasServices.callReaction('github', type, data)
     }
 }

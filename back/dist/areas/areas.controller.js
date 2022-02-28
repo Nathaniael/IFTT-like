@@ -23,7 +23,7 @@ let AreasController = class AreasController {
         this.areasServices = areasServices;
     }
     async createArea(user, body) {
-        this.areasServices.createArea(user.id, body);
+        this.areasServices.createArea(user["payload"].userId, body);
     }
 };
 __decorate([
