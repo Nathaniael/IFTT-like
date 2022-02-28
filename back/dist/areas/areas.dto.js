@@ -16,6 +16,10 @@ class AreaCreationDto {
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
+], AreaCreationDto.prototype, "user_id", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
 ], AreaCreationDto.prototype, "action_service_name", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),

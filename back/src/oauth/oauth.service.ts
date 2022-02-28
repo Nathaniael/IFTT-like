@@ -29,8 +29,6 @@ export class OauthService {
 
         return `${service.query_token}?client_id=${service.client_id}&client_secret=${service.client_secret}&redirect_uri=${service.redirect_uri}&code=${body.code}`
     }
-
-
     async getToken(body: TokenCreationDto): Promise<string> {
         const uri = await this.getTokenLink(body);
         const res = await this.httpService.post(uri).toPromise()

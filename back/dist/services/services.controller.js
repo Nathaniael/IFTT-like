@@ -23,12 +23,14 @@ let ServicesController = class ServicesController {
         this.servicesService = servicesService;
     }
     async getServices(usr) {
+        console.log(usr);
         return this.servicesService.getServices();
     }
     async getActionsByServiceId(usr, body) {
         return this.servicesService.getActionsByServiceId(body.id);
     }
     async getReactionsByServiceId(usr, body) {
+        console.log(usr);
         return this.servicesService.getReactionsByServiceId(body.id);
     }
 };
