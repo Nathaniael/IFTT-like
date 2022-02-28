@@ -5,23 +5,14 @@ export class AreaCreationDto {
     user_id: string
 
     @IsString()
-    action_service_name: string
-
-    @IsString()
-    action_type: string
+    action_id: string
 
     @IsJSON()
     action_params: JSON
 
     @IsString()
-    reaction_service_name: string
-
-    @IsString()
-    reaction_type: string
+    reaction_id: string
 
     @IsJSON()
     reaction_params: JSON
-
-    @IsString()
-    reaction_route: string
 }

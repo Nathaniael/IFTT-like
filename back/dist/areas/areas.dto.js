@@ -20,11 +20,7 @@ __decorate([
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], AreaCreationDto.prototype, "action_service_name", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], AreaCreationDto.prototype, "action_type", void 0);
+], AreaCreationDto.prototype, "action_id", void 0);
 __decorate([
     (0, class_validator_1.IsJSON)(),
     __metadata("design:type", Object)
@@ -32,18 +28,11 @@ __decorate([
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], AreaCreationDto.prototype, "reaction_service_name", void 0);
+], AreaCreationDto.prototype, "reaction_id", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], AreaCreationDto.prototype, "reaction_type", void 0);
-__decorate([
     (0, class_validator_1.IsJSON)(),
     __metadata("design:type", Object)
 ], AreaCreationDto.prototype, "reaction_params", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], AreaCreationDto.prototype, "reaction_route", void 0);
 exports.AreaCreationDto = AreaCreationDto;
 //# sourceMappingURL=areas.dto.js.map

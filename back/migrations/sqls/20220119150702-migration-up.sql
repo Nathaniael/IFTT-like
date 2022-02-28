@@ -52,8 +52,6 @@ CREATE TABLE readictionnary (
 
 CREATE TABLE action (
     id SERIAL PRIMARY KEY,
-    service_name TEXT NOT NULL,
-    action_type TEXT NOT NULL,
     params TEXT NOT NULL,
     dico_id INT NOT NULL,
     CONSTRAINT fk_dico FOREIGN KEY(dico_id) REFERENCES adictionnary(id)
@@ -61,8 +59,6 @@ CREATE TABLE action (
 
 CREATE TABLE reaction (
     id SERIAL PRIMARY KEY,
-    service_name TEXT NOT NULL,
-    reaction_type TEXT NOT NULL,
     params TEXT NOT NULL,
     reaction_route TEXT NOT NULL,
     dico_id INT NOT NULL,
@@ -71,8 +67,6 @@ CREATE TABLE reaction (
 
 CREATE TABLE area (
     id SERIAL PRIMARY KEY,
-    r_service TEXT NOT NULL,
-    r_params TEXT NOT NULL,
     id_act INT NOT NULL,
     CONSTRAINT fk_action FOREIGN KEY(id_act) REFERENCES action(id),
     id_react INT NOT NULL,
@@ -89,8 +83,8 @@ VALUES ('Mailjet', '0', '', '', '/mail.png', '', '', '', ''); -- ID:2
 
 -- ACTIONS DICO
 INSERT INTO "adictionnary" ("name", "description", "params", "service_id")
-VALUES ('Any new repository event', 'This trigger reaction every time a new event occurs in a repository.', '{repoId:number}', '1');
+VALUES ('Any new repository event', 'This trigger reaction every time a new event occurs in a repository.', '[{"number":"repoId"}]', '1');
 
 -- REACTIONS DICO
 INSERT INTO "readictionnary" ("name", "description", "params","service_id")
-VALUES ('Send an email', 'When triggered, send an email to a chosen recipient, a subject and a body', '{username:string, recipient:string,subject:string, body:string}' , '2');
+VALUES ('Send an email', 'When triggered, send an email to a chosen recipient, a subject and a body', '[{"string":"username", "string":"recipient","string":"subject", "string":"body"}]' , '2');
