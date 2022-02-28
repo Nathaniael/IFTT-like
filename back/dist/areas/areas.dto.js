@@ -30,7 +30,6 @@ __decorate([
     __metadata("design:type", String)
 ], AreaCreationDto.prototype, "reaction_id", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsJSON)(),
     __metadata("design:type", Object)
 ], AreaCreationDto.prototype, "reaction_params", void 0);
