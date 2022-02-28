@@ -11,13 +11,11 @@ function LoginForm({ setGotAccount, gotAccount }) {
         e.preventDefault()
         const usernameOrEmail = e.target.children.usernameOrEmail.value
         const password = e.target.children.password.value
-     
+
         Request.login(usernameOrEmail, password).then((res) => {
             if (res.success) {
-                console.log(res.access_token)
-                console.log(document.cookie)
                 setCookies('logged', true, { path: '/' })
-                setCookies('access_token', res.access_token, { path: '/' })
+                // setCookies('access_token', res.access_token, { path: '/' })
                 // setCookies('jwt', res.access_token)
                 // window.location.href = window.location.href.split("/")[0] + "/profile"
             } else {

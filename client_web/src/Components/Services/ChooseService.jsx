@@ -30,9 +30,6 @@ function SubDescription({ title, list }) {
 }
 
 function DescriptionWidget({ hidden, onLeft, name, actions, reactions }) {
-    console.log(name)
-    console.log(actions)
-    console.log(reactions)
     return (
         <div className={`${styles.descriptionService} ${hidden ? styles.hidden : null} ${onLeft ? styles.descriptionLeft : styles.descriptionRight}`}>
             <div className={styles.serviceTitle}>{name}</div>
@@ -60,9 +57,7 @@ function ChooseService() {
     const [cookies, setCookies] = useCookies()
 
     React.useEffect(() => {
-        console.log(cookies.access_token)
         Request.getServices(cookies.access_token).then((res) => {
-            console.log(res)
             setListServices(res)
         }).catch((err) => {
             console.log(err)

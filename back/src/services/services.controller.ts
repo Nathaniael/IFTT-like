@@ -1,4 +1,4 @@
-import { Controller, Body ,Get, UseGuards } from '@nestjs/common';
+import { Controller, Body ,Get, UseGuards, Req } from '@nestjs/common';
 import { ServicesService } from './services.service';
 import { AuthGuard } from '@nestjs/passport';
 import { UserAuth } from 'src/auth/auth.controller';
@@ -11,8 +11,8 @@ export class ServicesController {
     ) { }
 
     @Get()
-    async getServices(@User() usr: UserAuth) {
-        console.log(usr)
+    @UseGuards(AuthGuard('jwt'))
+    async getServices(@User() usr: UserAuth, @Req() req) {
         return this.servicesService.getServices();
     }
 

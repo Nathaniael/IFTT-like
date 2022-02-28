@@ -61,7 +61,6 @@ function ButtonService ({ aOrRea, imgUrl, isAction, indexDraggable }) {
 
 function AorReaList({ title, service, isAction }) {
     const list = isAction ? service?.actions : service?.reactions
-    console.log(list)
     return (
         <div className={styles.subDescriptionAction}>
             <div className={styles.littleTitle}>
@@ -88,7 +87,6 @@ function Service() {
     const location = useLocation()
     const { service } = location.state;
 
-    console.log("HELLO",service)
     return (
         <div className={styles.servicePage}>
             <AppBar></AppBar>

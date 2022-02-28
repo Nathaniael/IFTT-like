@@ -31,6 +31,7 @@ export class AuthController {
             domain: 'localhost',
             expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
         }).send({ success: true, access_token: signed_payload });
+
     }
 
     @Post('login')

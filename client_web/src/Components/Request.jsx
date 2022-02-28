@@ -33,8 +33,7 @@ class RequestApi {
                 "password": password
             }
         }
-        
-        const response = await axios.post(prefixUrlApi + "auth/login/", data)
+        const response = await axios.post(prefixUrlApi + "auth/login/", data, {withCredentials:true })
         console.log(response)
         return response.data
     }
@@ -45,13 +44,8 @@ class RequestApi {
     }
 
     async getServices(access_token) {
-        const response = await axios.get(prefixUrlApi + "services/",
-        {
-            headers: {
-                access_token: access_token
-            }
-        })
-        return response.data  
+        const response = await axios.get(prefixUrlApi + "services/", {withCredentials:true})
+        return response.data
     }
 }
 

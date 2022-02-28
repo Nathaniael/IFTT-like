@@ -12,11 +12,11 @@ function RegisterForm({ setGotAccount, gotAccount }) {
         const username = e.target.children.username.value
         const email = e.target.children.email.value
         const password = e.target.children.password.value
-        
+
         Request.register(username, email, password).then((res) => {
             if (res.success) {
                 setCookies('logged', true, { path: '/' })
-                setCookies('access_token', res.access_token, { path: '/' })
+                // setCookies('access_token', res.access_token, { path: '/' })
                 // setCookies('jwt', res.access_token)
                 window.location.href = window.location.href.split("/")[0] + "/profile"
             } else {
