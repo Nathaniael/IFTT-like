@@ -42,6 +42,5 @@
   },
   "devDependencies": {
     "mini-css-extract-plugin": "2.4.5"
-  },
-  "proxy" : "http://localhost:8080"
+  }
 }

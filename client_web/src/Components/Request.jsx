@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const prefixUrlApi = "http://localhost:8080/"
+const prefixUrlApi = (process.env.NODE_ENV == 'development') ? process.env.BASE_URL_DEV : process.env.BASE_URL_PROD;
 
 class RequestApi {
     async register(username, email, password) {
@@ -25,7 +25,7 @@ class RequestApi {
             prefixUrlApi + "auth/login/",
             {
                 [loginField]: usernameOrEmail,
-                "password": password 
+                "password": password
             },
             {
                 withCredentials: true
