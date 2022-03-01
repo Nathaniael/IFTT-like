@@ -37,6 +37,7 @@ let AuthController = class AuthController {
         res.cookie('access_token', signed_payload, {
             httpOnly: false,
             domain: 'localhost',
+            sameSite: false,
             expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
         }).send({ success: true, access_token: signed_payload });
     }
@@ -48,6 +49,7 @@ let AuthController = class AuthController {
             res.cookie('access_token', signed_payload, {
                 httpOnly: false,
                 domain: 'localhost',
+                sameSite: false,
                 expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
             }).send({ success: true, access_token: signed_payload });
         }
