@@ -1,6 +1,5 @@
 import React from 'react'
 import styles from './ConfigArea.module.css'
-import { useCookies } from 'react-cookie'
 
 function ImgTextContainer({ imgUrl, text }) {
     return (
@@ -33,26 +32,28 @@ function Params({params}) {
         })}</div>
     )
 }
-function ConfigArea() {
-    const [cookie, , removeCookies] = useCookies(["action", "reaction"])
-
+function ConfigArea({activeService, setActiveService, action, reaction, setAction, setReaction}) {
     let placeHolderUrl = "/areaPlaceHolder.png"
     let defaultActionTitle = "No action selected"
     let defaultReactionTitle = "No reaction selected"
     let defaultEmptyList = "[]"
     return (
         <div className={styles.configContainer}>
-            <div id="ImgTextContainerAction" onClick={() => {removeCookies("action")}}>
+            {activeService !== undefined ?
+                <div onClick={() => {setActiveService(undefined)}} className={styles.arrow}>➡️</div>
+            : null}
+            <div id="ImgTextContainerAction" onClick={() => {setAction(undefined)}}>
                 <ImgTextContainer
-                    text={cookie?.action?.title ? cookie.action.title : defaultActionTitle}
-                    imgUrl={cookie?.action?.imgUrl ? cookie.action.imgUrl : placeHolderUrl}></ImgTextContainer>
-                <Params params={cookie?.action?.params ? cookie.action.params : defaultEmptyList}></Params>
+                    text={action?.title ? action.title : defaultActionTitle}
+                    imgUrl={action?.imgUrl ? action.imgUrl : placeHolderUrl}></ImgTextContainer>
+                <Params params={action?.params ? action.params : defaultEmptyList}></Params>
             </div>
             <div className={styles.arrow}>➡️</div>
-            <div id="ImgTextContainerReaction" onClick={() => {removeCookies("reaction")}}>
+            <div id="ImgTextContainerReaction" onClick={() => {setReaction(undefined)}}>
                 <ImgTextContainer
-                    text={cookie?.reaction?.title ? cookie.reaction.title : defaultReactionTitle}
-                    imgUrl={cookie?.reaction?.imgUrl ? cookie.reaction.imgUrl : placeHolderUrl}></ImgTextContainer>
+                    text={reaction?.title ? reaction.title : defaultReactionTitle}
+                    imgUrl={reaction?.imgUrl ? reaction.imgUrl : placeHolderUrl}></ImgTextContainer>
+                <Params params={reaction?.params ? reaction.params : defaultEmptyList}></Params>
             </div>
         </div>
     )

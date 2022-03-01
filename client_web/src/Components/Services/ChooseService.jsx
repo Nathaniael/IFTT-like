@@ -5,6 +5,7 @@ import AppBar from "../AppBar/AppBar";
 import ConfigArea from '../ConfigArea/ConfigArea';
 import Request from '../Request';
 import { useCookies } from 'react-cookie';
+import Service from './Service';
 
 function SubDescription({ title, list }) {
     return (
@@ -39,15 +40,13 @@ function DescriptionWidget({ hidden, onLeft, name, actions, reactions }) {
     )
 }
 
-function ServiceWidget({ service, onLeft }) {
+function ServiceWidget({ service, onLeft, setActiveService }) {
     const [hover, setHover] = React.useState(false)
 
     return (
         <div>
             <DescriptionWidget hidden={!hover} onLeft={onLeft} name={service?.name} actions={service?.actions} reactions={service?.reactions}></DescriptionWidget>
-            <Link to={`/services/${service.id}`} state={{service: service}}>
-            <img onMouseEnter={() => {setHover(true)}} onMouseLeave={() => {setHover(false)}} className={`${styles.serviceLogo} ${hover ? styles.logoGoCenter : null}`} src={service?.logo} alt={service?.logo}></img>
-            </Link>  
+            <img onClick={() => {setActiveService(service)}} onMouseEnter={() => {setHover(true)}} onMouseLeave={() => {setHover(false)}} className={`${styles.serviceLogo} ${hover ? styles.logoGoCenter : null}`} src={service?.logo} alt={service?.logo}></img>  
         </div>
     )
 }
@@ -55,31 +54,40 @@ function ServiceWidget({ service, onLeft }) {
 function ChooseService() {
     const [listServices, setListServices] = React.useState([])
     const [cookies] = useCookies()
+    const [activeService, setActiveService] = React.useState()
+    const [action, setAction] = React.useState()
+    const [reaction, setReaction] = React.useState()
 
     React.useEffect(() => {
+        console.log(action)
+        console.log(reaction)
         Request.getServices().then((res) => {
             setListServices(res)
         }).catch((err) => {
             console.log(err)
         })
-    }, [])
+    }, [action, reaction])
+
     return (
         <div className={styles.servicePage}>
             <AppBar></AppBar>
-            <ConfigArea></ConfigArea>
-            <div className={styles.servicePageBody}>
-                <div className={styles.titlePage}>Services</div>
-                {cookies?.logged ?
-                    <div className={styles.listServices}>
-                        {listServices?.map((elem, index) => {
-                            return (
-                                <ServiceWidget key={elem?.id} service={elem} onLeft={index % 2 === 0 ? true : false}></ServiceWidget>
-                            )
-                        })}
-                    </div>
-                    : <Link to="/login">LOG TOI</Link>
-                }
-            </div>
+            <ConfigArea activeService={activeService} setActiveService={setActiveService} action={action} reaction={reaction} setAction={setAction} setReaction={setReaction}></ConfigArea>
+            {activeService === undefined ?
+                <div className={styles.servicePageBody}>
+                    <div className={styles.titlePage}>Services</div>
+                    {cookies?.logged ?
+                        <div className={styles.listServices}>
+                            {listServices?.map((elem, index) => {
+                                return (
+                                    <ServiceWidget key={elem?.id} service={elem} setActiveService={setActiveService} onLeft={index % 2 === 0 ? true : false}></ServiceWidget>
+                                )
+                            })}
+                        </div>
+                        : <Link to="/login">LOG TOI</Link>
+                    }
+                </div>
+                : <Service service={activeService} setAction={setAction} setReaction={setReaction}></Service>
+            }
         </div>
     )
 }

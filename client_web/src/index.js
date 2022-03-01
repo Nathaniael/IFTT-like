@@ -7,7 +7,6 @@ import './index.css'
 
 import Login from "./Components/Login/Login"
 import ChooseService from "./Components/Services/ChooseService";
-import Service from "./Components/Services/Service";
 import Home from "./Components/Home/Home";
 import Profile from "./Components/Profile/Profile";
 
@@ -19,7 +18,6 @@ function App() {
             <Route path="/" element={<Home/>}/>
             <Route path="/services" element={<ChooseService/>}/>
             <Route path="/login" element={<Login/>}/>
-            <Route path="/services/:serviceId" element={<Service/>}/>
             <Route path="/profile" element={<Profile/>}/>
           </Routes>
       </Router>
