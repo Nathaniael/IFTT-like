@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:client_mobile/Widgets/Background.dart';
 
-class LoginPage extends StatelessWidget {
+class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -15,12 +15,28 @@ class LoginPage extends StatelessWidget {
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.symmetric(horizontal: 40),
               child: Text(
-                "LOGIN",
+                "REGISTER",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Color(0xFF2661FA),
                     fontSize: 36),
                 textAlign: TextAlign.left,
+              ),
+            ),
+            SizedBox(height: size.height * 0.03),
+            Container(
+              alignment: Alignment.center,
+              margin: EdgeInsets.symmetric(horizontal: 40),
+              child: TextField(
+                decoration: InputDecoration(labelText: "Name"),
+              ),
+            ),
+            SizedBox(height: size.height * 0.03),
+            Container(
+              alignment: Alignment.center,
+              margin: EdgeInsets.symmetric(horizontal: 40),
+              child: TextField(
+                decoration: InputDecoration(labelText: "Mobile Number"),
               ),
             ),
             SizedBox(height: size.height * 0.03),
@@ -38,14 +54,6 @@ class LoginPage extends StatelessWidget {
               child: TextField(
                 decoration: InputDecoration(labelText: "Password"),
                 obscureText: true,
-              ),
-            ),
-            Container(
-              alignment: Alignment.centerRight,
-              margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-              child: Text(
-                "Forgot your password?",
-                style: TextStyle(fontSize: 12, color: Color(0XFF2661FA)),
               ),
             ),
             SizedBox(height: size.height * 0.05),
@@ -70,7 +78,7 @@ class LoginPage extends StatelessWidget {
                       ])),
                   padding: const EdgeInsets.all(0),
                   child: Text(
-                    "LOGIN",
+                    "SIGN UP",
                     textAlign: TextAlign.center,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
@@ -81,9 +89,9 @@ class LoginPage extends StatelessWidget {
               alignment: Alignment.centerRight,
               margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: GestureDetector(
-                onTap: () => {Navigator.pushNamed(context, '/register')},
+                onTap: () => {Navigator.pushNamed(context, '/login')},
                 child: Text(
-                  "Don't Have an Account? Sign up",
+                  "Already Have an Account? Sign in",
                   style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
