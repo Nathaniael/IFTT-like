@@ -36,7 +36,7 @@ let AuthController = class AuthController {
         const signed_payload = this.jwtService.sign(payload);
         res.cookie('access_token', signed_payload, {
             httpOnly: false,
-            domain: 'localhost',
+            domain: (process.env.NODE_ENV === 'development') ? 'localhost' : 'pantharea.fun',
             sameSite: false,
             expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
         }).send({ success: true, access_token: signed_payload });
@@ -48,7 +48,7 @@ let AuthController = class AuthController {
             const signed_payload = this.jwtService.sign({ payload });
             res.cookie('access_token', signed_payload, {
                 httpOnly: false,
-                domain: 'localhost',
+                domain: (process.env.NODE_ENV === 'development') ? 'localhost' : 'pantharea.fun',
                 sameSite: false,
                 expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
             }).send({ success: true, access_token: signed_payload });
