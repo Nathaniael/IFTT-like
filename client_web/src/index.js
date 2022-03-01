@@ -9,6 +9,7 @@ import Login from "./Components/Login/Login"
 import ChooseService from "./Components/Services/ChooseService";
 import Home from "./Components/Home/Home";
 import Profile from "./Components/Profile/Profile";
+import GetStarted from "./Components/GetStarted/GetStarted";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/services" element={<ChooseService/>}/>
             <Route path="/login" element={<Login/>}/>
             <Route path="/profile" element={<Profile/>}/>
+            <Route path="/getStarted" element={<GetStarted/>}/>
           </Routes>
       </Router>
     </CookiesProvider>

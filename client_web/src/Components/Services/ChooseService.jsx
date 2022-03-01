@@ -81,7 +81,7 @@ function ChooseService() {
                                 )
                             })}
                         </div>
-                        : <Link to="/login">LOG TOI</Link>
+                        : <Link to="/getStarted">GET STARTED</Link>
                     }
                 </div>
                 : <Service service={activeService} setAction={setAction} setReaction={setReaction}></Service>
