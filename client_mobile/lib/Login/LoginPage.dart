@@ -69,10 +69,13 @@ class LoginPage extends StatelessWidget {
                         Color(0xff000D4D),
                       ])),
                   padding: const EdgeInsets.all(0),
-                  child: Text(
-                    "LOGIN",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  child: GestureDetector(
+                    onTap: () => {Navigator.pushNamed(context, '/services')},
+                    child: Text(
+                      "LOGIN",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ),
               ),

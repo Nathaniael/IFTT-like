@@ -20,7 +20,7 @@ class _OneservicepageState extends State<Oneservicepage> {
     return Scaffold(
         appBar: Navbar(context: context),
         body: const BleuRadialBackground(
-          child: TextANM("This is Area"),
+          child: TextANM("This is One SERVICE bitches"),
           onPressed: onPressedBackground,
         ));
   }
