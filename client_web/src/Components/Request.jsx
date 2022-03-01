@@ -1,6 +1,9 @@
 import axios from 'axios'
 
-const prefixUrlApi = (process.env.NODE_ENV === 'development') ? process.env.BASE_URL_DEV : process.env.BASE_URL_PROD;
+if (process.env.NODE_ENV === 'development')
+    const prefixUrlApi = process.env.BASE_URL_DEV;
+else
+    const prefixUrlApi = process.env.BASE_URL_PROD;
 
 class RequestApi {
     async register(username, email, password) {
