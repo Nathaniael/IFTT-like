@@ -11,7 +11,7 @@ class Oneservicepage extends StatefulWidget {
 }
 
 void onPressedBackground(context) {
-  Navigator.pushNamed(context, '/services');
+  Navigator.popAndPushNamed(context, '/services');
 }
 
 class _OneservicepageState extends State<Oneservicepage> {
