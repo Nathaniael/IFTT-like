@@ -231,7 +231,7 @@ class CustomerCart extends StatelessWidget {
                   width: 46,
                   height: 46,
                   child: Image(
-                    image: customer.imageProvider,
+                    image: customer.formattedTotalItemPrice.imageProvider,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -254,7 +254,7 @@ class CustomerCart extends StatelessWidget {
                   children: [
                     const SizedBox(height: 4.0),
                     Text(
-                      "test",
+                      customer.formattedTotalItemPrice.actionText,
                       style: Theme.of(context).textTheme.caption!.copyWith(
                             color: textColor,
                             fontSize: 16.0,
@@ -404,11 +404,19 @@ class Customer {
     required this.name,
     required this.imageProvider,
     List<Item>? items,
-    this.key = -1,
   }) : items = items ?? [];
 
   final String name;
   final ImageProvider imageProvider;
   final List<Item> items;
-  final int key;
+  Item get formattedTotalItemPrice {
+    if (items.isEmpty == true)
+      return (Item(
+        name: 'No action',
+        actionText: "No action",
+        uid: '1',
+        imageProvider: AssetImage('web/png/areaPlaceHolder.png'),
+      ));
+    return items[0];
+  }
 }
