@@ -47,7 +47,7 @@ services:
     environment:
       - PORT=8081
     volumes:
-      - 'apk:/usr/share/nginx/html'
+      - 'apk:/tmp'
 volumes:
   postgres-data: null
   apk: null
