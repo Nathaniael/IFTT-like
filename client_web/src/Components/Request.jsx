@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const prefixUrlApi = "http://server:8080/"
+const prefixUrlApi = "http://localhost:8080/"
 
 class RequestApi {
     async register(username, email, password) {
@@ -47,6 +47,18 @@ class RequestApi {
     async getServices() {
         const response = await axios.get(
             prefixUrlApi + "services/",
+            {
+                withCredentials: true
+            }
+        )
+        return response.data
+    }
+
+    async createArea(createAreaDatas) {
+        console.log(createAreaDatas)
+        const response = await axios.post(
+            prefixUrlApi + "areas/create/",
+            createAreaDatas,
             {
                 withCredentials: true
             }

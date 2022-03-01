@@ -2,9 +2,15 @@ import React from 'react'
 import Request from '../Request'
 import { useCookies } from 'react-cookie'
 import { Link } from 'react-router-dom'
+import styles from './Profile.module.css'
+import AppBar from '../AppBar/AppBar'
 
 function Profile() {
     const [cookies, setCookies, removeCookie] = useCookies(["logged", "access_token", "user"])
+
+    if (cookies.logged == undefined) {
+        window.location.href = window.location.href.split("/")[0] + "/login"
+    }
 
     React.useState(() => {
         Request.getProfile().then((res) => {
@@ -18,19 +24,16 @@ function Profile() {
         removeCookie("logged")
         removeCookie("access_token")
         removeCookie("user")
+        removeCookie("closeGetStarted")
         window.location.href = window.location.href.split("/")[0] + "/login"
     }
     return (
-        <div>
-            {cookies.user ?
-                <div>Profile of
-                    <br/>
-                    {cookies?.user?.username}
-                    <button onClick={() => {resetCookie()}}>LOGOUT</button>
-                </div>
-            : 
-                <Link to="/login">LOG TOI</Link>
-            }
+        <div className={styles.background}>
+            <AppBar></AppBar>
+            <div className={styles.profilePage}>
+                <div>Profile of {cookies?.user?.username}</div>
+                <button onClick={() => {resetCookie()}}>LOGOUT</button>
+            </div>
         </div>
     )
 }

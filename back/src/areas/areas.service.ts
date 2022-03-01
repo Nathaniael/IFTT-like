@@ -12,7 +12,9 @@ export class AreasService {
     ) { }
 
     async callReaction(params: string) {
+        console.log(params)
         let action = await this.pool.query(sql`SELECT * FROM action WHERE params = ${params}`)
+        console.log(action)
         let area = await this.pool.query(sql`SELECT * FROM area WHERE id_act = ${action.rows[0].id}`)
         let reaction = await this.pool.query(sql`SELECT * FROM reaction WHERE id = ${area.rows[0].id_react}`)
         let data = JSON.parse(reaction.rows[0].params.toString())
@@ -22,6 +24,7 @@ export class AreasService {
 
     async createArea(userId: string, body: AreaCreationDto) {
         const reaction_dico = await this.pool.query(sql`SELECT * FROM readictionnary WHERE id = ${body.reaction_id}`)
+        console.log(reaction_dico)
         const reaction_service = await this.pool.query(sql`SELECT * FROM service WHERE id = ${reaction_dico.rows[0].service_id}`)
         const action = await this.pool.query(sql`INSERT INTO action (params, dico_id)
         VALUES (${JSON.stringify(body.action_params)}, ${body.action_id}) RETURNING id;`)

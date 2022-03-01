@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './AppBar.module.css'
 import { Link } from 'react-router-dom'
+import { useCookies } from 'react-cookie'
 
 function CustomLink({title, path, imgUrl}) {
     const [animate, setAnimate] = React.useState(false)
@@ -14,13 +15,23 @@ function CustomLink({title, path, imgUrl}) {
 }
 
 function AppBar() {
+    const [cookies] = useCookies('logged', 'closeGetStarted')
+
+    React.useEffect(() => {
+    }, [cookies?.closeGetStarted])
     return (
         <div className={styles.appBar}>
             <CustomLink title="Home" path="/" imgUrl="/three/emile.png"></CustomLink>
             <CustomLink title="Services" path="/services" imgUrl="/three/baptiste.png"></CustomLink>
-            <CustomLink title="Profile" path="/profile" imgUrl="/three/nathaniael.png"></CustomLink>
-            <CustomLink title="Login" path="/login" imgUrl="/three/kilian.png"></CustomLink>
-        </div>
+            {cookies?.closeGetStarted ?
+                null
+                :   <CustomLink title="Get Started" path="/getStarted" imgUrl="/three/nathaniael.png"></CustomLink>
+            }
+            {cookies?.logged ?
+                    <CustomLink title="Profile" path="/profile" imgUrl="/three/kilian.png"></CustomLink>
+                :   <CustomLink title="Login" path="/login" imgUrl="/three/kilian.png"></CustomLink>
+            }
+            </div>
     )
 }
 

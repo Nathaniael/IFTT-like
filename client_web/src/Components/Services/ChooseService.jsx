@@ -59,8 +59,6 @@ function ChooseService() {
     const [reaction, setReaction] = React.useState()
 
     React.useEffect(() => {
-        console.log(action)
-        console.log(reaction)
         Request.getServices().then((res) => {
             setListServices(res)
         }).catch((err) => {
@@ -83,7 +81,7 @@ function ChooseService() {
                                 )
                             })}
                         </div>
-                        : <Link to="/login">LOG TOI</Link>
+                        : <Link to="/getStarted">GET STARTED</Link>
                     }
                 </div>
                 : <Service service={activeService} setAction={setAction} setReaction={setReaction}></Service>

@@ -10,9 +10,7 @@ function ButtonService ({ aOrRea, imgUrl, isAction, indexDraggable, setAorReacti
         if (isAction !== isActionDest) {
             return
         }
-        console.log(isAction, isActionDest, aOrRea)
         if (isAction) {
-            console.log("Drag action", setAorReaction)
             setAorReaction({
                 'id': aOrRea.id,
                 'title': aOrRea.name,
@@ -20,14 +18,12 @@ function ButtonService ({ aOrRea, imgUrl, isAction, indexDraggable, setAorReacti
                 'params': aOrRea.params
             })
         } else { // Is a reaction
-            console.log("Drag reaction", setAorReaction)
             setAorReaction({
                 'id': aOrRea.id,
                 'title': aOrRea.name,
                 'imgUrl': imgUrl,
                 'params': aOrRea.params
             })
-            console.log("Drag reaction")
         }
     }
     return (
@@ -66,11 +62,10 @@ function AorReaList({ title, service, isAction, setAorReaction }) {
         </div>
     )
 }
+
 function Service({service, setAction, setReaction}) {
     const [hover, setHover] = React.useState(false)
 
-    console.log(setAction)
-    console.log(setReaction)
     return (
         <div className={styles.servicePage}>
             <div className={styles.pagination}>
