@@ -1,13 +1,8 @@
 import React from 'react'
 import styles from './Service.module.css'
-import AppBar from '../AppBar/AppBar'
-import { useCookies } from 'react-cookie'
-import ConfigArea from '../ConfigArea/ConfigArea'
 import MoveComp from '../MoveComp'
-import { useLocation } from 'react-router-dom'
 
-function ButtonService ({ aOrRea, imgUrl, isAction, indexDraggable }) {
-    const [,setCookies,] = useCookies(["action", "reaction"])
+function ButtonService ({ aOrRea, imgUrl, isAction, indexDraggable, setAorReaction }) {
     const [willDrag, setWillDrag] = React.useState(false)
     const selectorDrag = "draggable_" + (isAction ? "action" : "reaction") + indexDraggable
 
@@ -15,20 +10,24 @@ function ButtonService ({ aOrRea, imgUrl, isAction, indexDraggable }) {
         if (isAction !== isActionDest) {
             return
         }
+        console.log(isAction, isActionDest, aOrRea)
         if (isAction) {
-            setCookies('action', {
+            console.log("Drag action", setAorReaction)
+            setAorReaction({
                 'id': aOrRea.id,
                 'title': aOrRea.name,
                 'imgUrl': imgUrl,
                 'params': aOrRea.params
             })
         } else { // Is a reaction
-            setCookies('reaction', {
+            console.log("Drag reaction", setAorReaction)
+            setAorReaction({
                 'id': aOrRea.id,
                 'title': aOrRea.name,
                 'imgUrl': imgUrl,
                 'params': aOrRea.params
             })
+            console.log("Drag reaction")
         }
     }
     return (
@@ -43,7 +42,7 @@ function ButtonService ({ aOrRea, imgUrl, isAction, indexDraggable }) {
     )
 }
 
-function AorReaList({ title, service, isAction }) {
+function AorReaList({ title, service, isAction, setAorReaction }) {
     const list = isAction ? service?.actions : service?.reactions
     return (
         <div className={styles.subDescriptionAction}>
@@ -58,6 +57,7 @@ function AorReaList({ title, service, isAction }) {
                             aOrRea={elem}
                             imgUrl={service?.logo}
                             isAction={isAction}
+                            setAorReaction={setAorReaction}
                             indexDraggable={index}
                         ></ButtonService> 
                 )
@@ -66,19 +66,17 @@ function AorReaList({ title, service, isAction }) {
         </div>
     )
 }
-function Service() {
+function Service({service, setAction, setReaction}) {
     const [hover, setHover] = React.useState(false)
-    const location = useLocation()
-    const { service } = location.state;
 
+    console.log(setAction)
+    console.log(setReaction)
     return (
         <div className={styles.servicePage}>
-            <AppBar></AppBar>
-            <ConfigArea></ConfigArea>
             <div className={styles.pagination}>
-                <AorReaList title="Actions" service={service} isAction={true}></AorReaList>
+                <AorReaList title="Actions" service={service} isAction={true} setAorReaction={setAction}></AorReaList>
                 <img onMouseEnter={() => {setHover(true)}} onMouseLeave={() => {setHover(false)}} className={`${styles.serviceLogo} ${hover ? styles.logoGoCenter : null}`} src={service?.logo} alt={service?.logo}></img>
-                <AorReaList title="Reactions" service={service} isAction={false}></AorReaList>
+                <AorReaList title="Reactions" service={service} isAction={false} setAorReaction={setReaction}></AorReaList>
             </div>    
         </div>
   )
