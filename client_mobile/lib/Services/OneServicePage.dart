@@ -1,6 +1,4 @@
-import 'package:client_mobile/Widgets/BleuRadialBackground.dart';
 import 'package:client_mobile/Widgets/Navbar/Navbar.dart';
-import 'package:client_mobile/Widgets/Text/TextADN.dart';
 import 'package:flutter/material.dart';
 
 @immutable
@@ -15,42 +13,42 @@ void onPressedBackground(context) {
   Navigator.popAndPushNamed(context, '/services');
 }
 
-const List<Item> _items = [
+List<Item> _items = [
   Item(
     name: 'Github',
     actionText: "Blablabla 1",
     uid: '1',
-    imageProvider: AssetImage('web/png/emile.png'),
+    imageProvider: const AssetImage('web/png/emile.png'),
   ),
   Item(
     name: 'Mail',
     actionText: "Blablabla 2",
     uid: '2',
-    imageProvider: AssetImage('web/png/baptiste.png'),
+    imageProvider: const AssetImage('web/png/baptiste.png'),
   ),
   Item(
     name: 'Askip on a des area',
     actionText: "blablabla 3",
     uid: '3',
-    imageProvider: AssetImage('web/png/nathaniael.png'),
+    imageProvider: const AssetImage('web/png/nathaniael.png'),
   ),
   Item(
     name: 'Github',
     actionText: "Blablabla 1",
     uid: '4',
-    imageProvider: AssetImage('web/png/emile.png'),
+    imageProvider: const AssetImage('web/png/emile.png'),
   ),
   Item(
     name: 'Mail',
     actionText: "Blablabla 2",
     uid: '5',
-    imageProvider: AssetImage('web/png/baptiste.png'),
+    imageProvider: const AssetImage('web/png/baptiste.png'),
   ),
   Item(
     name: 'Askip on a des area',
     actionText: "blablabla 3",
     uid: '6',
-    imageProvider: AssetImage('web/png/nathaniael.png'),
+    imageProvider: const AssetImage('web/png/nathaniael.png'),
   ),
 ];
 
@@ -76,32 +74,16 @@ class _OneservicepageState extends State<Oneservicepage>
     required Customer customer,
   }) {
     setState(() {
-      customer.items.add(item);
+      customer.item = item;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F7F7),
-      appBar: _buildAppBar(),
+      backgroundColor: const Color(0xff000D4D),
+      appBar: Navbar(context: context),
       body: _buildContent(),
-    );
-  }
-
-  PreferredSizeWidget _buildAppBar() {
-    return AppBar(
-      iconTheme: const IconThemeData(color: Color(0xff007EA7)),
-      title: Text(
-        'Add Action or Reaction',
-        style: Theme.of(context).textTheme.headline4?.copyWith(
-              fontSize: 36,
-              color: const Color(0xff007EA7),
-              fontWeight: FontWeight.bold,
-            ),
-      ),
-      backgroundColor: const Color(0xFFF7F7F7),
-      elevation: 0,
     );
   }
 
@@ -179,7 +161,6 @@ class _OneservicepageState extends State<Oneservicepage>
         child: DragTarget<Item>(
           builder: (context, candidateItems, rejectedItems) {
             return CustomerCart(
-              hasItems: customer.items.isNotEmpty,
               highlighted: candidateItems.isNotEmpty,
               customer: customer,
             );
@@ -254,7 +235,7 @@ class CustomerCart extends StatelessWidget {
                   children: [
                     const SizedBox(height: 4.0),
                     Text(
-                      customer.formattedTotalItemPrice.actionText,
+                      customer.item.actionText,
                       style: Theme.of(context).textTheme.caption!.copyWith(
                             color: textColor,
                             fontSize: 16.0,
@@ -262,13 +243,6 @@ class CustomerCart extends StatelessWidget {
                           ),
                     ),
                     const SizedBox(height: 4.0),
-                    Text(
-                      '${customer.items.length} item${customer.items.length != 1 ? 's' : ''}',
-                      style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                            color: textColor,
-                            fontSize: 12.0,
-                          ),
-                    ),
                   ],
                 ),
               )
@@ -385,38 +359,36 @@ class DraggingListItem extends StatelessWidget {
   }
 }
 
-@immutable
+// @immutable
 class Item {
-  const Item({
+  Item({
     required this.actionText,
     required this.name,
     required this.uid,
     required this.imageProvider,
   });
-  final String actionText;
-  final String name;
-  final String uid;
-  final ImageProvider imageProvider;
+  String actionText;
+  String name;
+  String uid;
+  ImageProvider imageProvider;
 }
 
 class Customer {
   Customer({
     required this.name,
     required this.imageProvider,
-    List<Item>? items,
-  }) : items = items ?? [];
+    Item? item,
+  });
 
-  final String name;
-  final ImageProvider imageProvider;
-  final List<Item> items;
+  String name;
+  ImageProvider imageProvider;
+  Item item = Item(
+    name: 'No action',
+    actionText: "No action",
+    uid: '1',
+    imageProvider: const AssetImage('web/png/areaPlaceHolder.png'),
+  );
   Item get formattedTotalItemPrice {
-    if (items.isEmpty == true)
-      return (Item(
-        name: 'No action',
-        actionText: "No action",
-        uid: '1',
-        imageProvider: AssetImage('web/png/areaPlaceHolder.png'),
-      ));
-    return items[0];
+    return item;
   }
 }
