@@ -17,21 +17,39 @@ void onPressedBackground(context) {
 
 const List<Item> _items = [
   Item(
-    name: 'Spinach Pizza',
-    totalPriceCents: 1299,
+    name: 'Github',
+    actionText: "Blablabla 1",
     uid: '1',
     imageProvider: AssetImage('web/png/emile.png'),
   ),
   Item(
-    name: 'Veggie Delight',
-    totalPriceCents: 799,
+    name: 'Mail',
+    actionText: "Blablabla 2",
     uid: '2',
     imageProvider: AssetImage('web/png/baptiste.png'),
   ),
   Item(
-    name: 'Chicken Parmesan',
-    totalPriceCents: 1499,
+    name: 'Askip on a des area',
+    actionText: "blablabla 3",
     uid: '3',
+    imageProvider: AssetImage('web/png/nathaniael.png'),
+  ),
+  Item(
+    name: 'Github',
+    actionText: "Blablabla 1",
+    uid: '4',
+    imageProvider: AssetImage('web/png/emile.png'),
+  ),
+  Item(
+    name: 'Mail',
+    actionText: "Blablabla 2",
+    uid: '5',
+    imageProvider: AssetImage('web/png/baptiste.png'),
+  ),
+  Item(
+    name: 'Askip on a des area',
+    actionText: "blablabla 3",
+    uid: '6',
     imageProvider: AssetImage('web/png/nathaniael.png'),
   ),
 ];
@@ -134,7 +152,7 @@ class _OneservicepageState extends State<Oneservicepage>
       ),
       child: MenuListItem(
         name: item.name,
-        price: item.formattedTotalItemPrice,
+        price: item.actionText,
         photoProvider: item.imageProvider,
       ),
     );
@@ -236,7 +254,7 @@ class CustomerCart extends StatelessWidget {
                   children: [
                     const SizedBox(height: 4.0),
                     Text(
-                      customer.formattedTotalItemPrice,
+                      "test",
                       style: Theme.of(context).textTheme.caption!.copyWith(
                             color: textColor,
                             fontSize: 16.0,
@@ -370,17 +388,15 @@ class DraggingListItem extends StatelessWidget {
 @immutable
 class Item {
   const Item({
-    required this.totalPriceCents,
+    required this.actionText,
     required this.name,
     required this.uid,
     required this.imageProvider,
   });
-  final int totalPriceCents;
+  final String actionText;
   final String name;
   final String uid;
   final ImageProvider imageProvider;
-  String get formattedTotalItemPrice =>
-      '\$${(totalPriceCents / 100.0).toStringAsFixed(2)}';
 }
 
 class Customer {
@@ -388,15 +404,11 @@ class Customer {
     required this.name,
     required this.imageProvider,
     List<Item>? items,
+    this.key = -1,
   }) : items = items ?? [];
 
   final String name;
   final ImageProvider imageProvider;
   final List<Item> items;
-
-  String get formattedTotalItemPrice {
-    final totalPriceCents =
-        items.fold<int>(0, (prev, item) => prev + item.totalPriceCents);
-    return '\$${(totalPriceCents / 100.0).toStringAsFixed(2)}';
-  }
+  final int key;
 }
