@@ -1,10 +1,6 @@
 import axios from 'axios'
 
-let prefixUrlApi = "";
-if (process.env.NODE_ENV === 'development')
-    prefixUrlApi = process.env.BASE_URL_DEV;
-else
-    prefixUrlApi = process.env.BASE_URL_PROD;
+const prefixUrlApi = (process.env.NODE_ENV === 'development') ? process.env.REACT_APP_BASE_URL_DEV : process.env.REACT_APP_BASE_URL_PROD;
 
 class RequestApi {
     async register(username, email, password) {
