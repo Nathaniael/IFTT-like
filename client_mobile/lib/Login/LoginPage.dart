@@ -84,7 +84,7 @@ class LoginPage extends StatelessWidget {
               alignment: Alignment.centerRight,
               margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: GestureDetector(
-                onTap: () => {Navigator.pushNamed(context, '/register')},
+                onTap: () => {Navigator.popAndPushNamed(context, '/register')},
                 child: Text(
                   "Don't Have an Account? Sign up",
                   style: TextStyle(

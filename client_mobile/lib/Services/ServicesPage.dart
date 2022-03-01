@@ -12,7 +12,7 @@ class ServicesPage extends StatefulWidget {
 }
 
 void onPressedBackground(context) {
-  Navigator.pushNamed(context, '/profile');
+  Navigator.popAndPushNamed(context, '/profile');
 }
 
 // ListView list() {
