@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const prefixUrlApi = "http://localhost:8080/"
+const prefixUrlApi = "http://127.0.0.1:8080/"
 
 class RequestApi {
     async register(username, email, password) {
