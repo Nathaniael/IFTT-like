@@ -1,5 +1,6 @@
 import React from 'react'
 import styles from './ConfigArea.module.css'
+import Request from '../Request'
 
 function ImgTextContainer({ imgUrl, text }) {
     return (
@@ -11,16 +12,13 @@ function ImgTextContainer({ imgUrl, text }) {
 }
 
 function Params({params}) {
-    function modifyValues(id) {
-        var value = document.getElementById(id).value
-        console.log(value)
-    }
     return (
-        <div>{JSON.parse(params).map((elem, index) => {
+        <div>{params.map((elem, index) => {
+            // console.log(elem)
             return (
                 <div key={index}>
                     {elem?.number ?
-                        <input type="text" placeholder={elem.number} id={elem.number} onChange={() => {modifyValues(elem.number)}}></input>
+                        <input type="text" placeholder={elem.number} id={elem.number}></input>
                         : null
                     }    
                     {elem?.string ?
@@ -36,24 +34,79 @@ function ConfigArea({activeService, setActiveService, action, reaction, setActio
     let placeHolderUrl = "/areaPlaceHolder.png"
     let defaultActionTitle = "No action selected"
     let defaultReactionTitle = "No reaction selected"
-    let defaultEmptyList = "[]"
+
+    const [actionParams, setActionParams] = React.useState([])
+    const [reactionParams, setReactionParams] = React.useState([])
+
+    React.useEffect(() => {
+        if (action?.params) {
+            setActionParams(JSON.parse(action.params))
+        } else {
+            setActionParams([])
+        }
+        if (reaction?.params) {
+            setReactionParams(JSON.parse(reaction.params))
+        } else {
+            setReactionParams([])
+        }
+    }, [action, reaction])
+
+    function createArea() {
+        var createAreaDatas = {
+            "action_id": action?.id,
+            "reaction_id": reaction?.id,
+            "action_params": {},
+            "reaction_params": {}
+        }
+        for (const param of actionParams) {
+            var inputId;
+            if (param.number) {
+                inputId = param.number
+            }
+            if (param.string) {
+                inputId = param.string
+            }
+            var inputElem = document.getElementById(inputId)
+            createAreaDatas["action_params"][inputId] = param.number ? parseInt(inputElem.value) : inputElem.value
+        }
+        for (const param of reactionParams) {
+            var inputId;
+            if (param.number) {
+                inputId = param.number
+            }
+            if (param.string) {
+                inputId = param.string
+            }
+            var inputElem = document.getElementById(inputId)
+            createAreaDatas["reaction_params"][inputId] = param.number ? parseInt(inputElem.value) : inputElem.value
+        }
+        Request.createArea(createAreaDatas).then((res) => {
+            console.log(res)
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
     return (
         <div className={styles.configContainer}>
             {activeService !== undefined ?
-                <div onClick={() => {setActiveService(undefined)}} className={styles.arrow}>➡️</div>
+                <div onClick={() => {setActiveService(undefined)}} className={styles.arrow}>⬅️</div>
             : null}
-            <div id="ImgTextContainerAction" onClick={() => {setAction(undefined)}}>
-                <ImgTextContainer
-                    text={action?.title ? action.title : defaultActionTitle}
-                    imgUrl={action?.imgUrl ? action.imgUrl : placeHolderUrl}></ImgTextContainer>
-                <Params params={action?.params ? action.params : defaultEmptyList}></Params>
+            <div className={styles.confAreaBox}>
+                <div id="ImgTextContainerAction" onClick={() => {setAction(undefined)}}>
+                    <ImgTextContainer
+                        text={action?.title ? action.title : defaultActionTitle}
+                        imgUrl={action?.imgUrl ? action.imgUrl : placeHolderUrl}></ImgTextContainer>
+                </div>
+                <Params params={actionParams}></Params>
             </div>
-            <div className={styles.arrow}>➡️</div>
-            <div id="ImgTextContainerReaction" onClick={() => {setReaction(undefined)}}>
-                <ImgTextContainer
-                    text={reaction?.title ? reaction.title : defaultReactionTitle}
-                    imgUrl={reaction?.imgUrl ? reaction.imgUrl : placeHolderUrl}></ImgTextContainer>
-                <Params params={reaction?.params ? reaction.params : defaultEmptyList}></Params>
+            <div onClick={() => {createArea()}} className={styles.arrow}>➡️</div>
+            <div className={styles.confAreaBox}>
+                <div id="ImgTextContainerReaction" onClick={() => {setReaction(undefined)}}>
+                    <ImgTextContainer
+                        text={reaction?.title ? reaction.title : defaultReactionTitle}
+                        imgUrl={reaction?.imgUrl ? reaction.imgUrl : placeHolderUrl}></ImgTextContainer>
+                </div>
+                <Params params={reactionParams}></Params>
             </div>
         </div>
     )

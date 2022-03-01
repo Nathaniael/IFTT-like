@@ -83,8 +83,8 @@ VALUES ('Mailjet', '0', '', '', '/mail.png', '', '', '', ''); -- ID:2
 
 -- ACTIONS DICO
 INSERT INTO "adictionnary" ("name", "description", "params", "service_id")
-VALUES ('Any new repository event', 'This trigger reaction every time a new event occurs in a repository.', '[{"number":"repoId","string":"secret"}]', '1');
+VALUES ('Any new repository event', 'This trigger reaction every time a new event occurs in a repository.', '[{"number":"repoId"},{"string":"secret"}]', '1');
 
 -- REACTIONS DICO
-INSERT INTO "readictionnary" ("name", "description", "params","service_id")
-VALUES ('Send an email', 'When triggered, send an email to a chosen recipient, a subject and a body', '[{"string":"username", "string":"recipient","string":"subject", "string":"body"}]' , '2');
+INSERT INTO "readictionnary" ("name", "description", "params", "service_id")
+VALUES ('Send an email', 'When triggered, send an email to a chosen recipient, a subject and a body', '[{"string":"username"},{"string":"recipient"},{"string":"subject"},{"string":"body"}]' , '2');
