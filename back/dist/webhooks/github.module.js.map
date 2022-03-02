@@ -1,1 +1,0 @@
-{"version":3,"file":"github.module.js","sourceRoot":"","sources":["../../src/webhooks/github.module.ts"],"names":[],"mappings":";;;;;;;;;AAAA,2CAAwC;AACxC,2DAAuD;AAMvD,IAAa,YAAY,GAAzB,MAAa,YAAY;CAAI,CAAA;AAAhB,YAAY;IAHxB,IAAA,eAAM,EAAC;QACN,WAAW,EAAE,CAAC,oCAAgB,CAAC;KAChC,CAAC;GACW,YAAY,CAAI;AAAhB,oCAAY"}

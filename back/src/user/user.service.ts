@@ -1,10 +1,9 @@
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectPool } from 'nestjs-slonik';
 import { DatabasePool, sql } from 'slonik'
 import { OauthCreationDto, UserCreationDto, UserDto, UserLoginDto } from './user.dto';
 import * as bcrypt from 'bcrypt';
 import { UserAuth } from 'src/auth/auth.controller';
-
 
 @Injectable()
 export class UserService {
@@ -15,13 +14,13 @@ export class UserService {
 
     async registerUser(usr: UserCreationDto) {
         if (!usr.email || !usr.username || !usr.password)
-            throw new UnauthorizedException("One or more of the required fields are missing")
+            throw new BadRequestException('One or more of the required fields are missing')
         let res = await this.pool.query(sql`SELECT *
                 FROM usr
                 WHERE email = ${usr.email}
                 OR username = ${usr.username}`)
         if (res.rows.length != 0) {
-            throw new UnauthorizedException("Username or email already in use")
+            throw new BadRequestException("Username or email already in use")
         }
         await this.pool.query(sql`INSERT INTO usr
         (username, password, email)
@@ -38,8 +37,12 @@ export class UserService {
             res = await this.pool.query(sql`SELECT * FROM usr WHERE username =  ${usr.username}`)
         else if (usr.email)
             res = await this.pool.query(sql`SELECT * FROM usr WHERE email =  ${usr.email}`)
-        if (res.rowCount != 1 && usr.password)
-            throw new UnauthorizedException("User not found")
+        else
+            throw new BadRequestException("Fields are missing")
+        if (!usr.password)
+            throw new BadRequestException("Fields are missing")
+        if (res.rowCount != 1)
+            throw new BadRequestException("User not found")
         let match = bcrypt.compareSync(usr.password, res.rows[0].password); // true
         if (match) {
             return res.rows[0]

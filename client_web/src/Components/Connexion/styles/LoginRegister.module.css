@@ -1,0 +1,63 @@
+.title {
+    text-align: center;
+    color: white;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.input {
+    margin: auto;
+    margin-top: 0.714vw;
+    margin-bottom: 0.714vw;
+    width: 28.572vw;
+    font-size: 2vw;
+    padding: 0.714vw;
+    background-color: white;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    box-shadow: 0px 0px 5px 0px rgb(232, 232, 232);
+}
+
+.input:hover {
+    box-shadow: 0px 0px 30px 0px rgb(203, 203, 203);
+}
+
+.input:focus {
+    box-shadow: 0px 0px 30px 0px rgb(164, 164, 164);
+}
+
+.button {
+    margin: auto;
+    margin-top: 0.714vw;
+    margin-bottom: 0.714vw;
+    width: 28.572vw;
+    font-size: 2vw;
+    padding: 0.714vw;
+    background-color: white;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+}
+
+.button:hover {
+    color: grey;
+    box-shadow: 0px 0px 30px 0px rgb(232, 232, 232);
+}
+
+.gotAccount {
+    cursor: pointer;
+    text-align: end;
+    margin: 3vw;
+    color: white;
+}
+
+.gotAccount:hover {
+    color: grey;
+}

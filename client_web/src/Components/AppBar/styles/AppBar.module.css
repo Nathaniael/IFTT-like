@@ -1,0 +1,16 @@
+.appBar {
+    width: 100%;
+    height: 6vw;
+    background-color: rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.appBar > a {
+    position: relative;
+    height: 6vw;
+    width: 10vw;
+    text-decoration: none;
+    color: white;
+}

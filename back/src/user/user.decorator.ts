@@ -10,7 +10,6 @@ async function getUser(cookie: { access_token: string }) {
     return usr
 }
 
-
 export const User = createParamDecorator(async (data: any, ctx: ExecutionContext) => {
     const request = ctx.switchToHttp().getRequest();
     return getUser(request.cookies)

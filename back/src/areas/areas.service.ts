@@ -1,5 +1,5 @@
 import { HttpModule, HttpService } from '@nestjs/axios';
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectPool } from 'nestjs-slonik';
 import { DatabasePool, sql } from 'slonik';
 import { AreaCreationDto, DicoDto } from './areas.dto';
@@ -26,7 +26,24 @@ export class AreasService {
         this.httpService.post(`http://localhost:8080/reactions/${reaction.rows[0].reaction_route}`, data).toPromise()
     }
 
+    checkBodyCreateArea(body: AreaCreationDto) {
+        if (body.action_id === undefined || body.reaction_id === undefined)
+            throw new BadRequestException("Missing action or reaction")
+        Object.keys(body.action_params).forEach(key => {
+            var value = body.action_params[key]
+            if (value === null || value === "")
+                throw new BadRequestException("Bad value for: " + JSON.stringify(key))
+        });
+        Object.keys(body.reaction_params).forEach(key => {
+            var value = body.reaction_params[key]
+            if (value === null || value === "")
+                throw new BadRequestException("Bad value for: " + JSON.stringify(key))
+        });
+    }
+
     async createArea(userId: string, body: AreaCreationDto) {
+        console.log(body)
+        this.checkBodyCreateArea(body)
         const reaction_dico = await this.pool.query(sql<DicoDto>`SELECT * FROM readictionnary WHERE id = ${body.reaction_id}`)
         const reaction_service = await this.pool.query(sql`SELECT * FROM service WHERE id = ${reaction_dico.rows[0].service_id}`)
         const action_dico = await this.pool.query(sql<DicoDto>`SELECT * FROM adictionnary WHERE id = ${body.action_id}`)
@@ -42,6 +59,5 @@ export class AreasService {
                 ${action.rows[0].id},
                 ${reaction.rows[0].id},
                 ${userId})`)
-        console.log(action, reaction, area)
     }
 }

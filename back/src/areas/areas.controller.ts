@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards, Res } from '@nestjs/common';
 import { AreaCreationDto } from './areas.dto';
 import { AreasService } from './areas.service';
 import { AuthGuard } from '@nestjs/passport';
@@ -13,7 +13,8 @@ export class AreasController {
 
     @Post('/create')
     @UseGuards(AuthGuard('jwt'))
-    async createArea(@User() user, @Body() body: AreaCreationDto) {
-        this.areasServices.createArea(user.userId, body)
+    async createArea(@User() user, @Body() body: AreaCreationDto, @Res() res) {
+        await this.areasServices.createArea(user["payload"].userId, body)
+        res.status(200).json("Area well created")
     }
 }

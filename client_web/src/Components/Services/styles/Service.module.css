@@ -1,0 +1,80 @@
+.servicePage {
+    min-height: 100vh;
+}
+
+.pagination {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.pagination > div {
+    min-width: 30%;
+}
+
+.serviceLogo {
+    width: 20vw;
+    height: 20vw;
+    transform: scale(80%);
+    opacity: 80%;
+    cursor: pointer;
+}
+
+.serviceLogo:hover {
+    opacity: 100%;
+    transform: scale(100%);
+    animation: rotating 1s;
+    transform-style: preserve-3d;
+}
+
+@keyframes rotating {
+    0% {
+        -webkit-transform: scale(80%);
+    }
+    50% {
+        -webkit-transform: scale(80%) rotateY(360deg);
+    }
+    100% {
+        -webkit-transform: rotateY(720deg);
+    }
+}
+
+.littleTitle {
+    font-size: 2.5vw;
+    padding: 1vw 0;
+}
+
+.button {
+    cursor: pointer;
+    border-radius: 1.071vw;
+    font-size: 1.5vw;
+    padding: 1.071vw 1.429vw;
+    background-color: #D9DBF1; 
+    color: rgb(0, 13, 77); 
+    border: 0.143vw solid #007EA7;
+    transition : 0.4s;
+}
+
+.button:hover{
+    background-color: #007EA7;
+    color: Black;
+}
+
+.subDescriptionAction {
+    text-align: center;
+    color: #D9DBF1;
+}
+
+.subDescriptionReAction {
+    text-align: center;
+    color: #D9DBF1;
+}
+
+.buttonPadding {
+    padding: 0.5vw 0;
+}
+
+.draggable {
+    opacity: 1;
+}
