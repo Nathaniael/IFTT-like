@@ -5,4 +5,5 @@ export declare class WebhooksController {
     private readonly areasServices;
     constructor(webhooksServices: WebhooksService, areasServices: AreasService);
     reactionGithub(req: any, body: any): Promise<void>;
+    reactionGitlab(req: any, body: any): Promise<void>;
 }

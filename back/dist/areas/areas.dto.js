@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AreaCreationDto = void 0;
+exports.DicoDto = exports.AreaCreationDto = void 0;
 const class_validator_1 = require("class-validator");
 class AreaCreationDto {
 }
@@ -34,4 +34,31 @@ __decorate([
     __metadata("design:type", Object)
 ], AreaCreationDto.prototype, "reaction_params", void 0);
 exports.AreaCreationDto = AreaCreationDto;
+class DicoDto {
+}
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], DicoDto.prototype, "params", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], DicoDto.prototype, "name", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], DicoDto.prototype, "description", void 0);
+__decorate([
+    (0, class_validator_1.IsNumber)(),
+    __metadata("design:type", String)
+], DicoDto.prototype, "service_id", void 0);
+__decorate([
+    (0, class_validator_1.IsNumber)(),
+    __metadata("design:type", String)
+], DicoDto.prototype, "id", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], DicoDto.prototype, "reaction_route", void 0);
+exports.DicoDto = DicoDto;
 //# sourceMappingURL=areas.dto.js.map
