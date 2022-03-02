@@ -56,7 +56,9 @@ class LoginPage extends StatelessWidget {
               alignment: Alignment.centerRight,
               margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.popAndPushNamed(context, '/area');
+                },
                 style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(80.0)),
@@ -74,8 +76,7 @@ class LoginPage extends StatelessWidget {
                       ])),
                   padding: const EdgeInsets.all(0),
                   child: GestureDetector(
-                    onTap: () => {
-                    },
+                    onTap: () => {},
                     child: const Text(
                       "LOGIN",
                       textAlign: TextAlign.center,

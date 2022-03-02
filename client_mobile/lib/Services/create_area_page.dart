@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:client_mobile/Widgets/Navbar/navbar.dart';
 
 @immutable
 class CreateAreaPage extends StatefulWidget {
@@ -12,18 +13,18 @@ void onPressedBackground(context) {
   Navigator.popAndPushNamed(context, '/services');
 }
 
-const List<Item> _items = [
+List<Item> _items = [
   Item(
     name: 'Github',
     actionText: "Blablabla 1",
     uid: '1',
-    imageProvider: AssetImage('web/png/emile.png'),
+    imageProvider: const AssetImage('web/png/emile.png'),
   ),
   Item(
     name: 'Mail',
     actionText: "Blablabla 2",
     uid: '2',
-    imageProvider: AssetImage('web/png/baptiste.png'),
+    imageProvider: const AssetImage('web/png/baptiste.png'),
   )
 ];
 
@@ -31,11 +32,21 @@ class CreateAreaPageState extends State<CreateAreaPage>
     with TickerProviderStateMixin {
   final List<Placeholder> _people = [
     Placeholder(
+      item: Item(
+          imageProvider: AssetImage('web/png/baptiste.png'),
+          name: "Pas d'action",
+          actionText: "Action",
+          uid: ''),
       name: 'Action',
       imageProvider: const NetworkImage('https://flutter'
           '.dev/docs/cookbook/img-files/effects/split-check/Avatar1.jpg'),
     ),
     Placeholder(
+      item: Item(
+          imageProvider: AssetImage('web/png/baptiste.png'),
+          name: "Pas de reaction",
+          actionText: "Réaction",
+          uid: ''),
       name: 'Reaction',
       imageProvider: const NetworkImage('https://flutter'
           '.dev/docs/cookbook/img-files/effects/split-check/Avatar2.jpg'),
@@ -56,8 +67,8 @@ class CreateAreaPageState extends State<CreateAreaPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F7F7),
-      appBar: _buildAppBar(),
+      backgroundColor: const Color(0xff000D4D),
+      appBar: Navbar(context: context),
       body: _buildContent(),
     );
   }
@@ -348,38 +359,26 @@ class DraggingListItem extends StatelessWidget {
   }
 }
 
-@immutable
+// @immutable
 class Item {
-  const Item({
-    required this.actionText,
-    required this.name,
-    required this.uid,
-    required this.imageProvider,
+  String actionText;
+  String name;
+  String uid;
+  ImageProvider imageProvider;
+  Item({
+    this.actionText = "No action",
+    this.name = "Action",
+    this.uid = '',
+    this.imageProvider = const AssetImage('web/png/baptiste.png'),
   });
-  final String actionText;
-  final String name;
-  final String uid;
-  final ImageProvider imageProvider;
 }
 
 class Placeholder {
-  Placeholder(
-      {required this.name,
-      required this.imageProvider,
-      Item item = const Item(
-          name: 'No action',
-          actionText: "No action",
-          uid: '1',
-          imageProvider: AssetImage('web/png/areaPlaceHolder.png'))});
-
   String name;
   ImageProvider imageProvider;
-  Item item = const Item(
-    name: 'No action',
-    actionText: "No action",
-    uid: '1',
-    imageProvider: AssetImage('web/png/areaPlaceHolder.png'),
-  );
+  Item item;
+  Placeholder(
+      {required this.name, required this.imageProvider, required this.item});
   Item get formattedTotalItemPrice {
     return item;
   }
