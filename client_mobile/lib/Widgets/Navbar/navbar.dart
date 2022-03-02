@@ -18,7 +18,7 @@ class Navbar extends AppBar {
                 onPressed: () =>
                     {Navigator.popAndPushNamed(context, '/login')}),
           ],
-          backgroundColor: Colors.black87,
+          backgroundColor: const Color(0xff000D4D),
           title: const Text('Area'),
         );
 }

@@ -32,7 +32,7 @@ class RegisterPage extends StatelessWidget {
               alignment: Alignment.center,
               margin: const EdgeInsets.symmetric(horizontal: 40),
               child: const TextField(
-                decoration: InputDecoration(labelText: "Name"),
+                decoration: InputDecoration(labelText: "Username"),
               ),
             ),
             SizedBox(height: size.height * 0.03),
@@ -40,7 +40,7 @@ class RegisterPage extends StatelessWidget {
               alignment: Alignment.center,
               margin: const EdgeInsets.symmetric(horizontal: 40),
               child: const TextField(
-                decoration: InputDecoration(labelText: "Username"),
+                decoration: InputDecoration(labelText: "Email address"),
               ),
             ),
             SizedBox(height: size.height * 0.03),
