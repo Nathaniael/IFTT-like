@@ -15,31 +15,6 @@
     color: white;
 }
 
-.linkText {
-    height: 6vw;
-    width: 100%;
-    text-align: center;
-    line-height: 6vw;
-    vertical-align: middle;
-    font-size: 2vw;
-    opacity: 1;
-    transition: 0.5s;
-}
-
-.linkImg {
-    position: absolute;
-    width: 5vw;
-    height: 5vw;
-    top: 0.5vw;
-    left: 2.5vw;
-    opacity: 0;
-}
-
-.animateImg {
-    animation: appearSpin 0.8s;
-    opacity: 1;
-}
-
 .animateText {
     opacity: 0; 
     animation: disapearSpin 0.8s;

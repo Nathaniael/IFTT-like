@@ -1,20 +1,23 @@
 import React from 'react'
-import styles from './GetStarted.module.css'
-import AppBar from '../AppBar/AppBar'
 import { Link } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
+
+import AppBar from '../AppBar/AppBar'
+import { goToPage } from '../Utils'
+
+import styles from './GetStarted.module.css'
 
 function GetStarted() {
     const [cookies, setCookies, removeCookies] = useCookies('closeGetStarted')
 
     function closeIt() {
         setCookies('closeGetStarted', true);
-        window.location.href = window.location.href.split("/")[0] + "/services"
+        goToPage("/services")
     }
 
     function enableIt() {
         removeCookies('closeGetStarted')
-        window.location.href = window.location.href.split("/")[0] + "/getStarted"
+        goToPage("/getStarted")
     }
 
     return (

@@ -27,7 +27,7 @@ let UserController = class UserController {
         return this.usersService.addOauthToUsr(usr, body);
     }
     async getUserProfile(usr, res) {
-        res.status(200).json(usr["payload"]);
+        res.status(200).json(usr["payload"].username);
     }
 };
 __decorate([

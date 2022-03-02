@@ -1,0 +1,14 @@
+.configContainer {
+    width: 71.429vw;
+    margin: 3.571vw auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    column-gap: 3vw;
+}
+
+.arrow {
+    font-size: 3vw;
+    color: white;
+}

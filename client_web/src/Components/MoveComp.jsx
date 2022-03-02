@@ -1,5 +1,6 @@
 import React from 'react'
 import Moveable from "react-moveable";
+import { idContainerActionMoveable, idContainerReactionMoveable } from './Utils'
 
 function isColliding(elem, otherElem) {
     var rect = elem.getBoundingClientRect()
@@ -38,8 +39,8 @@ function MoveComp({selector, addElemToArea}) {
             onDragEnd={({
                 target
             }) => {
-                var action = document.getElementById("ImgTextContainerAction")
-                var reaction = document.getElementById("ImgTextContainerReaction")
+                var action = document.getElementById(idContainerActionMoveable)
+                var reaction = document.getElementById(idContainerReactionMoveable)
                 if (isColliding(action, target)) {
                     addElemToArea(true)
                 } else if (isColliding(reaction, target)) {

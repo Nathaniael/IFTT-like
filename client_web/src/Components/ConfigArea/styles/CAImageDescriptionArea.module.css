@@ -1,18 +1,4 @@
-.configContainer {
-    width: 71.429vw;
-    margin: 3.571vw auto;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    column-gap: 3vw;
-}
-
-.arrow {
-    font-size: 3vw;
-}
-
-.imgTextContainer {
+.container {
     cursor: pointer;
     position: relative;
     width: 35.714vw;
@@ -26,7 +12,7 @@
     align-items: center;
 }
 
-.imgTextContainer > img {
+.container > img {
     width: 7.143vw;
     width: 7.143vw;
 }
