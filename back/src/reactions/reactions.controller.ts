@@ -1,5 +1,7 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { MailReactionDto } from './reactions.dto';
+import { Req, Body, Controller, Post } from '@nestjs/common';
+import { MailReactionDto, DiscordMsgReactionDto } from './reactions.dto';
+const { Webhook } = require('discord-webhook-node');
+
 @Controller('reactions')
 export class ReactionsController {
 
@@ -36,5 +38,12 @@ export class ReactionsController {
             console.log(err.statusCode)
         })
 
+    }
+
+    @Post('Discord')
+    async actionDiscord(@Req() req, @Body() body : DiscordMsgReactionDto) {
+        const hook = new Webhook(body.url)
+        hook.setUsername(body.hookusername)
+        hook.send(body.message)
     }
 }

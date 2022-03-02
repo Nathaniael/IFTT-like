@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReactionsController = void 0;
 const common_1 = require("@nestjs/common");
 const reactions_dto_1 = require("./reactions.dto");
+const { Webhook } = require('discord-webhook-node');
 let ReactionsController = class ReactionsController {
     async printstp(config) {
         console.log("config: ", config);
@@ -48,6 +49,11 @@ let ReactionsController = class ReactionsController {
             console.log(err.statusCode);
         });
     }
+    async actionDiscord(req, body) {
+        const hook = new Webhook(body.url);
+        hook.setUsername(body.hookusername);
+        hook.send(body.message);
+    }
 };
 __decorate([
     (0, common_1.Post)('/Mailjet'),
@@ -56,6 +62,14 @@ __decorate([
     __metadata("design:paramtypes", [reactions_dto_1.MailReactionDto]),
     __metadata("design:returntype", Promise)
 ], ReactionsController.prototype, "printstp", null);
+__decorate([
+    (0, common_1.Post)('Discord'),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, reactions_dto_1.DiscordMsgReactionDto]),
+    __metadata("design:returntype", Promise)
+], ReactionsController.prototype, "actionDiscord", null);
 ReactionsController = __decorate([
     (0, common_1.Controller)('reactions')
 ], ReactionsController);
