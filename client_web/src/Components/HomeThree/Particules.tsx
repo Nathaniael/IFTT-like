@@ -6,13 +6,9 @@ const texturesPathList = [
     "three/emile.png",
     "three/nathaniael.png",
     "three/kilian.png",
-    "three/chrome.png",
-    "three/clashroyale.png",
-    "three/discord.png",
-    "three/facebook.png",
-    "three/fortnite.png",
-    "three/reddit.png",
-    "three/tft.png",
+    "github.png",
+    "gitlab.png",
+    "mail.png",
 ]
 
 // Export to use it in HomeThree.js

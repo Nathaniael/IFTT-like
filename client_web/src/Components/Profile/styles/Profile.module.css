@@ -1,10 +1,7 @@
 .profilePage {
     margin: auto;
     width: 42.857vw;
-    height: 42.857vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    height: 10vw;
 }
 
 .background {

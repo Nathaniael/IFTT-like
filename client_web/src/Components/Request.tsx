@@ -1,5 +1,9 @@
 // Extern modules
-import axios from 'axios'
+import axios from 'axios';
+import qs from 'qs';
+
+// My modules
+import { randomString } from './Utils';
 
 // Globals variables
 const prefixUrlApi = (process.env.NODE_ENV === 'development') ? process.env.REACT_APP_BASE_URL_DEV : process.env.REACT_APP_BASE_URL_PROD;
@@ -135,6 +139,29 @@ class RequestApi {
             }
             // Default message
             throw err.message
+        })
+    }
+
+    async getAccessToken(code: string, state: string) {
+        const applicationId = process.env.REACT_APP_GITLAB_APPLICATION_ID as string
+        const redirectUri = ((process.env.NODE_ENV === 'development') ? process.env.REACT_APP_GITLAB_CALLBACK_DEV : process.env.REACT_APP_GITLAB_CALLBACK_PROD) as string;
+        const secretKey = process.env.REACT_APP_GITLAB_SECRET as string
+        
+        const url = "https://gitlab.com/oauth/token"
+
+        const credentials = {
+            grant_type: 'authorization_code',
+            client_id: applicationId,
+            client_secret: secretKey,
+            redirect_uri: redirectUri,
+            code: code,
+            scope: 'api',
+        }
+
+        return await axios.post(url + "?" + qs.stringify(credentials)).then((res) => {
+            return res.data
+        }).catch((err) => {
+            throw err
         })
     }
 }

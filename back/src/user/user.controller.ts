@@ -20,6 +20,12 @@ export class UserController {
     @Get('profile')
     @UseGuards(AuthGuard('jwt'))
     async getUserProfile(@User() usr: UserAuth, @Res() res) {
-        res.status(200).json(usr["payload"].username)
+        if (usr.username !== undefined) {
+            res.status(200).json(usr.username)
+        } else if (usr["payload"].username !== undefined) {
+            res.status(200).json(usr["payload"].username)
+        } else {
+            res.status(200).json("undefined")
+        }
     }
 }

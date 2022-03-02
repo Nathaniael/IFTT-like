@@ -85,7 +85,7 @@ VALUES ('Github', '1', 'https://github.com/login/oauth/authorize', 'https://gith
 
 -- ACTIONS DICO
 INSERT INTO "adictionnary" ("name", "description", "params", "service_id")
-VALUES ('Any new repository event', 'This trigger reaction every time a new event occurs in a repository.', '{"number":"repoId","string":"secret"}', '1'), -- id 1
+VALUES ('Any new repository event', 'This trigger reaction every time a new event occurs in a repository.', '[{"number":"repoId"},{"string":"secret"}]', '1'), -- id 1
 ('Push event', 'This triggers reaction everytime someone pushes something on a precise repository', '[{"string":"ProjectID"}]', '3'); -- id 2
 
 -- REACTIONS DICO
