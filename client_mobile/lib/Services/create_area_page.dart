@@ -1,14 +1,11 @@
-import 'package:client_mobile/Widgets/BleuRadialBackground.dart';
-import 'package:client_mobile/Widgets/Navbar/Navbar.dart';
-import 'package:client_mobile/Widgets/Text/TextADN.dart';
 import 'package:flutter/material.dart';
 
 @immutable
-class Oneservicepage extends StatefulWidget {
-  const Oneservicepage({Key? key}) : super(key: key);
+class CreateAreaPage extends StatefulWidget {
+  const CreateAreaPage({Key? key}) : super(key: key);
 
   @override
-  _OneservicepageState createState() => _OneservicepageState();
+  CreateAreaPageState createState() => CreateAreaPageState();
 }
 
 void onPressedBackground(context) {
@@ -27,42 +24,18 @@ const List<Item> _items = [
     actionText: "Blablabla 2",
     uid: '2',
     imageProvider: AssetImage('web/png/baptiste.png'),
-  ),
-  Item(
-    name: 'Askip on a des area',
-    actionText: "blablabla 3",
-    uid: '3',
-    imageProvider: AssetImage('web/png/nathaniael.png'),
-  ),
-  Item(
-    name: 'Github',
-    actionText: "Blablabla 1",
-    uid: '4',
-    imageProvider: AssetImage('web/png/emile.png'),
-  ),
-  Item(
-    name: 'Mail',
-    actionText: "Blablabla 2",
-    uid: '5',
-    imageProvider: AssetImage('web/png/baptiste.png'),
-  ),
-  Item(
-    name: 'Askip on a des area',
-    actionText: "blablabla 3",
-    uid: '6',
-    imageProvider: AssetImage('web/png/nathaniael.png'),
-  ),
+  )
 ];
 
-class _OneservicepageState extends State<Oneservicepage>
+class CreateAreaPageState extends State<CreateAreaPage>
     with TickerProviderStateMixin {
-  final List<Customer> _people = [
-    Customer(
+  final List<Placeholder> _people = [
+    Placeholder(
       name: 'Action',
       imageProvider: const NetworkImage('https://flutter'
           '.dev/docs/cookbook/img-files/effects/split-check/Avatar1.jpg'),
     ),
-    Customer(
+    Placeholder(
       name: 'Reaction',
       imageProvider: const NetworkImage('https://flutter'
           '.dev/docs/cookbook/img-files/effects/split-check/Avatar2.jpg'),
@@ -71,12 +44,12 @@ class _OneservicepageState extends State<Oneservicepage>
 
   final GlobalKey _draggableKey = GlobalKey();
 
-  void _itemDroppedOnCustomerCart({
+  void _itemDroppedOnPlaceholderBox({
     required Item item,
-    required Customer customer,
+    required Placeholder placeholder,
   }) {
     setState(() {
-      customer.items.add(item);
+      placeholder.item = item;
     });
   }
 
@@ -95,7 +68,7 @@ class _OneservicepageState extends State<Oneservicepage>
       title: Text(
         'Add Action or Reaction',
         style: Theme.of(context).textTheme.headline4?.copyWith(
-              fontSize: 36,
+              fontSize: 20,
               color: const Color(0xff007EA7),
               fontWeight: FontWeight.bold,
             ),
@@ -170,7 +143,7 @@ class _OneservicepageState extends State<Oneservicepage>
     );
   }
 
-  Widget _buildPersonWithDropZone(Customer customer) {
+  Widget _buildPersonWithDropZone(Placeholder placeholder) {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(
@@ -178,16 +151,15 @@ class _OneservicepageState extends State<Oneservicepage>
         ),
         child: DragTarget<Item>(
           builder: (context, candidateItems, rejectedItems) {
-            return CustomerCart(
-              hasItems: customer.items.isNotEmpty,
+            return PlaceholderBox(
               highlighted: candidateItems.isNotEmpty,
-              customer: customer,
+              placeholder: placeholder,
             );
           },
           onAccept: (item) {
-            _itemDroppedOnCustomerCart(
+            _itemDroppedOnPlaceholderBox(
               item: item,
-              customer: customer,
+              placeholder: placeholder,
             );
           },
         ),
@@ -196,17 +168,16 @@ class _OneservicepageState extends State<Oneservicepage>
   }
 }
 
-class CustomerCart extends StatelessWidget {
-  const CustomerCart({
+class PlaceholderBox extends StatelessWidget {
+  const PlaceholderBox({
     Key? key,
-    required this.customer,
+    required this.placeholder,
     this.highlighted = false,
-    this.hasItems = false,
+    // this.hasItems = false,
   }) : super(key: key);
 
-  final Customer customer;
+  final Placeholder placeholder;
   final bool highlighted;
-  final bool hasItems;
 
   @override
   Widget build(BuildContext context) {
@@ -231,22 +202,21 @@ class CustomerCart extends StatelessWidget {
                   width: 46,
                   height: 46,
                   child: Image(
-                    image: customer.formattedTotalItemPrice.imageProvider,
+                    image: placeholder.formattedTotalItemPrice.imageProvider,
                     fit: BoxFit.cover,
                   ),
                 ),
               ),
               const SizedBox(height: 8.0),
               Text(
-                customer.name,
-                style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                      color: textColor,
-                      fontWeight:
-                          hasItems ? FontWeight.normal : FontWeight.bold,
-                    ),
+                placeholder.name,
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle1
+                    ?.copyWith(color: textColor, fontWeight: FontWeight.normal),
               ),
               Visibility(
-                visible: hasItems,
+                // visible: hasItems,
                 maintainState: true,
                 maintainAnimation: true,
                 maintainSize: true,
@@ -254,21 +224,14 @@ class CustomerCart extends StatelessWidget {
                   children: [
                     const SizedBox(height: 4.0),
                     Text(
-                      customer.formattedTotalItemPrice.actionText,
+                      placeholder.formattedTotalItemPrice.actionText,
                       style: Theme.of(context).textTheme.caption!.copyWith(
                             color: textColor,
                             fontSize: 16.0,
                             fontWeight: FontWeight.bold,
                           ),
                     ),
-                    const SizedBox(height: 4.0),
-                    Text(
-                      '${customer.items.length} item${customer.items.length != 1 ? 's' : ''}',
-                      style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                            color: textColor,
-                            fontSize: 12.0,
-                          ),
-                    ),
+                    const SizedBox(height: 4.0)
                   ],
                 ),
               )
@@ -399,24 +362,25 @@ class Item {
   final ImageProvider imageProvider;
 }
 
-class Customer {
-  Customer({
-    required this.name,
-    required this.imageProvider,
-    List<Item>? items,
-  }) : items = items ?? [];
+class Placeholder {
+  Placeholder(
+      {required this.name,
+      required this.imageProvider,
+      Item item = const Item(
+          name: 'No action',
+          actionText: "No action",
+          uid: '1',
+          imageProvider: AssetImage('web/png/areaPlaceHolder.png'))});
 
-  final String name;
-  final ImageProvider imageProvider;
-  final List<Item> items;
+  String name;
+  ImageProvider imageProvider;
+  Item item = const Item(
+    name: 'No action',
+    actionText: "No action",
+    uid: '1',
+    imageProvider: AssetImage('web/png/areaPlaceHolder.png'),
+  );
   Item get formattedTotalItemPrice {
-    if (items.isEmpty == true)
-      return (Item(
-        name: 'No action',
-        actionText: "No action",
-        uid: '1',
-        imageProvider: AssetImage('web/png/areaPlaceHolder.png'),
-      ));
-    return items[0];
+    return item;
   }
 }
