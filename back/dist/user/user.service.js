@@ -23,13 +23,13 @@ let UserService = class UserService {
     }
     async registerUser(usr) {
         if (!usr.email || !usr.username || !usr.password)
-            throw new common_1.UnauthorizedException("One or more of the required fields are missing");
+            throw new common_1.BadRequestException('One or more of the required fields are missing');
         let res = await this.pool.query((0, slonik_1.sql) `SELECT *
                 FROM usr
                 WHERE email = ${usr.email}
                 OR username = ${usr.username}`);
         if (res.rows.length != 0) {
-            throw new common_1.UnauthorizedException("Username or email already in use");
+            throw new common_1.BadRequestException("Username or email already in use");
         }
         await this.pool.query((0, slonik_1.sql) `INSERT INTO usr
         (username, password, email)
@@ -45,8 +45,12 @@ let UserService = class UserService {
             res = await this.pool.query((0, slonik_1.sql) `SELECT * FROM usr WHERE username =  ${usr.username}`);
         else if (usr.email)
             res = await this.pool.query((0, slonik_1.sql) `SELECT * FROM usr WHERE email =  ${usr.email}`);
-        if (res.rowCount != 1 && usr.password)
-            throw new common_1.UnauthorizedException("User not found");
+        else
+            throw new common_1.BadRequestException("Fields are missing");
+        if (!usr.password)
+            throw new common_1.BadRequestException("Fields are missing");
+        if (res.rowCount != 1)
+            throw new common_1.BadRequestException("User not found");
         let match = bcrypt.compareSync(usr.password, res.rows[0].password);
         if (match) {
             return res.rows[0];

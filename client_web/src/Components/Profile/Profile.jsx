@@ -1,37 +1,44 @@
+// Extern modules
 import React from 'react'
-import Request from '../Request'
 import { useCookies } from 'react-cookie'
-import { Link } from 'react-router-dom'
-import styles from './Profile.module.css'
+
+// My modules
 import AppBar from '../AppBar/AppBar'
+import Request from '../Request'
+import { goToPage } from '../Utils';
+
+// Styles
+import styles from './Profile.module.css'
 
 function Profile() {
-    const [cookies, setCookies, removeCookie] = useCookies(["logged", "access_token", "user"])
+    const [cookies, setCookies, removeCookie] = useCookies(["logged", "access_token", "username"])
 
-    if (cookies.logged == undefined) {
-        window.location.href = window.location.href.split("/")[0] + "/login"
+    if (cookies?.logged === undefined) {
+        console.log("BLBLBLBLBL")
+        goToPage("/login")
+    }
+
+    function resetCookie() {
+        removeCookie("logged")
+        removeCookie("access_token")
+        removeCookie("username")
+        removeCookie("closeGetStarted")
+        goToPage("/login")
     }
 
     React.useState(() => {
         Request.getProfile().then((res) => {
-            setCookies("user", res)
+            setCookies("username", res)
         }).catch((err) => {
-            console.log(err)
+            resetCookie()
         })    
     }, [])
-    
-    function resetCookie() {
-        removeCookie("logged")
-        removeCookie("access_token")
-        removeCookie("user")
-        removeCookie("closeGetStarted")
-        window.location.href = window.location.href.split("/")[0] + "/login"
-    }
+
     return (
         <div className={styles.background}>
             <AppBar></AppBar>
             <div className={styles.profilePage}>
-                <div>Profile of {cookies?.user?.username}</div>
+                <div>Profile of {cookies?.username}</div>
                 <button onClick={() => {resetCookie()}}>LOGOUT</button>
             </div>
         </div>

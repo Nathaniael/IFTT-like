@@ -3,6 +3,7 @@ import HomeTree from "../HomeThree/HomeTree";
 import { Link } from 'react-router-dom'
 import styles from './Home.module.css'
 import { useCookies } from 'react-cookie';
+
 function Home() {
   const [cookies] = useCookies(['closeGetStarted'])
 

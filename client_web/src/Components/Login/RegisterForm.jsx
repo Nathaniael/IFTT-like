@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './Login.module.css';
 import Request from '../Request';
 import { useCookies } from 'react-cookie';
+import { goToPage } from '../Utils';
 
 function RegisterForm({ setGotAccount, gotAccount }) {
     const [errorMessage, setErrorMessage] = React.useState("")
@@ -13,15 +14,11 @@ function RegisterForm({ setGotAccount, gotAccount }) {
         const email = e.target.children.email.value
         const password = e.target.children.password.value
 
-        Request.register(username, email, password).then((res) => {
-            if (res.success) {
-                setCookies('logged', true, { path: '/' })
-                window.location.href = window.location.href.split("/")[0] + "/profile"
-            } else {
-                setErrorMessage(res.message)
-            }
+        Request.register({username, email, password}).then((res) => {
+            setCookies('logged', true)
+            goToPage("/profile")
         }).catch((err) => {
-            setErrorMessage("Unexpected error")
+            setErrorMessage(err)
         })
     }
 

@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './Login.module.css';
 import Request from '../Request';
 import { useCookies } from 'react-cookie';
+import{ goToPage }from '../Utils';
 
 function LoginForm({ setGotAccount, gotAccount }) {
     const [errorMessage, setErrorMessage] = React.useState("")
@@ -12,15 +13,11 @@ function LoginForm({ setGotAccount, gotAccount }) {
         const usernameOrEmail = e.target.children.usernameOrEmail.value
         const password = e.target.children.password.value
 
-        Request.login(usernameOrEmail, password).then((res) => {
-            if (res.success) {
-                setCookies('logged', true, { path: '/' })
-                window.location.href = window.location.href.split("/")[0] + "/profile"
-            } else {
-                setErrorMessage(res.message)
-            }
+        Request.login({usernameOrEmail, password}).then((res) => {
+            setCookies('logged')
+            goToPage("/profile")
         }).catch((err) => {
-            setErrorMessage("Unexpected error")
+            setErrorMessage(err)
         })
     }
     return (
