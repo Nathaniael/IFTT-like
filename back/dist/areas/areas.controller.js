@@ -23,7 +23,8 @@ let AreasController = class AreasController {
         this.areasServices = areasServices;
     }
     async createArea(user, body, res) {
-        await this.areasServices.createArea(user["payload"].userId, body);
+        console.log(user);
+        await this.areasServices.createArea(user.userId, body);
         res.status(200).json("Area well created");
     }
 };

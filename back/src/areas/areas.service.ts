@@ -18,12 +18,17 @@ export class AreasService {
             return
         }
         let area = await this.pool.query(sql`SELECT * FROM area WHERE id_act = ${action.rows[0].id}`)
-        console.log(area.rows[0].id)
-        let reaction = await this.pool.query(sql`SELECT * FROM reaction WHERE id = ${area.rows[0].id_react}`)
-        console.log(reaction.rows[0].params)
-        let data = JSON.parse(reaction.rows[0].params.toString())
-        console.log("data:", data)
-        this.httpService.post(`http://localhost:8080/reactions/${reaction.rows[0].reaction_route}`, data).toPromise()
+        console.log(area.rows)
+        for (var elem of area.rows) {
+            let reaction = await this.pool.query(sql`SELECT * FROM reaction WHERE id = ${elem.id_react}`)
+            let data = JSON.parse(reaction.rows[0].params.toString())
+            this.httpService.post(`http://localhost:8080/reactions/${reaction.rows[0].reaction_route}`, data).toPromise()
+        }
+        // let reaction = await this.pool.query(sql`SELECT * FROM reaction WHERE id = ${area.rows[0].id_react}`)
+        // console.log(reaction.rows[0].params)
+        // let data = JSON.parse(reaction.rows[0].params.toString())
+        // console.log("data:", data)
+        // this.httpService.post(`http://localhost:8080/reactions/${reaction.rows[0].reaction_route}`, data).toPromise()
     }
 
     checkBodyCreateArea(body: AreaCreationDto) {
