@@ -53,6 +53,7 @@ CREATE TABLE readictionnary (
 CREATE TABLE action (
     id SERIAL PRIMARY KEY,
     params TEXT NOT NULL,
+    type TEXT NOT NULL,
     dico_id INT NOT NULL,
     CONSTRAINT fk_dico FOREIGN KEY(dico_id) REFERENCES adictionnary(id)
 );
@@ -60,6 +61,7 @@ CREATE TABLE action (
 CREATE TABLE reaction (
     id SERIAL PRIMARY KEY,
     params TEXT NOT NULL,
+    type TEXT NOT NULL,
     reaction_route TEXT NOT NULL,
     dico_id INT NOT NULL,
     CONSTRAINT fk_dico FOREIGN KEY(dico_id) REFERENCES readictionnary(id)
@@ -77,14 +79,16 @@ CREATE TABLE area (
 
 -- SERVICES
 INSERT INTO "service" ("name", "has_oauth", "query_code", "query_token", "logo", "client_id", "client_secret", "redirect_uri", "scope")
-VALUES ('Github', '1', 'https://github.com/login/oauth/authorize', 'https://github.com/login/oauth/access_token', '/github.png', '07ffe0c7a5f5148909e2', '4d758dd8b4e8fcfe9aaf30e353ebc87ad9a069ce', 'http://localhost:8081', ''); -- ID:1
-INSERT INTO "service" ("name", "has_oauth", "query_code", "query_token", "logo", "client_id", "client_secret", "redirect_uri", "scope")
-VALUES ('Mailjet', '0', '', '', '/mail.png', '', '', '', ''); -- ID:2
+VALUES ('Github', '1', 'https://github.com/login/oauth/authorize', 'https://github.com/login/oauth/access_token', '/github.png', '07ffe0c7a5f5148909e2', '4d758dd8b4e8fcfe9aaf30e353ebc87ad9a069ce', 'http://localhost:8081', ''), -- ID:1
+    ('Mailjet', '0', '', '', '/mail.png', '', '', '', ''), -- ID:2
+    ('Gitlab', '1', 'https://gitlab.com/oauth/authorize', 'https://gitlab.com/oauth/token', '', 'ab602b60dacc5088c4f7ad1426935d458698aece545e352ecb67670f1116d608', '0e54a1fde0860c79a63cfc2f5bf659278bec2f56ed4cc6cc1a9bfa81be2c5009', 'http://localhost:8081', ''); -- ID: 3
 
 -- ACTIONS DICO
 INSERT INTO "adictionnary" ("name", "description", "params", "service_id")
-VALUES ('Any new repository event', 'This trigger reaction every time a new event occurs in a repository.', '[{"number":"repoId"},{"string":"secret"}]', '1');
+VALUES ('Any new repository event', 'This trigger reaction every time a new event occurs in a repository.', '[{"number":"repoId","string":"secret"}]', '1'),
+('gitlab push', 'This triggers reaction everytime someone pushes something on a precise repository', '[{"event_name":"push","service":"Gitlab"}]', '3')
+;
 
 -- REACTIONS DICO
-INSERT INTO "readictionnary" ("name", "description", "params", "service_id")
-VALUES ('Send an email', 'When triggered, send an email to a chosen recipient, a subject and a body', '[{"string":"username"},{"string":"recipient"},{"string":"subject"},{"string":"body"}]' , '2');
+INSERT INTO "readictionnary" ("name", "description", "params","service_id")
+VALUES ('Send an email', 'When triggered, send an email to a chosen recipient, a subject and a body', '[{"string":"username", "string":"recipient","string":"subject", "string":"body"}]' , '2');

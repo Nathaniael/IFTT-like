@@ -1,66 +1,68 @@
-import 'package:client_mobile/Widgets/Navbar/Navbar.dart';
 import 'package:flutter/material.dart';
+import 'package:client_mobile/Widgets/Navbar/navbar.dart';
 
 @immutable
-class Oneservicepage extends StatefulWidget {
-  const Oneservicepage({Key? key}) : super(key: key);
+class CreateAreaPage extends StatefulWidget {
+  const CreateAreaPage({Key? key}) : super(key: key);
 
   @override
-  _OneservicepageState createState() => _OneservicepageState();
+  CreateAreaPageState createState() => CreateAreaPageState();
 }
 
 void onPressedBackground(context) {
   Navigator.popAndPushNamed(context, '/services');
 }
 
-List<Item> _items = [
-  Item(
-    name: 'Github',
-    actionText: "Blablabla 1",
-    uid: '1',
-    imageProvider: const AssetImage('web/png/emile.png'),
-  ),
-  Item(
-    name: 'Mail',
-    actionText: "Blablabla 2",
-    uid: '2',
-    imageProvider: const AssetImage('web/png/baptiste.png'),
-  ),
-  Item(
-    name: 'Askip on a des area',
-    actionText: "blablabla 3",
-    uid: '3',
-    imageProvider: const AssetImage('web/png/nathaniael.png'),
-  ),
-  Item(
-    name: 'Github',
-    actionText: "Blablabla 1",
-    uid: '4',
-    imageProvider: const AssetImage('web/png/emile.png'),
-  ),
-  Item(
-    name: 'Mail',
-    actionText: "Blablabla 2",
-    uid: '5',
-    imageProvider: const AssetImage('web/png/baptiste.png'),
-  ),
-  Item(
-    name: 'Askip on a des area',
-    actionText: "blablabla 3",
-    uid: '6',
-    imageProvider: const AssetImage('web/png/nathaniael.png'),
-  ),
+enum ItemType { action, reaction, none }
+
+// late String name;
+// late ImageProvider logo;
+// late List<Item> items;
+
+List<Service> _services = [
+  Service(
+      id: 1,
+      name: 'Github',
+      logo: const AssetImage('web/png/github.png'),
+      items: <Item>[
+        Item(
+            name: 'Push event',
+            description: 'Trigger a reaction when a new push occurs',
+            id: 1,
+            imageProvider: const AssetImage('web/png/baptiste.png'))
+      ]),
+  Service(
+      id: 2,
+      name: 'Email',
+      logo: const AssetImage('web/png/mail.png'),
+      items: <Item>[
+        Item(
+            name: 'Send an email',
+            description: 'Send a customizable email',
+            id: 1,
+            imageProvider: const AssetImage('web/png/baptiste.png'))
+      ])
 ];
 
-class _OneservicepageState extends State<Oneservicepage>
+class CreateAreaPageState extends State<CreateAreaPage>
     with TickerProviderStateMixin {
-  final List<Customer> _people = [
-    Customer(
+  final List<Placeholder> _placeholders = [
+    Placeholder(
+      item: Item(
+          imageProvider: const AssetImage('web/png/baptiste.png'),
+          name: "",
+          description: "Pas d'action",
+          id: 1),
       name: 'Action',
       imageProvider: const NetworkImage('https://flutter'
           '.dev/docs/cookbook/img-files/effects/split-check/Avatar1.jpg'),
     ),
-    Customer(
+    Placeholder(
+      item: Item(
+          imageProvider: const AssetImage('web/png/baptiste.png'),
+          name: "",
+          description: "Pas de réaction",
+          id: 1),
       name: 'Reaction',
       imageProvider: const NetworkImage('https://flutter'
           '.dev/docs/cookbook/img-files/effects/split-check/Avatar2.jpg'),
@@ -69,12 +71,12 @@ class _OneservicepageState extends State<Oneservicepage>
 
   final GlobalKey _draggableKey = GlobalKey();
 
-  void _itemDroppedOnCustomerCart({
+  void _itemDroppedOnPlaceholderBox({
     required Item item,
-    required Customer customer,
+    required Placeholder placeholder,
   }) {
     setState(() {
-      customer.item = item;
+      placeholder.item = item;
     });
   }
 
@@ -94,9 +96,9 @@ class _OneservicepageState extends State<Oneservicepage>
           child: Column(
             children: [
               Expanded(
-                child: _buildMenuList(),
+                child: _buildServicesList(),
               ),
-              _buildPeopleRow(),
+              _buildPlaceholderRow(),
             ],
           ),
         ),
@@ -104,55 +106,58 @@ class _OneservicepageState extends State<Oneservicepage>
     );
   }
 
-  Widget _buildMenuList() {
+  // Widget _buildItemsFromService () {
+
+  // }
+
+  Widget _buildServicesList() {
     return ListView.separated(
       padding: const EdgeInsets.all(16.0),
-      itemCount: _items.length,
+      itemCount: _services.length,
       separatorBuilder: (context, index) {
         return const SizedBox(
           height: 12.0,
         );
       },
       itemBuilder: (context, index) {
-        final item = _items[index];
-        return _buildMenuItem(
-          item: item,
+        final service = _services[index];
+        return _buildServiceItem(
+          service: service,
         );
       },
     );
   }
 
-  Widget _buildMenuItem({
-    required Item item,
+  Widget _buildServiceItem({
+    required Service service,
   }) {
-    return LongPressDraggable<Item>(
-      data: item,
+    return LongPressDraggable<Service>(
+      data: service,
       dragAnchorStrategy: pointerDragAnchorStrategy,
       feedback: DraggingListItem(
         dragKey: _draggableKey,
-        photoProvider: item.imageProvider,
+        photoProvider: service.getLogo,
       ),
-      child: MenuListItem(
-        name: item.name,
-        price: item.actionText,
-        photoProvider: item.imageProvider,
+      child: MenuListService(
+        name: service.name,
+        photoProvider: service.getLogo,
       ),
     );
   }
 
-  Widget _buildPeopleRow() {
+  Widget _buildPlaceholderRow() {
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: 8.0,
         vertical: 20.0,
       ),
       child: Row(
-        children: _people.map(_buildPersonWithDropZone).toList(),
+        children: _placeholders.map(_buildPlaceholderWithDropZone).toList(),
       ),
     );
   }
 
-  Widget _buildPersonWithDropZone(Customer customer) {
+  Widget _buildPlaceholderWithDropZone(Placeholder placeholder) {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(
@@ -160,15 +165,15 @@ class _OneservicepageState extends State<Oneservicepage>
         ),
         child: DragTarget<Item>(
           builder: (context, candidateItems, rejectedItems) {
-            return CustomerCart(
+            return PlaceholderBox(
               highlighted: candidateItems.isNotEmpty,
-              customer: customer,
+              placeholder: placeholder,
             );
           },
           onAccept: (item) {
-            _itemDroppedOnCustomerCart(
+            _itemDroppedOnPlaceholderBox(
               item: item,
-              customer: customer,
+              placeholder: placeholder,
             );
           },
         ),
@@ -177,17 +182,16 @@ class _OneservicepageState extends State<Oneservicepage>
   }
 }
 
-class CustomerCart extends StatelessWidget {
-  const CustomerCart({
+class PlaceholderBox extends StatelessWidget {
+  const PlaceholderBox({
     Key? key,
-    required this.customer,
+    required this.placeholder,
     this.highlighted = false,
-    this.hasItems = false,
+    // this.hasItems = false,
   }) : super(key: key);
 
-  final Customer customer;
+  final Placeholder placeholder;
   final bool highlighted;
-  final bool hasItems;
 
   @override
   Widget build(BuildContext context) {
@@ -212,22 +216,21 @@ class CustomerCart extends StatelessWidget {
                   width: 46,
                   height: 46,
                   child: Image(
-                    image: customer.formattedTotalItemPrice.imageProvider,
+                    image: placeholder.getItem.imageProvider,
                     fit: BoxFit.cover,
                   ),
                 ),
               ),
               const SizedBox(height: 8.0),
               Text(
-                customer.name,
-                style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                      color: textColor,
-                      fontWeight:
-                          hasItems ? FontWeight.normal : FontWeight.bold,
-                    ),
+                placeholder.name,
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle1
+                    ?.copyWith(color: textColor, fontWeight: FontWeight.normal),
               ),
               Visibility(
-                visible: hasItems,
+                // visible: hasItems,
                 maintainState: true,
                 maintainAnimation: true,
                 maintainSize: true,
@@ -235,14 +238,14 @@ class CustomerCart extends StatelessWidget {
                   children: [
                     const SizedBox(height: 4.0),
                     Text(
-                      customer.item.actionText,
+                      placeholder.getItem.description,
                       style: Theme.of(context).textTheme.caption!.copyWith(
                             color: textColor,
                             fontSize: 16.0,
                             fontWeight: FontWeight.bold,
                           ),
                     ),
-                    const SizedBox(height: 4.0),
+                    const SizedBox(height: 4.0)
                   ],
                 ),
               )
@@ -254,17 +257,15 @@ class CustomerCart extends StatelessWidget {
   }
 }
 
-class MenuListItem extends StatelessWidget {
-  const MenuListItem({
+class MenuListService extends StatelessWidget {
+  const MenuListService({
     Key? key,
     this.name = '',
-    this.price = '',
     required this.photoProvider,
     this.isDepressed = false,
   }) : super(key: key);
 
   final String name;
-  final String price;
   final ImageProvider photoProvider;
   final bool isDepressed;
 
@@ -308,14 +309,7 @@ class MenuListItem extends StatelessWidget {
                           fontSize: 18.0,
                         ),
                   ),
-                  const SizedBox(height: 10.0),
-                  Text(
-                    price,
-                    style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18.0,
-                        ),
-                  ),
+                  const SizedBox(height: 10.0)
                 ],
               ),
             ),
@@ -359,36 +353,43 @@ class DraggingListItem extends StatelessWidget {
   }
 }
 
-// @immutable
 class Item {
-  Item({
-    required this.actionText,
-    required this.name,
-    required this.uid,
-    required this.imageProvider,
-  });
-  String actionText;
+  ItemType type;
   String name;
-  String uid;
+  String description;
+  int id;
   ImageProvider imageProvider;
+  Item({
+    this.type = ItemType.none,
+    this.name = "Action",
+    this.description = "No action",
+    this.id = 0,
+    this.imageProvider = const AssetImage('web/png/baptiste.png'),
+  });
 }
 
-class Customer {
-  Customer({
-    required this.name,
-    required this.imageProvider,
-    Item? item,
-  });
+class Service {
+  int id;
+  String name;
+  ImageProvider logo;
+  List<Item> items;
+  Service(
+      {required this.id,
+      required this.name,
+      required this.logo,
+      required this.items});
+  ImageProvider get getLogo {
+    return logo;
+  }
+}
 
+class Placeholder {
   String name;
   ImageProvider imageProvider;
-  Item item = Item(
-    name: 'No action',
-    actionText: "No action",
-    uid: '1',
-    imageProvider: const AssetImage('web/png/areaPlaceHolder.png'),
-  );
-  Item get formattedTotalItemPrice {
+  Item item;
+  Placeholder(
+      {required this.name, required this.imageProvider, required this.item});
+  Item get getItem {
     return item;
   }
 }

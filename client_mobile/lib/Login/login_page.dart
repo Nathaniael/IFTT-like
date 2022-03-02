@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:client_mobile/Widgets/Background.dart';
+import 'package:client_mobile/Widgets/background.dart';
 
-class RegisterPage extends StatelessWidget {
-  const RegisterPage({Key? key}) : super(key: key);
+class LoginPage extends StatelessWidget {
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,20 +17,12 @@ class RegisterPage extends StatelessWidget {
               alignment: Alignment.centerLeft,
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: const Text(
-                "REGISTER",
+                "LOGIN",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Color(0xFF2661FA),
                     fontSize: 36),
                 textAlign: TextAlign.left,
-              ),
-            ),
-            SizedBox(height: size.height * 0.03),
-            Container(
-              alignment: Alignment.center,
-              margin: const EdgeInsets.symmetric(horizontal: 40),
-              child: const TextField(
-                decoration: InputDecoration(labelText: "Name"),
               ),
             ),
             SizedBox(height: size.height * 0.03),
@@ -54,12 +46,15 @@ class RegisterPage extends StatelessWidget {
             Container(
               alignment: Alignment.centerRight,
               margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-              child: RaisedButton(
-                onPressed: () {},
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(80.0)),
-                textColor: Colors.white,
-                padding: const EdgeInsets.all(0),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.popAndPushNamed(context, '/area');
+                },
+                style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(80.0)),
+                    textStyle: const TextStyle(color: Colors.white),
+                    padding: const EdgeInsets.all(0)),
                 child: Container(
                   alignment: Alignment.center,
                   height: 50.0,
@@ -72,9 +67,9 @@ class RegisterPage extends StatelessWidget {
                       ])),
                   padding: const EdgeInsets.all(0),
                   child: GestureDetector(
-                    onTap: () => {Navigator.pushNamed(context, '/services')},
+                    onTap: () => {},
                     child: const Text(
-                      "SIGN UP",
+                      "LOGIN",
                       textAlign: TextAlign.center,
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
@@ -86,9 +81,9 @@ class RegisterPage extends StatelessWidget {
               alignment: Alignment.centerRight,
               margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: GestureDetector(
-                onTap: () => {Navigator.popAndPushNamed(context, '/login')},
+                onTap: () => {Navigator.popAndPushNamed(context, '/register')},
                 child: const Text(
-                  "Already Have an Account? Sign in",
+                  "Don't have an Account? Sign up",
                   style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,

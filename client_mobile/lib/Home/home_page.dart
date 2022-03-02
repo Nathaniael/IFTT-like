@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:client_mobile/Widgets/BleuRadialBackground.dart';
-import 'package:client_mobile/Widgets/Text/TextADN.dart';
+import 'package:client_mobile/Widgets/bleuradialbackground.dart';
+import 'package:client_mobile/Widgets/Text/text_adn.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
