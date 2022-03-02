@@ -1,17 +1,3 @@
-.logWidget {
-    margin: auto;
-    width: 42.857vw;
-    height: 42.857vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.background {
-    background: radial-gradient(rgb(0, 126, 167), rgb(0, 13, 77));
-    min-height: 100vh;
-}
-
 .title {
     text-align: center;
     color: white;
@@ -74,8 +60,4 @@
 
 .gotAccount:hover {
     color: grey;
-}
-
-.sizedBox100pxH {
-    height: 7.143vw;
 }

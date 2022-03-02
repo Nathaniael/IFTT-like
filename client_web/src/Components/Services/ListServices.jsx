@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './ChooseService.module.css'
+import styles from './styles/ChooseService.module.css'
 import { Link } from 'react-router-dom'
 import AppBar from "../AppBar/AppBar";
 import ConfigArea from '../ConfigArea/ConfigArea';
@@ -51,7 +51,7 @@ function ServiceWidget({ service, onLeft, setActiveService }) {
     )
 }
 
-function ChooseService() {
+function ListServices() {
     const [listServices, setListServices] = React.useState([])
     const [cookies] = useCookies()
     const [activeService, setActiveService] = React.useState()
@@ -90,4 +90,4 @@ function ChooseService() {
     )
 }
 
-export default ChooseService
+export default ListServices

@@ -1,0 +1,43 @@
+.params {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 1.786vw;
+}
+
+.item {
+    width: 40%;
+    margin: 0 calc(5% - 0.357vw);
+    padding: 0.357vw;
+}
+
+.input {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0);
+    border: 1px solid white;
+    border-radius: 3.571vw;
+    padding: 0.357vw;
+    padding-left: 1vw;
+    text-decoration: none;
+    color: white;
+    text-align: center;
+}
+
+.input::placeholder {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.validInput {
+    background-color: rgb(232, 240, 254);
+    color: black;
+}
+
+.errorInput {
+    background-color: rgb(232, 240, 254);
+    color: red;
+    border: 1px solid red;
+}
+
+.errorInput::placeholder {
+    color: rgba(255, 0, 0, 0.500);
+}

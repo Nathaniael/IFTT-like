@@ -1,9 +1,3 @@
-// actions: []
-// id: 2
-// logo: "/mail.png"
-// name: "Mailjet"
-// reactions: [{…}]
-
 type ActionReaction = {
     id: number,
     service_id: number

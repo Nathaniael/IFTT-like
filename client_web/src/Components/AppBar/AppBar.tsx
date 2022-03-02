@@ -13,10 +13,12 @@ import styles from './styles/AppBar.module.css'
 function AppBar() {
     const [cookies] = useCookies(['logged', 'closeGetStarted'])
 
+    // Actualize nav bar when the user log in / out, or when he choose to hide / show the getStarted options
     React.useEffect(() => {
-    }, [cookies?.closeGetStarted])
+    }, [cookies?.closeGetStarted, cookies?.logged])
     return (
         <div className={styles.appBar}>
+            {/* AppBar custom links */}
             <ABAnimatedImageTextLink
                 linkTitle='Home'
                 linkPath='/'
@@ -27,6 +29,7 @@ function AppBar() {
                 linkPath='/services'
                 imgUrl='/three/baptiste.png'
             ></ABAnimatedImageTextLink>
+            {/* Show the getStarted link only with the client choose to not hide it */}
             {cookies?.closeGetStarted ?
                 null
                 :
@@ -36,6 +39,7 @@ function AppBar() {
                     imgUrl="/three/nathaniael.png"
                 ></ABAnimatedImageTextLink>
             }
+            {/* Show the profile link if the user is logged, the login link if not */}
             {cookies?.logged ?
                 <ABAnimatedImageTextLink
                     linkTitle="Profile"

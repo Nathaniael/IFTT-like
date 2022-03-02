@@ -1,67 +1,6 @@
 import React from 'react'
-import styles from './Service.module.css'
-import MoveComp from '../MoveComp'
-
-function ButtonService ({ aOrRea, imgUrl, isAction, indexDraggable, setAorReaction }) {
-    const [willDrag, setWillDrag] = React.useState(false)
-    const selectorDrag = "draggable_" + (isAction ? "action" : "reaction") + indexDraggable
-
-    function addElemToArea(isActionDest) {
-        if (isAction !== isActionDest) {
-            return
-        }
-        if (isAction) {
-            setAorReaction({
-                'id': aOrRea.id,
-                'title': aOrRea.name,
-                'imgUrl': imgUrl,
-                'params': aOrRea.params
-            })
-        } else { // Is a reaction
-            setAorReaction({
-                'id': aOrRea.id,
-                'title': aOrRea.name,
-                'imgUrl': imgUrl,
-                'params': aOrRea.params
-            })
-        }
-    }
-    return (
-        <div>
-            {willDrag ?
-                <MoveComp selector={selectorDrag} addElemToArea={addElemToArea}></MoveComp>
-            : null}
-            <div onMouseEnter={() => {setWillDrag(true)}} className={`${styles.buttonPadding}`} id={selectorDrag}>
-                <button className={`${styles.button}`}>{aOrRea.name}</button>
-            </div>
-        </div>
-    )
-}
-
-function AorReaList({ title, service, isAction, setAorReaction }) {
-    const list = isAction ? service?.actions : service?.reactions
-    return (
-        <div className={styles.subDescriptionAction}>
-            <div className={styles.littleTitle}>
-                {title}
-            </div>
-            <div>
-                {list?.map((elem, index) => {
-                    return (
-                        <ButtonService
-                            key={index}
-                            aOrRea={elem}
-                            imgUrl={service?.logo}
-                            isAction={isAction}
-                            setAorReaction={setAorReaction}
-                            indexDraggable={index}
-                        ></ButtonService> 
-                )
-                })}
-            </div>
-        </div>
-    )
-}
+import styles from './styles/Service.module.css'
+import AorReaList from './AorReaList'
 
 function Service({service, setAction, setReaction}) {
     const [hover, setHover] = React.useState(false)

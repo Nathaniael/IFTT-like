@@ -16,11 +16,13 @@ type Props = {
 
 // Component
 function ABAnimatedImageTextLink(props: Props) {
+    // Default: Text of the link is visible
     const [animate, setAnimate] = React.useState(false)
 
     return (
         <Link
             to={props.linkPath}
+            // Double animation on hover, when one elem fade out the other fade in
             onMouseEnter={() => {setAnimate(true)}}
             onMouseLeave={() => {setAnimate(false)}}>
             <div
