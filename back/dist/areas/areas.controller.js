@@ -22,9 +22,10 @@ let AreasController = class AreasController {
     constructor(areasServices) {
         this.areasServices = areasServices;
     }
-    async createArea(user, body) {
+    async createArea(user, body, res) {
         console.log(user);
-        this.areasServices.createArea(user["payload"].userId, body);
+        await this.areasServices.createArea(user.userId, body);
+        res.status(200).json("Area well created");
     }
 };
 __decorate([
@@ -32,8 +33,9 @@ __decorate([
     (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
     __param(0, (0, user_decorator_1.User)()),
     __param(1, (0, common_1.Body)()),
+    __param(2, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, areas_dto_1.AreaCreationDto]),
+    __metadata("design:paramtypes", [Object, areas_dto_1.AreaCreationDto, Object]),
     __metadata("design:returntype", Promise)
 ], AreasController.prototype, "createArea", null);
 AreasController = __decorate([

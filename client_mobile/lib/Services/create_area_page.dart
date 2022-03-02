@@ -26,6 +26,7 @@ List<Service> _services = [
       logo: const AssetImage('web/png/github.png'),
       items: <Item>[
         Item(
+            type: ItemType.action,
             name: 'Push event',
             description: 'Trigger a reaction when a new push occurs',
             id: 1,
@@ -37,6 +38,7 @@ List<Service> _services = [
       logo: const AssetImage('web/png/mail.png'),
       items: <Item>[
         Item(
+            type: ItemType.reaction,
             name: 'Send an email',
             description: 'Send a customizable email',
             id: 1,
@@ -49,6 +51,7 @@ class CreateAreaPageState extends State<CreateAreaPage>
   final List<Placeholder> _placeholders = [
     Placeholder(
       item: Item(
+          type: ItemType.none,
           imageProvider: const AssetImage('web/png/baptiste.png'),
           name: "",
           description: "Pas d'action",
@@ -59,11 +62,12 @@ class CreateAreaPageState extends State<CreateAreaPage>
     ),
     Placeholder(
       item: Item(
+          type: ItemType.none,
           imageProvider: const AssetImage('web/png/baptiste.png'),
           name: "",
           description: "Pas de réaction",
           id: 1),
-      name: 'Reaction',
+      name: 'Réaction',
       imageProvider: const NetworkImage('https://flutter'
           '.dev/docs/cookbook/img-files/effects/split-check/Avatar2.jpg'),
     ),
@@ -359,13 +363,12 @@ class Item {
   String description;
   int id;
   ImageProvider imageProvider;
-  Item({
-    this.type = ItemType.none,
-    this.name = "Action",
-    this.description = "No action",
-    this.id = 0,
-    this.imageProvider = const AssetImage('web/png/baptiste.png'),
-  });
+  Item(
+      {required this.type,
+      required this.name,
+      required this.description,
+      required this.id,
+      required this.imageProvider});
 }
 
 class Service {

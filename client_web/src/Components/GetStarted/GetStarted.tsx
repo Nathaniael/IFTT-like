@@ -1,14 +1,22 @@
+// Extern modules
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 
+// My modules
 import AppBar from '../AppBar/AppBar'
 import { goToPage } from '../Utils'
 
-import styles from './GetStarted.module.css'
+// Styles
+import styles from './styles/GetStarted.module.css'
 
+
+// Types
+
+
+// Component
 function GetStarted() {
-    const [cookies, setCookies, removeCookies] = useCookies('closeGetStarted')
+    const [cookies, setCookies, removeCookies] = useCookies(['closeGetStarted'])
 
     function closeIt() {
         setCookies('closeGetStarted', true);

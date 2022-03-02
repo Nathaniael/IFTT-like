@@ -5,3 +5,11 @@ export declare class AreaCreationDto {
     reaction_id: string;
     reaction_params: JSON;
 }
+export declare class DicoDto {
+    params: string;
+    name: string;
+    description: string;
+    service_id: string;
+    id: string;
+    reaction_route: string;
+}

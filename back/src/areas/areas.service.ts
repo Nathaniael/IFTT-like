@@ -1,8 +1,8 @@
 import { HttpModule, HttpService } from '@nestjs/axios';
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectPool } from 'nestjs-slonik';
 import { DatabasePool, sql } from 'slonik';
-import { AreaCreationDto } from './areas.dto';
+import { AreaCreationDto, DicoDto } from './areas.dto';
 @Injectable()
 export class AreasService {
     constructor(
@@ -11,25 +11,51 @@ export class AreasService {
         private readonly httpService: HttpService
     ) { }
 
-    async callReaction(params: string) {
-        console.log(params)
-        let action = await this.pool.query(sql`SELECT * FROM action WHERE params = ${params}`)
-        console.log(action)
+    async callReaction(params: string, type: string) {
+        console.log(params, " ", type)
+        var action = await this.pool.query(sql`SELECT * FROM action WHERE params = ${params} AND type = ${type}`)
+        if (action.rowCount === 0) {
+            return
+        }
         let area = await this.pool.query(sql`SELECT * FROM area WHERE id_act = ${action.rows[0].id}`)
-        let reaction = await this.pool.query(sql`SELECT * FROM reaction WHERE id = ${area.rows[0].id_react}`)
-        let data = JSON.parse(reaction.rows[0].params.toString())
-        console.log("data:", data)
-        this.httpService.post(`http://localhost:8080/reactions/${reaction.rows[0].reaction_route}`, data).toPromise()
+        console.log(area.rows)
+        for (var elem of area.rows) {
+            let reaction = await this.pool.query(sql`SELECT * FROM reaction WHERE id = ${elem.id_react}`)
+            let data = JSON.parse(reaction.rows[0].params.toString())
+            this.httpService.post(`http://localhost:8080/reactions/${reaction.rows[0].reaction_route}`, data).toPromise()
+        }
+        // let reaction = await this.pool.query(sql`SELECT * FROM reaction WHERE id = ${area.rows[0].id_react}`)
+        // console.log(reaction.rows[0].params)
+        // let data = JSON.parse(reaction.rows[0].params.toString())
+        // console.log("data:", data)
+        // this.httpService.post(`http://localhost:8080/reactions/${reaction.rows[0].reaction_route}`, data).toPromise()
+    }
+
+    checkBodyCreateArea(body: AreaCreationDto) {
+        if (body.action_id === undefined || body.reaction_id === undefined)
+            throw new BadRequestException("Missing action or reaction")
+        Object.keys(body.action_params).forEach(key => {
+            var value = body.action_params[key]
+            if (value === null || value === "")
+                throw new BadRequestException("Bad value for: " + JSON.stringify(key))
+        });
+        Object.keys(body.reaction_params).forEach(key => {
+            var value = body.reaction_params[key]
+            if (value === null || value === "")
+                throw new BadRequestException("Bad value for: " + JSON.stringify(key))
+        });
     }
 
     async createArea(userId: string, body: AreaCreationDto) {
-        const reaction_dico = await this.pool.query(sql`SELECT * FROM readictionnary WHERE id = ${body.reaction_id}`)
-        console.log(reaction_dico)
+        console.log(body)
+        this.checkBodyCreateArea(body)
+        const reaction_dico = await this.pool.query(sql<DicoDto>`SELECT * FROM readictionnary WHERE id = ${body.reaction_id}`)
         const reaction_service = await this.pool.query(sql`SELECT * FROM service WHERE id = ${reaction_dico.rows[0].service_id}`)
-        const action = await this.pool.query(sql`INSERT INTO action (params, dico_id)
-        VALUES (${JSON.stringify(body.action_params)}, ${body.action_id}) RETURNING id;`)
-        const reaction = await this.pool.query(sql`INSERT INTO reaction (params, reaction_route,dico_id)
-        VALUES (${JSON.stringify(body.reaction_params)}, ${reaction_service.rows[0].name} ,${body.reaction_id}) RETURNING id;`)
+        const action_dico = await this.pool.query(sql<DicoDto>`SELECT * FROM adictionnary WHERE id = ${body.action_id}`)
+        const action = await this.pool.query(sql`INSERT INTO action (params, type, dico_id)
+        VALUES (${JSON.stringify(body.action_params)}, ${action_dico.rows[0].params},${body.action_id}) RETURNING id;`)
+        const reaction = await this.pool.query(sql`INSERT INTO reaction (params, type, reaction_route,dico_id)
+        VALUES (${JSON.stringify(body.reaction_params)}, ${reaction_dico.rows[0].params},${reaction_service.rows[0].name} ,${body.reaction_id}) RETURNING id;`)
 
         const area = await this.pool.query(sql`INSERT INTO area (
             id_act,
@@ -38,6 +64,5 @@ export class AreasService {
                 ${action.rows[0].id},
                 ${reaction.rows[0].id},
                 ${userId})`)
-        console.log(action, reaction, area)
     }
 }

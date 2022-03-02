@@ -14,36 +14,3 @@
     text-decoration: none;
     color: white;
 }
-
-.animateText {
-    opacity: 0; 
-    animation: disapearSpin 0.8s;
-}
-
-@keyframes appearSpin {
-    0% {
-        -webkit-transform: scale(0%);
-        opacity: 0;
-    }
-    50% {
-        opacity: 0;
-    }
-    100% {
-        -webkit-transform: scale(100%);
-        opacity: 1;
-    }
-}
-
-@keyframes disapearSpin {
-    0% {
-        -webkit-transform: scale(100%);
-        opacity: 1;
-    }
-    50% {
-        opacity: 1;
-    }
-    100% {
-        -webkit-transform: scale(30%);
-        opacity: 0;
-    }
-}

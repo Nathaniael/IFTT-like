@@ -8,15 +8,10 @@ import Request from '../Request'
 import { goToPage } from '../Utils';
 
 // Styles
-import styles from './Profile.module.css'
+import styles from './styles/Profile.module.css'
 
 function Profile() {
-    const [cookies, setCookies, removeCookie] = useCookies(["logged", "access_token", "username"])
-
-    if (cookies?.logged === undefined) {
-        console.log("BLBLBLBLBL")
-        goToPage("/login")
-    }
+    const [cookies, setCookies, removeCookie] = useCookies(["logged", "access_token", "username", "closeGetStarted"])
 
     function resetCookie() {
         removeCookie("logged")
@@ -27,12 +22,20 @@ function Profile() {
     }
 
     React.useState(() => {
+        // Redirect to login page if the user isn't logged
+        if (cookies?.logged === undefined) {
+            goToPage("/login")
+        }
+
+        // Get the user profile
         Request.getProfile().then((res) => {
+            // Set username if success
             setCookies("username", res)
         }).catch((err) => {
+            // Logout if error (to discourage the viscious ones)
             resetCookie()
         })    
-    }, [])
+    })
 
     return (
         <div className={styles.background}>

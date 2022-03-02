@@ -1,25 +1,40 @@
+// Extern modules
 import React, { Component } from "react";
 import * as THREE from "three";
-import styles from './HomeThree.module.css'
+
+// My modules
 import { addParticules, texturesParticules } from "./Particules";
 
-function setCameraPos(camera, posZ, posY, posX) {
+// Styles
+import styles from './styles/HomeThree.module.css'
+
+
+// Setup initial camera pos (the camera is fixed in the scene)
+function setCameraPos(camera: THREE.PerspectiveCamera, posZ: number, posY: number, posX: number) {
     camera.position.z = posZ
     camera.position.y = posY
     camera.position.x = posX
 }
 
-function particulesCreation(particulesCount, distance, scene, group) {
+// Loop to create a particule and lines system for each existing textures of particules, add group to scene
+function particulesCreation(particulesCount: number, distance: number, scene: THREE.Scene, group: THREE.Group) {
+  // Init ressources
   const positions = new Float32Array(particulesCount * 3)
   const textureLoader = new THREE.TextureLoader()
 
+  // Loop add particules
   for (let i = 0; i < texturesParticules().length; i++) {
     addParticules(group, positions, distance, i, textureLoader)
   }
+
+  // Add to scene
   scene.add(group)
 }
 
+
+// Component
 export default class HomeTree extends Component {
+    mount: any;
     componentDidMount() {
         var scene = new THREE.Scene()
 

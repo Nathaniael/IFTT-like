@@ -46,6 +46,7 @@
     },
     "devDependencies": {
         "@types/node": "^17.0.21",
+        "@types/three": "^0.137.0",
         "mini-css-extract-plugin": "2.4.5",
         "typescript-plugin-css-modules": "^3.4.0"
     }

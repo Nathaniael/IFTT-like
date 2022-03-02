@@ -1,4 +1,4 @@
-import { IsJSON, IsString } from "class-validator";
+import { IsJSON, IsString, IsNumber } from "class-validator";
 
 export class AreaCreationDto {
     @IsString()
@@ -15,4 +15,25 @@ export class AreaCreationDto {
 
     @IsJSON()
     reaction_params: JSON
+}
+
+export class DicoDto {
+    @IsString()
+    params: string
+    
+    @IsString()
+    name: string
+
+
+    @IsString()
+    description: string
+
+    @IsNumber()
+    service_id: string
+
+    @IsNumber()
+    id: string
+
+    @IsString()
+    reaction_route: string
 }

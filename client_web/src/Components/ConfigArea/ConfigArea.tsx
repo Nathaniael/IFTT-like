@@ -5,7 +5,7 @@ import React from 'react'
 import CAImageDescriptionArea from './CAImageDescriptionArea'
 import CAParams from './CAParams'
 import Request from '../Request'
-import { idContainerActionMoveable, idContainerReactionMoveable } from '../Utils'
+import { goToPage, idContainerActionMoveable, idContainerReactionMoveable } from '../Utils'
 
 // Styles
 import styles from './styles/ConfigArea.module.css'
@@ -13,7 +13,7 @@ import styles from './styles/ConfigArea.module.css'
 
 //Types
 
-import type { Service, ActionReactionConfig } from './Types'
+import type { Service, ActionReactionConfig } from '../../Types/Types'
 
 type KeyValues = {
     [key: string]: any
@@ -66,6 +66,7 @@ function ConfigArea(props: ConfigAreaProps) {
     // Use state to actualize the components everytime a new action / reaction is selected
     const [actionParams, setActionParams] = React.useState([])
     const [reactionParams, setReactionParams] = React.useState([])
+    const [errorCreating, setErrorCreating] = React.useState(undefined) as any
 
     React.useEffect(() => {
         // If an action is given, parse her params needed to create custom fields of action settings
@@ -91,63 +92,83 @@ function ConfigArea(props: ConfigAreaProps) {
         var action_params = getParamsUserValues(actionParams)
         var reaction_params = getParamsUserValues(reactionParams)
 
+        // Check if action is defined
+        if (!props?.action?.id) {
+            setErrorCreating("Missing action")
+            return
+        }
+        // Check if reaction is defined
+        if (!props?.reaction?.id) {
+            setErrorCreating("Missing reaction")
+            return
+        }
         // Call the api via the Request module
         Request.createArea({
-                action_id: props.action.id,
-                reaction_id: props.reaction.id,
-                action_params: action_params,
-                reaction_params: reaction_params
+            action_id: props.action.id,
+            reaction_id: props.reaction.id,
+            action_params: action_params,
+            reaction_params: reaction_params
         }).then((res) => {
             console.log(res)
+            // goToPage('/profile')
         }).catch((err) => {
             console.log(err)
+            setErrorCreating(err)
         })
     }
     return (
-        <div className={styles.configContainer}>
-
+        <div>
             {/* Return button displayed only if on specific service page */}
             {props.activeService !== undefined ?
-                <div onClick={() => {props.setActiveService(undefined)}} className={styles.arrow}>↩️</div>
+                <div className={styles.arrowContainer}>
+                    <img onClick={() => {props.setActiveService(undefined)}} className={styles.arrow} src='arrow_left.png' alt='arrow_left.png'></img>
+                    <img onClick={() => {createArea()}} className={`${styles.arrow} ${styles.arrowRight}`} src='arrow_left.png' alt='arrow_left.png'></img>
+                </div>
             : null}
 
-            {/* First container used to configure an Action */}
-            <div className={styles.confAreaBox}>
+            <div className={`${styles.configContainer} ${props.activeService == undefined ? styles.noMinHeight : null}`}>
 
-                {/* Container used to check hitbox for draggables actions + to unset action by clicking on it */}
-                <div id={idContainerActionMoveable} onClick={() => {props.setAction(undefined)}}>
+                {/* First container used to configure an Action */}
+                <div className={styles.confAreaBox}>
 
-                    {/* Container summarizing the reaction choosen */}
-                    <CAImageDescriptionArea
-                        description={props.action?.title ? props.action.title : defaultActionTitle}
-                        imgUrl={props.action?.imgUrl ? props.action.imgUrl : placeHolderUrl}></CAImageDescriptionArea>
+                    {/* Container used to check hitbox for draggables actions + to unset action by clicking on it */}
+                    <div id={idContainerActionMoveable} onClick={() => {props.setAction(undefined)}}>
+
+                        {/* Container summarizing the reaction choosen */}
+                        <CAImageDescriptionArea
+                            description={props.action?.title ? props.action.title : defaultActionTitle}
+                            imgUrl={props.action?.imgUrl ? props.action.imgUrl : placeHolderUrl}></CAImageDescriptionArea>
+                    </div>
+
+                    {/* Container of the params used to create the AREA */}
+                    <CAParams params={actionParams}></CAParams>
                 </div>
 
-                {/* Container of the params used to create the AREA */}
-                <CAParams params={actionParams}></CAParams>
-            </div>
+                {/* The add symbol at the middle */}
+                <div className={styles.errorContainer}>
+                    <img onClick={() => {createArea()}} className={styles.rouage} src='rouage.png' alt='rouage.png'></img>
+                    {errorCreating !== undefined ?
+                        <div className={styles.errorMessage}>{errorCreating}</div>
+                    : null}
+                    </div>
 
-            {/* The add symbol at the middle */}
-            <div onClick={() => {createArea()}} className={styles.arrow}>+</div>
+                {/* Second container used to configure a Reaction */}
+                <div className={styles.confAreaBox}>
 
-            {/* Second container used to configure a Reaction */}
-            <div className={styles.confAreaBox}>
+                    {/* Container used to check hitbox for draggables reactions + to unset reaaction by clicking on it */}
+                    <div id={idContainerReactionMoveable} onClick={() => {props.setReaction(undefined)}}>
 
-                {/* Container used to check hitbox for draggables reactions + to unset reaaction by clicking on it */}
-                <div id={idContainerReactionMoveable} onClick={() => {props.setReaction(undefined)}}>
-
-                    {/* Container summarizing the reaction choosen */}
-                    <CAImageDescriptionArea
-                        description={props.reaction?.title ? props.reaction.title : defaultReactionTitle}
-                        imgUrl={props.reaction?.imgUrl ? props.reaction.imgUrl : placeHolderUrl}></CAImageDescriptionArea>
+                        {/* Container summarizing the reaction choosen */}
+                        <CAImageDescriptionArea
+                            description={props.reaction?.title ? props.reaction.title : defaultReactionTitle}
+                            imgUrl={props.reaction?.imgUrl ? props.reaction.imgUrl : placeHolderUrl}></CAImageDescriptionArea>
+                    </div>
+                
+                    {/* Container of the params used to create the AREA */}
+                    <CAParams params={reactionParams}></CAParams>
                 </div>
-            
-                {/* Container of the params used to create the AREA */}
-                <CAParams params={reactionParams}></CAParams>
-            </div>
 
-            {/* Button to launch the creation of the area when action, reaction and settings are set */}
-            <div onClick={() => {createArea()}} className={styles.arrow}>➡️</div>
+            </div>
         </div>
     )
 }

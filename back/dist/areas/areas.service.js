@@ -22,24 +22,44 @@ let AreasService = class AreasService {
         this.pool = pool;
         this.httpService = httpService;
     }
-    async callReaction(params) {
-        console.log(params);
-        let action = await this.pool.query((0, slonik_1.sql) `SELECT * FROM action WHERE params = ${params}`);
-        console.log(action);
+    async callReaction(params, type) {
+        console.log(params, " ", type);
+        var action = await this.pool.query((0, slonik_1.sql) `SELECT * FROM action WHERE params = ${params} AND type = ${type}`);
+        if (action.rowCount === 0) {
+            return;
+        }
         let area = await this.pool.query((0, slonik_1.sql) `SELECT * FROM area WHERE id_act = ${action.rows[0].id}`);
-        let reaction = await this.pool.query((0, slonik_1.sql) `SELECT * FROM reaction WHERE id = ${area.rows[0].id_react}`);
-        let data = JSON.parse(reaction.rows[0].params.toString());
-        console.log("data:", data);
-        this.httpService.post(`http://localhost:8080/reactions/${reaction.rows[0].reaction_route}`, data).toPromise();
+        console.log(area.rows);
+        for (var elem of area.rows) {
+            let reaction = await this.pool.query((0, slonik_1.sql) `SELECT * FROM reaction WHERE id = ${elem.id_react}`);
+            let data = JSON.parse(reaction.rows[0].params.toString());
+            this.httpService.post(`http://localhost:8080/reactions/${reaction.rows[0].reaction_route}`, data).toPromise();
+        }
+    }
+    checkBodyCreateArea(body) {
+        if (body.action_id === undefined || body.reaction_id === undefined)
+            throw new common_1.BadRequestException("Missing action or reaction");
+        Object.keys(body.action_params).forEach(key => {
+            var value = body.action_params[key];
+            if (value === null || value === "")
+                throw new common_1.BadRequestException("Bad value for: " + JSON.stringify(key));
+        });
+        Object.keys(body.reaction_params).forEach(key => {
+            var value = body.reaction_params[key];
+            if (value === null || value === "")
+                throw new common_1.BadRequestException("Bad value for: " + JSON.stringify(key));
+        });
     }
     async createArea(userId, body) {
+        console.log(body);
+        this.checkBodyCreateArea(body);
         const reaction_dico = await this.pool.query((0, slonik_1.sql) `SELECT * FROM readictionnary WHERE id = ${body.reaction_id}`);
-        console.log(reaction_dico);
         const reaction_service = await this.pool.query((0, slonik_1.sql) `SELECT * FROM service WHERE id = ${reaction_dico.rows[0].service_id}`);
-        const action = await this.pool.query((0, slonik_1.sql) `INSERT INTO action (params, dico_id)
-        VALUES (${JSON.stringify(body.action_params)}, ${body.action_id}) RETURNING id;`);
-        const reaction = await this.pool.query((0, slonik_1.sql) `INSERT INTO reaction (params, reaction_route,dico_id)
-        VALUES (${JSON.stringify(body.reaction_params)}, ${reaction_service.rows[0].name} ,${body.reaction_id}) RETURNING id;`);
+        const action_dico = await this.pool.query((0, slonik_1.sql) `SELECT * FROM adictionnary WHERE id = ${body.action_id}`);
+        const action = await this.pool.query((0, slonik_1.sql) `INSERT INTO action (params, type, dico_id)
+        VALUES (${JSON.stringify(body.action_params)}, ${action_dico.rows[0].params},${body.action_id}) RETURNING id;`);
+        const reaction = await this.pool.query((0, slonik_1.sql) `INSERT INTO reaction (params, type, reaction_route,dico_id)
+        VALUES (${JSON.stringify(body.reaction_params)}, ${reaction_dico.rows[0].params},${reaction_service.rows[0].name} ,${body.reaction_id}) RETURNING id;`);
         const area = await this.pool.query((0, slonik_1.sql) `INSERT INTO area (
             id_act,
             id_react,
@@ -47,7 +67,6 @@ let AreasService = class AreasService {
                 ${action.rows[0].id},
                 ${reaction.rows[0].id},
                 ${userId})`);
-        console.log(action, reaction, area);
     }
 };
 AreasService = __decorate([
