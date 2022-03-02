@@ -25,7 +25,7 @@ export class AuthController {
     async registerUser(@Body() body: UserCreationDto, @Res() res: Response) {
         const user = await this.userService.registerUser(body)
         const payload = { userId: user.id, username: user.username };
-        const signed_payload = this.jwtService.sign(payload)    
+        const signed_payload = this.jwtService.sign(payload)
         res.cookie('access_token', signed_payload, {
             httpOnly: false,
             domain: (process.env.NODE_ENV === 'development' ) ? 'localhost' : 'pantharea.fun',

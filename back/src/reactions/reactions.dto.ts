@@ -1,4 +1,5 @@
-import { IsString } from "class-validator"
+import { IsString, IsUrl } from "class-validator"
+import { Url } from "url"
 
 export class MailReactionDto {
     @IsString()
@@ -12,4 +13,15 @@ export class MailReactionDto {
 
     @IsString()
     body: string
+}
+
+export class DiscordMsgReactionDto {
+    @IsString()
+    url: string
+
+    @IsString()
+    message: string
+
+    @IsString()
+    hookusername: string
 }

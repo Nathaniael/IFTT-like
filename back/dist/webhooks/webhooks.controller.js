@@ -21,11 +21,11 @@ let WebhooksController = class WebhooksController {
         this.webhooksServices = webhooksServices;
         this.areasServices = areasServices;
     }
-    async reactionGithub(req, body) {
+    async actionGithub(req, body) {
         let params = JSON.stringify({ repoId: body.repository.id, secret: req.headers["x-hub-signature"] });
         this.areasServices.callReaction(params, "");
     }
-    async reactionGitlab(req, body) {
+    async actionGitlab(req, body) {
         const type = JSON.stringify({
             event_name: body.event_name,
             service: "Gitlab"
@@ -43,7 +43,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
-], WebhooksController.prototype, "reactionGithub", null);
+], WebhooksController.prototype, "actionGithub", null);
 __decorate([
     (0, common_1.Post)('Gitlab'),
     __param(0, (0, common_1.Req)()),
@@ -51,7 +51,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
-], WebhooksController.prototype, "reactionGitlab", null);
+], WebhooksController.prototype, "actionGitlab", null);
 WebhooksController = __decorate([
     (0, common_1.Controller)('webhooks'),
     __metadata("design:paramtypes", [webhooks_service_1.WebhooksService,
