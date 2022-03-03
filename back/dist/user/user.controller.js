@@ -19,9 +19,11 @@ const auth_controller_1 = require("../auth/auth.controller");
 const user_decorator_1 = require("./user.decorator");
 const user_dto_1 = require("./user.dto");
 const user_service_1 = require("./user.service");
+const user_areas_1 = require("./user.areas");
 let UserController = class UserController {
-    constructor(usersService) {
+    constructor(usersService, userAreas) {
         this.usersService = usersService;
+        this.userAreas = userAreas;
     }
     async addOauthToUsr(usr, body) {
         return this.usersService.addOauthToUsr(usr, body);
@@ -36,6 +38,21 @@ let UserController = class UserController {
         else {
             res.status(200).json("undefined");
         }
+    }
+    async getAreas(usr, res) {
+        var _a;
+        var userId;
+        if (((_a = usr["payload"]) === null || _a === void 0 ? void 0 : _a.userId) !== undefined) {
+            userId = usr["payload"].userId;
+        }
+        else if ((usr === null || usr === void 0 ? void 0 : usr.userId) !== undefined) {
+            userId = usr.userId;
+        }
+        else {
+            throw new common_1.BadRequestException("User not found");
+        }
+        const areas = await this.userAreas.getAreas(userId);
+        res.status(200).json(areas);
     }
 };
 __decorate([
@@ -56,9 +73,19 @@ __decorate([
     __metadata("design:paramtypes", [auth_controller_1.UserAuth, Object]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "getUserProfile", null);
+__decorate([
+    (0, common_1.Get)('areas'),
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
+    __param(0, (0, user_decorator_1.User)()),
+    __param(1, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [auth_controller_1.UserAuth, Object]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "getAreas", null);
 UserController = __decorate([
     (0, common_1.Controller)('user'),
-    __metadata("design:paramtypes", [user_service_1.UserService])
+    __metadata("design:paramtypes", [user_service_1.UserService,
+        user_areas_1.UserAreas])
 ], UserController);
 exports.UserController = UserController;
 //# sourceMappingURL=user.controller.js.map
