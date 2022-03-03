@@ -160,6 +160,26 @@ class RequestApi {
             throw err
         })
     }
+
+    async getAreas() {
+        // Configure options
+        const url = prefixUrlApi + "user/areas/"
+        const headers = {
+            withCredentials: true
+        }
+
+        // Execute request and return status + data
+        return await axios.get(url, headers).then((res) => {
+            return res.data
+        }).catch((err) => {
+            // If there is a custom error message
+            if (err?.response?.data?.message) {
+                throw err.response.data.message
+            }
+            // Default message
+            throw err.message
+        })
+    }
 }
 
 export default new RequestApi()

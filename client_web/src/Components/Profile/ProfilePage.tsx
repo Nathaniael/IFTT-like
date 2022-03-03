@@ -70,8 +70,6 @@ function ProfilePage() {
                     null
                 }
                 <PBar setPage={setPage} deconnexion={resetCookie}></PBar>
-                {/* 
-                <button onClick={() => {resetCookie()}}>LOGOUT</button> */}
             </div>
         </div>
     )
