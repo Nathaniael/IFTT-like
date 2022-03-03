@@ -47,7 +47,8 @@
     "rxjs": "^6.0.0",
     "slonik": "^27.1.0",
     "slonik-interceptor-field-name-transformation": "^1.6.4",
-    "smee-client": "^1.2.2"
+    "smee-client": "^1.2.2",
+    "twilio": "^3.75.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",

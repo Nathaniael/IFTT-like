@@ -25,3 +25,12 @@ export class DiscordMsgReactionDto {
     @IsString()
     hookusername: string
 }
+
+export class SmsReactionDto {
+    @IsString()
+    number: string
+
+    @IsString()
+    message: string
+
+}

@@ -35,7 +35,35 @@ let AreasController = class AreasController {
             throw new common_1.BadRequestException("Can't get user");
         }
         await this.areasServices.createArea(userId, body);
-        res.status(200).json("Area well created");
+        res.status(200).send("Area well created");
+    }
+    async deleteArea(user, body, res) {
+        var _a;
+        var userId;
+        if (((_a = user["payload"]) === null || _a === void 0 ? void 0 : _a.userId) != undefined) {
+            userId = user["payload"].userId;
+        }
+        else if (user.userId != undefined) {
+            userId = user.userId;
+        }
+        else {
+            throw new common_1.BadRequestException("Can't get user");
+        }
+        res.status(200).send("Area deleted successfully");
+    }
+    async getAreasByUser(user, body, res) {
+        var _a;
+        var userId;
+        if (((_a = user["payload"]) === null || _a === void 0 ? void 0 : _a.userId) != undefined) {
+            userId = user["payload"].userId;
+        }
+        else if (user.userId != undefined) {
+            userId = user.userId;
+        }
+        else {
+            throw new common_1.BadRequestException("Can't get user");
+        }
+        res.status(200).json(await this.areasServices.getAreaByUser(userId));
     }
 };
 __decorate([
@@ -48,6 +76,26 @@ __decorate([
     __metadata("design:paramtypes", [Object, areas_dto_1.AreaCreationDto, Object]),
     __metadata("design:returntype", Promise)
 ], AreasController.prototype, "createArea", null);
+__decorate([
+    (0, common_1.Delete)('/delete'),
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
+    __param(0, (0, user_decorator_1.User)()),
+    __param(1, (0, common_1.Body)()),
+    __param(2, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object, Object]),
+    __metadata("design:returntype", Promise)
+], AreasController.prototype, "deleteArea", null);
+__decorate([
+    (0, common_1.Get)('/get'),
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
+    __param(0, (0, user_decorator_1.User)()),
+    __param(1, (0, common_1.Body)()),
+    __param(2, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object, Object]),
+    __metadata("design:returntype", Promise)
+], AreasController.prototype, "getAreasByUser", null);
 AreasController = __decorate([
     (0, common_1.Controller)('areas'),
     __metadata("design:paramtypes", [areas_service_1.AreasService])

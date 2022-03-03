@@ -83,6 +83,7 @@ VALUES ('Github', '1', 'https://github.com/login/oauth/authorize', 'https://gith
     ('Mailjet', '0', '', '', '/mail.png', '', '', '', ''), -- ID:2 Mail
     ('Gitlab', '1', 'https://gitlab.com/oauth/authorize', 'https://gitlab.com/oauth/token', '/gitlab.png', 'ab602b60dacc5088c4f7ad1426935d458698aece545e352ecb67670f1116d608', '0e54a1fde0860c79a63cfc2f5bf659278bec2f56ed4cc6cc1a9bfa81be2c5009', 'http://localhost:8081', ''), -- ID:3 Gitlab
     ('Discord', '0', '', '', '/discord.png', '', '', '', ''); -- ID:4 Discord
+    ('Sms', '0', '', '', '/sms.png', '', '', '', ''); -- ID: 5 Sms
 
 -- ACTIONS DICO
 INSERT INTO "adictionnary" ("name", "description", "params", "service_id")
@@ -93,3 +94,4 @@ VALUES ('Any new repository event', 'This trigger reaction every time a new even
 INSERT INTO "readictionnary" ("name", "description", "params","service_id")
 VALUES ('Send an email', 'When triggered, send an email to a chosen recipient, a subject and a body', '[{"string":"username"}, {"string":"recipient"},{"string":"subject"}, {"string":"body"}]' , '2'), -- ID:1
 ('Send a discord message', 'When triggered, send a discord message in your server using Discord webhooks', '[{"string":"url"}, {"string":"hookusername"},{"string":"message"}]' , '4') -- ID:2
+('Send a SMS', 'When triggered, send a message to the phone number you set', '[{"string":"number"}, {"string":"message"}]' , '5') -- ID:3

@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards, Res, BadRequestException } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards, Res, BadRequestException, Delete } from '@nestjs/common';
 import { AreaCreationDto } from './areas.dto';
 import { AreasService } from './areas.service';
 import { AuthGuard } from '@nestjs/passport';
@@ -23,6 +23,34 @@ export class AreasController {
             throw new BadRequestException("Can't get user")
         }
         await this.areasServices.createArea(userId, body)
-        res.status(200).json("Area well created")
+        res.status(200).send("Area well created")
+    }
+
+    @Delete('/delete')
+    @UseGuards(AuthGuard('jwt'))
+    async deleteArea(@User() user, @Body() body, @Res() res) {
+        var userId;
+        if (user["payload"]?.userId != undefined) {
+            userId = user["payload"].userId
+        } else if (user.userId != undefined) {
+            userId = user.userId
+        } else {
+            throw new BadRequestException("Can't get user")
+        }
+        res.status(200).send("Area deleted successfully")
+    }
+
+    @Get('/get')
+    @UseGuards(AuthGuard('jwt'))
+    async getAreasByUser(@User() user, @Body() body, @Res() res) {
+        var userId;
+        if (user["payload"]?.userId != undefined) {
+            userId = user["payload"].userId
+        } else if (user.userId != undefined) {
+            userId = user.userId
+        } else {
+            throw new BadRequestException("Can't get user")
+        }
+        res.status(200).json(await this.areasServices.getAreaByUser(userId))
     }
 }

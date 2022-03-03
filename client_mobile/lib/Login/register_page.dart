@@ -22,7 +22,7 @@ class RegisterPage extends StatelessWidget {
                 "REGISTER",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF2661FA),
+                    color: Color(0xff007EA7),
                     fontSize: 36),
                 textAlign: TextAlign.left,
               ),
@@ -95,7 +95,7 @@ class RegisterPage extends StatelessWidget {
                   style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF2661FA)),
+                      color: Color(0xff007EA7)),
                 ),
               ),
             )
