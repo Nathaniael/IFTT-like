@@ -7,17 +7,25 @@ import AppBar from '../AppBar/AppBar'
 import Request from '../Request'
 import { goToPage } from '../Utils';
 
+// My modules
+import PServices from './PServices';
+
 // Styles
 import styles from './styles/Profile.module.css'
 
 function Profile() {
-    const [cookies, setCookies, removeCookie] = useCookies(["logged", "access_token", "username", "closeGetStarted"])
+    const [cookies, setCookies, removeCookie] = useCookies(["logged", "access_token", "username", "closeGetStarted", "gitlab_token"])
 
     function resetCookie() {
+        // Application cookies
         removeCookie("logged")
         removeCookie("access_token")
         removeCookie("username")
         removeCookie("closeGetStarted")
+
+        // OAuth cookies
+        removeCookie("gitlab_token")
+
         goToPage("/login")
     }
 
@@ -44,6 +52,7 @@ function Profile() {
                 <div>Profile of {cookies?.username}</div>
                 <button onClick={() => {resetCookie()}}>LOGOUT</button>
             </div>
+            <PServices></PServices>
         </div>
     )
 }

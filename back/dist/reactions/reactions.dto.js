@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MailReactionDto = void 0;
+exports.DiscordMsgReactionDto = exports.MailReactionDto = void 0;
 const class_validator_1 = require("class-validator");
 class MailReactionDto {
 }
@@ -30,4 +30,19 @@ __decorate([
     __metadata("design:type", String)
 ], MailReactionDto.prototype, "body", void 0);
 exports.MailReactionDto = MailReactionDto;
+class DiscordMsgReactionDto {
+}
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], DiscordMsgReactionDto.prototype, "url", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], DiscordMsgReactionDto.prototype, "message", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], DiscordMsgReactionDto.prototype, "hookusername", void 0);
+exports.DiscordMsgReactionDto = DiscordMsgReactionDto;
 //# sourceMappingURL=reactions.dto.js.map

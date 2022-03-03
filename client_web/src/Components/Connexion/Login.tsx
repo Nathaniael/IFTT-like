@@ -4,7 +4,8 @@ import Request from '../Request';
 import { useCookies } from 'react-cookie';
 
 // My modules
-import{ goToPage }from '../Utils';
+import { goToPage } from '../Utils';
+import GoogleAuthWidget from '../OAuth/GoogleAuthWidget';
 
 // Styles
 import styles from './styles/LoginRegister.module.css';
@@ -68,6 +69,7 @@ function Login(props: Props) {
             <p>{errorMessage}</p>
             {/* Switch to the register form for a user that does not have an account */}
             <p className={styles.gotAccount} onClick={() => {props.setGotAccount(!props.gotAccount)}}>Still don't have an account ?</p>
+            <GoogleAuthWidget></GoogleAuthWidget>
         </div>
     )
 }

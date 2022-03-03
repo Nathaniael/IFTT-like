@@ -10,6 +10,7 @@ import ListServices from "./Components/Services/ListServices";
 import Home from "./Components/Home/Home";
 import Profile from "./Components/Profile/Profile";
 import GetStarted from "./Components/GetStarted/GetStarted";
+import GitLabAuthRedirect from "./Components/OAuth/GitLabAuthRedirect";
 
 function App() {
   return (
@@ -21,6 +22,9 @@ function App() {
             <Route path="/login" element={<ConnexionPage/>}/>
             <Route path="/profile" element={<Profile/>}/>
             <Route path="/getStarted" element={<GetStarted/>}/>
+
+            {/* OAuth paths */}
+            <Route path="/auth/gitlab" element={<GitLabAuthRedirect/>}/>
           </Routes>
       </Router>
     </CookiesProvider>

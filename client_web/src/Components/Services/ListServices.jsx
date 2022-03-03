@@ -40,7 +40,7 @@ function DescriptionWidget({ hidden, onLeft, name, actions, reactions }) {
     )
 }
 
-function ServiceWidget({ service, onLeft, setActiveService }) {
+function ServiceWidget({setActiveService, service, onLeft }) {
     const [hover, setHover] = React.useState(false)
 
     return (
@@ -77,14 +77,14 @@ function ListServices() {
                         <div className={styles.listServices}>
                             {listServices?.map((elem, index) => {
                                 return (
-                                    <ServiceWidget key={elem?.id} service={elem} setActiveService={setActiveService} onLeft={index % 2 === 0 ? true : false}></ServiceWidget>
+                                    <ServiceWidget key={elem?.id} setActiveService={setActiveService} service={elem} onLeft={index % 2 === 0 ? true : false}></ServiceWidget>
                                 )
                             })}
                         </div>
                         : <Link to="/getStarted">GET STARTED</Link>
                     }
                 </div>
-                : <Service service={activeService} setAction={setAction} setReaction={setReaction}></Service>
+                : <Service setActiveService={setActiveService} service={activeService} setAction={setAction} setReaction={setReaction}></Service>
             }
         </div>
     )

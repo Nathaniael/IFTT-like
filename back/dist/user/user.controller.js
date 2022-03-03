@@ -27,7 +27,15 @@ let UserController = class UserController {
         return this.usersService.addOauthToUsr(usr, body);
     }
     async getUserProfile(usr, res) {
-        res.status(200).json(usr["payload"].username);
+        if (usr.username !== undefined) {
+            res.status(200).json(usr.username);
+        }
+        else if (usr["payload"].username !== undefined) {
+            res.status(200).json(usr["payload"].username);
+        }
+        else {
+            res.status(200).json("undefined");
+        }
     }
 };
 __decorate([
