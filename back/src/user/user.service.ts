@@ -17,10 +17,9 @@ export class UserService {
             throw new BadRequestException('One or more of the required fields are missing')
         let res = await this.pool.query(sql`SELECT *
                 FROM usr
-                WHERE email = ${usr.email}
-                OR username = ${usr.username}`)
+                WHERE email = ${usr.email}`)
         if (res.rows.length != 0) {
-            throw new BadRequestException("Username or email already in use")
+            throw new BadRequestException("Email already in use")
         }
         await this.pool.query(sql`INSERT INTO usr
         (username, password, email)
@@ -33,9 +32,7 @@ export class UserService {
 
     async getUser(usr: UserLoginDto) {
         let res: any;
-        if (usr.username)
-            res = await this.pool.query(sql`SELECT * FROM usr WHERE username =  ${usr.username}`)
-        else if (usr.email)
+        if (usr.email)
             res = await this.pool.query(sql`SELECT * FROM usr WHERE email =  ${usr.email}`)
         else
             throw new BadRequestException("Fields are missing")

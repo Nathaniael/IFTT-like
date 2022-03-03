@@ -14,17 +14,14 @@ import qs from 'qs'
 
 const applicationId = process.env.REACT_APP_GITLAB_APPLICATION_ID as string
 const redirectUri = ((process.env.NODE_ENV === 'development') ? process.env.REACT_APP_GITLAB_CALLBACK_DEV : process.env.REACT_APP_GITLAB_CALLBACK_PROD) as string;
-const secretKey = process.env.REACT_APP_GITLAB_SECRET as string
 
 function GitLabAuthWidget() {
-  const state = randomString(50)
-
   React.useEffect(() => {
     const params = {
       client_id: applicationId,
       redirect_uri: redirectUri,
       response_type: "code",
-      state: state,
+      state: randomString(50),
       scope: "api"
     }
     const urlParams = qs.stringify(params)

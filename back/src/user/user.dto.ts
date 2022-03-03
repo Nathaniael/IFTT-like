@@ -29,11 +29,6 @@ export class UserDto {
 }
 
 export class UserLoginDto {
-    @IsOptional()
-    @IsString()
-    username?: string
-
-    @IsOptional()
     @IsString()
     email?: string
 

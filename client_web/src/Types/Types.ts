@@ -21,8 +21,14 @@ type Service = {
     reactions: [ActionReaction]
 };
 
+export enum WhichPage {
+    Profile,
+    Oauth,
+    Services
+}
+
 export type {
     Service,
     ActionReaction,
-    ActionReactionConfig
+    ActionReactionConfig,
 };

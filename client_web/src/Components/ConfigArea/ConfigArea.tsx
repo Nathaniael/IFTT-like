@@ -110,7 +110,7 @@ function ConfigArea(props: ConfigAreaProps) {
             reaction_params: reaction_params
         }).then((res) => {
             console.log(res)
-            // goToPage('/profile')
+            goToPage('/profile')
         }).catch((err) => {
             console.log(err)
             setErrorCreating(err)
@@ -126,7 +126,7 @@ function ConfigArea(props: ConfigAreaProps) {
                 </div>
             : null}
 
-            <div className={`${styles.configContainer} ${props.activeService == undefined ? styles.noMinHeight : null}`}>
+            <div className={`${styles.configContainer} ${props.activeService === undefined ? styles.noMinHeight : null}`}>
 
                 {/* First container used to configure an Action */}
                 <div className={styles.confAreaBox}>

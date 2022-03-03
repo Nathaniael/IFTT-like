@@ -23,8 +23,18 @@ let AreasController = class AreasController {
         this.areasServices = areasServices;
     }
     async createArea(user, body, res) {
-        console.log(user);
-        await this.areasServices.createArea(user.userId, body);
+        var _a;
+        var userId;
+        if (((_a = user["payload"]) === null || _a === void 0 ? void 0 : _a.userId) != undefined) {
+            userId = user["payload"].userId;
+        }
+        else if (user.userId != undefined) {
+            userId = user.userId;
+        }
+        else {
+            throw new common_1.BadRequestException("Can't get user");
+        }
+        await this.areasServices.createArea(userId, body);
         res.status(200).json("Area well created");
     }
 };

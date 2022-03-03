@@ -57,6 +57,10 @@
     }
 }
 
+.errorContainer {
+    min-width: 5.5vw;
+    min-height: 5.7vw;
+}
 .errorMessage {
     margin-top: 2vw;
     color: white;

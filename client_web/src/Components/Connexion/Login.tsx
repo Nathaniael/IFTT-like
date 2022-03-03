@@ -30,11 +30,11 @@ function Login(props: Props) {
         e.preventDefault()
 
         // Get the user input values needed for login
-        const usernameOrEmail = e.target.children.usernameOrEmail.value
+        const email = e.target.children.email.value
         const password = e.target.children.password.value
 
         // Login request to the database by Request
-        Request.login({usernameOrEmail: usernameOrEmail, password: password}).then((res) => {
+        Request.login({email: email, password: password}).then((res) => {
             // Set the cookies to know that the user is now logged
             setCookies('logged', true)
             // Redirect to profile page
@@ -52,9 +52,9 @@ function Login(props: Props) {
             <form className={styles.form} onSubmit={(e) => login(e)}>
                 <input
                     className={styles.input}
-                    placeholder='Username / Email'
+                    placeholder='email'
                     type='text'
-                    name='usernameOrEmail'/>
+                    name='email'/>
                 <input
                     className={styles.input}
                     placeholder='Password'
@@ -66,10 +66,12 @@ function Login(props: Props) {
                     value='Envoyer'/>
             </form>
             {/* Zone of error message if a problem is encountered during login */}
-            <p>{errorMessage}</p>
+            <p className={styles.errorMsg}>{errorMessage}</p>
             {/* Switch to the register form for a user that does not have an account */}
-            <p className={styles.gotAccount} onClick={() => {props.setGotAccount(!props.gotAccount)}}>Still don't have an account ?</p>
-            <GoogleAuthWidget></GoogleAuthWidget>
+            <div className={styles.optionsContainer}>
+                <GoogleAuthWidget setErrorMessage={setErrorMessage}></GoogleAuthWidget>
+                <p className={styles.gotAccount} onClick={() => {props.setGotAccount(!props.gotAccount)}}>Still don't have an account ?</p>
+            </div>
         </div>
     )
 }
