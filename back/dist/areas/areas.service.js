@@ -68,6 +68,13 @@ let AreasService = class AreasService {
                 ${reaction.rows[0].id},
                 ${userId})`);
     }
+    async deleteArea(id) {
+        const deleted_area = await this.pool.query((0, slonik_1.sql) `DELETE FROM area WHERE id = ${id}`);
+    }
+    async getAreaByUser(usrId) {
+        const areas = await this.pool.query((0, slonik_1.sql) `SELECT * FROM area WHERE usr_id = ${usrId}`);
+        return areas.rows;
+    }
 };
 AreasService = __decorate([
     (0, common_1.Injectable)(),

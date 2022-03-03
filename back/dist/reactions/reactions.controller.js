@@ -13,11 +13,13 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReactionsController = void 0;
+require('dotenv').config();
 const common_1 = require("@nestjs/common");
 const reactions_dto_1 = require("./reactions.dto");
 const { Webhook } = require('discord-webhook-node');
+const twilio = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 let ReactionsController = class ReactionsController {
-    async printstp(config) {
+    async reactionMail(config) {
         console.log("config: ", config);
         const mailjet = require('node-mailjet')
             .connect('95d7f3e348ada34e2587a04a86442e33', 'ea353c779dbd2fa1d3d4372b194a6f95');
@@ -49,10 +51,15 @@ let ReactionsController = class ReactionsController {
             console.log(err.statusCode);
         });
     }
-    async actionDiscord(req, body) {
+    async reactionDiscord(body) {
         const hook = new Webhook(body.url);
         hook.setUsername(body.hookusername);
         hook.send(body.message);
+    }
+    async reactionSms(body) {
+        twilio.messages
+            .create({ body: body.message, from: '+15076936709', to: body.number })
+            .then(message => console.log(message));
     }
 };
 __decorate([
@@ -61,15 +68,21 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [reactions_dto_1.MailReactionDto]),
     __metadata("design:returntype", Promise)
-], ReactionsController.prototype, "printstp", null);
+], ReactionsController.prototype, "reactionMail", null);
 __decorate([
     (0, common_1.Post)('Discord'),
-    __param(0, (0, common_1.Req)()),
-    __param(1, (0, common_1.Body)()),
+    __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, reactions_dto_1.DiscordMsgReactionDto]),
+    __metadata("design:paramtypes", [reactions_dto_1.DiscordMsgReactionDto]),
     __metadata("design:returntype", Promise)
-], ReactionsController.prototype, "actionDiscord", null);
+], ReactionsController.prototype, "reactionDiscord", null);
+__decorate([
+    (0, common_1.Post)('Sms'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [reactions_dto_1.SmsReactionDto]),
+    __metadata("design:returntype", Promise)
+], ReactionsController.prototype, "reactionSms", null);
 ReactionsController = __decorate([
     (0, common_1.Controller)('reactions')
 ], ReactionsController);

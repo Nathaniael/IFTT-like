@@ -9,3 +9,7 @@ export declare class DiscordMsgReactionDto {
     message: string;
     hookusername: string;
 }
+export declare class SmsReactionDto {
+    number: string;
+    message: string;
+}

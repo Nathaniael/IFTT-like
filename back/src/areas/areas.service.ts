@@ -65,4 +65,13 @@ export class AreasService {
                 ${reaction.rows[0].id},
                 ${userId})`)
     }
+
+    async deleteArea(id: number) {
+        const deleted_area = await this.pool.query(sql`DELETE FROM area WHERE id = ${id}`)
+    }
+
+    async getAreaByUser(usrId: string) {
+        const areas =  await this.pool.query(sql`SELECT * FROM area WHERE usr_id = ${usrId}`)
+        return areas.rows
+    }
 }

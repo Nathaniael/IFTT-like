@@ -1,12 +1,15 @@
+require('dotenv').config()
 import { Req, Body, Controller, Post } from '@nestjs/common';
-import { MailReactionDto, DiscordMsgReactionDto } from './reactions.dto';
+import { MailReactionDto, DiscordMsgReactionDto, SmsReactionDto } from './reactions.dto';
 const { Webhook } = require('discord-webhook-node');
+const twilio = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+
 
 @Controller('reactions')
 export class ReactionsController {
 
     @Post('/Mailjet')
-    async printstp(@Body() config: MailReactionDto) {
+    async reactionMail(@Body() config: MailReactionDto) {
         console.log("config: ", config)
         const mailjet = require ('node-mailjet')
         .connect('95d7f3e348ada34e2587a04a86442e33', 'ea353c779dbd2fa1d3d4372b194a6f95')
@@ -41,9 +44,16 @@ export class ReactionsController {
     }
 
     @Post('Discord')
-    async actionDiscord(@Req() req, @Body() body : DiscordMsgReactionDto) {
+    async reactionDiscord(@Body() body : DiscordMsgReactionDto) {
         const hook = new Webhook(body.url)
         hook.setUsername(body.hookusername)
         hook.send(body.message)
+    }
+
+    @Post('Sms')
+    async reactionSms(@Body() body : SmsReactionDto) {
+        twilio.messages
+      .create({body: body.message, from: '+15076936709', to: body.number})
+      .then(message => console.log(message));
     }
 }
