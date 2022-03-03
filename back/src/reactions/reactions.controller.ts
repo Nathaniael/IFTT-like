@@ -4,7 +4,6 @@ import { MailReactionDto, DiscordMsgReactionDto, SmsReactionDto } from './reacti
 const { Webhook } = require('discord-webhook-node');
 const twilio = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
-
 @Controller('reactions')
 export class ReactionsController {
 
