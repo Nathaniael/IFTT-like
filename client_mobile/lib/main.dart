@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       '/area': (context) => const CreateAreaPage(),
       '/login': (context) => const LoginPage(),
       '/register': (context) => const RegisterPage(),
-      '/profile': (context) => const Userpage(),
+      '/profile': (context) => Userpage(),
     });
   }
 }

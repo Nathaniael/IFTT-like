@@ -43,6 +43,90 @@ List<Service> _services = [
             description: 'Send a customizable email',
             id: 1,
             imageProvider: const AssetImage('web/png/baptiste.png'))
+      ]),
+  Service(
+      id: 3,
+      name: 'Github',
+      logo: const AssetImage('web/png/github.png'),
+      items: <Item>[
+        Item(
+            type: ItemType.action,
+            name: 'Push event',
+            description: 'Trigger a reaction when a new push occurs',
+            id: 1,
+            imageProvider: const AssetImage('web/png/baptiste.png'))
+      ]),
+  Service(
+      id: 4,
+      name: 'Email',
+      logo: const AssetImage('web/png/mail.png'),
+      items: <Item>[
+        Item(
+            type: ItemType.reaction,
+            name: 'Send an email',
+            description: 'Send a customizable email',
+            id: 1,
+            imageProvider: const AssetImage('web/png/baptiste.png'))
+      ]),
+  Service(
+      id: 5,
+      name: 'Github',
+      logo: const AssetImage('web/png/github.png'),
+      items: <Item>[
+        Item(
+            type: ItemType.action,
+            name: 'Push event',
+            description: 'Trigger a reaction when a new push occurs',
+            id: 1,
+            imageProvider: const AssetImage('web/png/baptiste.png'))
+      ]),
+  Service(
+      id: 6,
+      name: 'Email',
+      logo: const AssetImage('web/png/mail.png'),
+      items: <Item>[
+        Item(
+            type: ItemType.reaction,
+            name: 'Send an email',
+            description: 'Send a customizable email',
+            id: 1,
+            imageProvider: const AssetImage('web/png/baptiste.png'))
+      ]),
+  Service(
+      id: 7,
+      name: 'Email',
+      logo: const AssetImage('web/png/mail.png'),
+      items: <Item>[
+        Item(
+            type: ItemType.reaction,
+            name: 'Send an email',
+            description: 'Send a customizable email',
+            id: 1,
+            imageProvider: const AssetImage('web/png/baptiste.png'))
+      ]),
+  Service(
+      id: 8,
+      name: 'Github',
+      logo: const AssetImage('web/png/github.png'),
+      items: <Item>[
+        Item(
+            type: ItemType.action,
+            name: 'Push event',
+            description: 'Trigger a reaction when a new push occurs',
+            id: 1,
+            imageProvider: const AssetImage('web/png/baptiste.png'))
+      ]),
+  Service(
+      id: 9,
+      name: 'Email',
+      logo: const AssetImage('web/png/mail.png'),
+      items: <Item>[
+        Item(
+            type: ItemType.reaction,
+            name: 'Send an email',
+            description: 'Send a customizable email',
+            id: 1,
+            imageProvider: const AssetImage('web/png/baptiste.png'))
       ])
 ];
 
