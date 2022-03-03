@@ -5,6 +5,7 @@ import { goToPage } from '../Utils';
 
 // My modules
 import Request from '../Request';
+import GoogleAuthWidget from '../OAuth/GoogleAuthWidget';
 
 // Styles
 import styles from './styles/LoginRegister.module.css';
@@ -74,6 +75,7 @@ function Register(props: Props) {
             <p>{errorMessage}</p>
             {/* Switch to the login form if the user already has an account */}
             <p className={styles.gotAccount} onClick={() => {props.setGotAccount(!props.gotAccount)}}>Already have an account ?</p>
+            <GoogleAuthWidget setErrorMessage={setErrorMessage}></GoogleAuthWidget>
         </div>
     )
 }

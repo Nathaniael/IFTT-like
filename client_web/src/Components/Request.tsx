@@ -2,9 +2,6 @@
 import axios from 'axios';
 import qs from 'qs';
 
-// My modules
-import { randomString } from './Utils';
-
 // Globals variables
 const prefixUrlApi = (process.env.NODE_ENV === 'development') ? process.env.REACT_APP_BASE_URL_DEV : process.env.REACT_APP_BASE_URL_PROD;
 
@@ -20,7 +17,7 @@ type RegisterProps = {
 
 // Login needed params
 type LoginProps = {
-    usernameOrEmail: string,
+    email: string,
     password: string
 };
 
@@ -58,10 +55,9 @@ class RequestApi {
     async login(props: LoginProps) {
         // Configure options
         let url = prefixUrlApi + "auth/login/"
-        let loginField = props.usernameOrEmail.includes("@") ? "email" : "username";
         // Modifying body to be able to connect automatically with the email or username
         let body = {
-            [loginField]: props.usernameOrEmail,
+            "email": props.email,
             "password": props.password
         }
         let headers = {

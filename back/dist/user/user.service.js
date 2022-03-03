@@ -26,10 +26,9 @@ let UserService = class UserService {
             throw new common_1.BadRequestException('One or more of the required fields are missing');
         let res = await this.pool.query((0, slonik_1.sql) `SELECT *
                 FROM usr
-                WHERE email = ${usr.email}
-                OR username = ${usr.username}`);
+                WHERE email = ${usr.email}`);
         if (res.rows.length != 0) {
-            throw new common_1.BadRequestException("Username or email already in use");
+            throw new common_1.BadRequestException("Email already in use");
         }
         await this.pool.query((0, slonik_1.sql) `INSERT INTO usr
         (username, password, email)
@@ -41,9 +40,7 @@ let UserService = class UserService {
     }
     async getUser(usr) {
         let res;
-        if (usr.username)
-            res = await this.pool.query((0, slonik_1.sql) `SELECT * FROM usr WHERE username =  ${usr.username}`);
-        else if (usr.email)
+        if (usr.email)
             res = await this.pool.query((0, slonik_1.sql) `SELECT * FROM usr WHERE email =  ${usr.email}`);
         else
             throw new common_1.BadRequestException("Fields are missing");

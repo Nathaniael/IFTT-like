@@ -1,0 +1,129 @@
+.container {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    width: 20vw;
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
+    box-shadow: 0px 0px 10px 0px;
+    /* border-radius: 50px; */
+}
+
+.hideArrow {
+    cursor: pointer;
+    position: absolute;
+    transform: translateX(-100%);
+    width: 2vw;
+    height: 2vw;
+    padding: 1vw;
+    box-shadow: 0px 0px 10px 0px;
+    background-color: rgba(255, 255, 255, 0.15);
+    transition: 0.3s;
+}
+
+.hideArrow:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.turnHideArrow {
+    transition: 0.3s;
+    transform: translateX(-100%) rotateZ(180deg);
+}
+
+.hideContainer {
+    animation: hideRight 1s;
+    transform: translateX(100%);
+}
+
+@keyframes hideRight {
+    0% {
+        -webkit-transform: translateX(0%);
+    }
+    100% {
+        -webkit-transform: translateX(100%);
+    }
+}
+
+.showContainer {
+    animation: showLeft 1s;
+    transform: translateX(0%);
+}
+
+@keyframes showLeft {
+    0% {
+        -webkit-transform: translateX(100%);
+    }
+    100% {
+        -webkit-transform: translateX(0%);
+    }
+}
+
+.username {
+    text-align: center;
+    font-size: 2vw;
+    color: white;
+    padding: 1vw;
+}
+
+.username:hover {
+    animation: squeeze 3s infinite;
+}
+
+@keyframes squeeze {
+    0% {
+        -webkit-transform: scaleX(100%);
+    }
+    30% {
+        -webkit-transform: scaleX(105%);
+    }
+    100% {
+        -webkit-transform: scaleX(100%);
+    }
+}
+
+.header {
+    position: relative;
+    border-bottom: 1px white solid;
+    cursor: pointer;
+}
+
+.link {
+    cursor: pointer;
+    color: white;
+    font-size: 1.5vw;
+    border-bottom: 1px white solid;
+    padding: 1vw;
+}
+
+.link:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.img {
+    width: 10vw;
+    height: 10vw;
+    margin-left: calc(50% - 5vw);
+    margin-top: 2vw;
+    margin-bottom: 5vw;
+    border-radius: 7.143vw;
+}
+
+.img:hover {
+    animation: fadeLoop 3s infinite;
+}
+
+@keyframes fadeLoop {
+    0% {
+        opacity: 1;
+        box-shadow: 0px 0px 0px 0px white;
+    }
+    20% {
+        opacity: 0.9;
+        box-shadow: 0px 0px 15px 0px white;
+    }
+    100% {
+        opacity: 1;
+        box-shadow: 0px 0px 0px 0px white;
+    }
+}

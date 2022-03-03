@@ -21,7 +21,7 @@ function OneParam(props: any) {
         // Value is valid if is number and not null and not undefined
         if (isNumber) {
             const checkValue = Number(value)
-            if (value === "" && value != undefined) {
+            if (value === "" && value !== undefined) {
                 setValid(false)
             } else if (Number.isInteger(checkValue)) {
                 setValid(true)
@@ -30,7 +30,7 @@ function OneParam(props: any) {
             }
         // Value is valid if not null and not undefined
         } else {
-            if (value !== "" && value != undefined) {
+            if (value !== "" && value !== undefined) {
                 setValid(true)
             } else {
                 setValid(false)
@@ -46,7 +46,7 @@ function OneParam(props: any) {
                     autoComplete='off'
                     onChange={(e) => {checkValidity(e.target.value, true)}}
                     // Change style depending on value state (undefined / valid / not valid)
-                    className={`${styles.input} ${valid == undefined ? null : (valid ? styles.validInput : styles.errorInput)}`}
+                    className={`${styles.input} ${valid === undefined ? null : (valid ? styles.validInput : styles.errorInput)}`}
                     type="text" placeholder={props.elem.number} id={props.elem.number}></input>
                 :
                 null
@@ -56,7 +56,7 @@ function OneParam(props: any) {
                     autoComplete='off'
                     onChange={(e) => {checkValidity(e.target.value, false)}}
                     // Change style depending on value state (undefined / valid / not valid)
-                    className={`${styles.input} ${valid == undefined ? null : (valid ? styles.validInput : styles.errorInput)}`}
+                    className={`${styles.input} ${valid === undefined ? null : (valid ? styles.validInput : styles.errorInput)}`}
                     type="text" placeholder={props.elem.string} id={props.elem.string}></input>
                 :
                 null

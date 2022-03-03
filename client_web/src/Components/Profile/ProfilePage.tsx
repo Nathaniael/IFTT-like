@@ -1,20 +1,25 @@
 // Extern modules
-import React from 'react'
+import React, { useState } from 'react'
 import { useCookies } from 'react-cookie'
 
 // My modules
 import AppBar from '../AppBar/AppBar'
 import Request from '../Request'
 import { goToPage } from '../Utils';
-
-// My modules
+import PBar from './PBar';
+import PProfile from './PProfile';
 import PServices from './PServices';
+import POauth from './POauth';
 
 // Styles
 import styles from './styles/Profile.module.css'
 
-function Profile() {
+// Types
+import { WhichPage } from '../../Types/Types';
+
+function ProfilePage() {
     const [cookies, setCookies, removeCookie] = useCookies(["logged", "access_token", "username", "closeGetStarted", "gitlab_token"])
+    const [page, setPage] = useState(WhichPage.Profile)
 
     function resetCookie() {
         // Application cookies
@@ -49,12 +54,27 @@ function Profile() {
         <div className={styles.background}>
             <AppBar></AppBar>
             <div className={styles.profilePage}>
-                <div>Profile of {cookies?.username}</div>
-                <button onClick={() => {resetCookie()}}>LOGOUT</button>
+                {page === WhichPage.Profile ? 
+                    <PProfile username={cookies?.username}></PProfile>
+                    :
+                    null
+                }
+                {page === WhichPage.Oauth ? 
+                    <POauth></POauth>
+                    :
+                    null
+                }
+                {page === WhichPage.Services ?
+                    <PServices></PServices>
+                    :
+                    null
+                }
+                <PBar setPage={setPage} deconnexion={resetCookie}></PBar>
+                {/* 
+                <button onClick={() => {resetCookie()}}>LOGOUT</button> */}
             </div>
-            <PServices></PServices>
         </div>
     )
 }
 
-export default Profile
+export default ProfilePage
