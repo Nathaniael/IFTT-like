@@ -20,7 +20,7 @@ class LoginPage extends StatelessWidget {
                 "LOGIN",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF2661FA),
+                    color: Color(0xff007EA7),
                     fontSize: 36),
                 textAlign: TextAlign.left,
               ),
@@ -30,7 +30,7 @@ class LoginPage extends StatelessWidget {
               alignment: Alignment.center,
               margin: const EdgeInsets.symmetric(horizontal: 40),
               child: const TextField(
-                decoration: InputDecoration(labelText: "Username"),
+                decoration: InputDecoration(labelText: "Email"),
               ),
             ),
             SizedBox(height: size.height * 0.03),
@@ -87,7 +87,7 @@ class LoginPage extends StatelessWidget {
                   style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF2661FA)),
+                      color: Color(0xff007EA7)),
                 ),
               ),
             )

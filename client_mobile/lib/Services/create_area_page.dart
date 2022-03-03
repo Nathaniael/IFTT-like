@@ -171,10 +171,19 @@ class CreateAreaPageState extends State<CreateAreaPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xff000D4D),
-      appBar: Navbar(context: context),
-      body: _buildContent(),
-    );
+        appBar: Navbar(context: context),
+        body: Container(
+          alignment: Alignment.center,
+          decoration: const BoxDecoration(
+              gradient: RadialGradient(
+            radius: 0.8,
+            colors: [
+              Color(0xff007EA7),
+              Color(0xff000D4D),
+            ],
+          )),
+          child: _buildContent(),
+        ));
   }
 
   Widget _buildContent() {

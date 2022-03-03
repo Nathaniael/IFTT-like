@@ -132,6 +132,52 @@ class CardArea extends StatelessWidget {
 }
 
 class _UserpageState extends State<Userpage> {
+  bool _isEditingText = false;
+  late TextEditingController _editingController;
+  String initialText = "NAME ICI MGL";
+
+  @override
+  void initState() {
+    super.initState();
+    _editingController = TextEditingController(text: initialText);
+  }
+
+  @override
+  void dispose() {
+    _editingController.dispose();
+    super.dispose();
+  }
+
+  Widget _editTitleTextField() {
+    if (_isEditingText) {
+      return Center(
+        child: TextField(
+          onSubmitted: (newValue) {
+            setState(() {
+              initialText = newValue;
+              _isEditingText = false;
+            });
+          },
+          autofocus: true,
+          controller: _editingController,
+        ),
+      );
+    }
+    return InkWell(
+        onTap: () {
+          setState(() {
+            _isEditingText = true;
+          });
+        },
+        child: Text(
+          initialText,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 30.0,
+          ),
+        ));
+  }
+
   List<Area> insharea = listarea;
   @override
   Widget build(BuildContext context) {
@@ -164,13 +210,7 @@ class _UserpageState extends State<Userpage> {
                           const SizedBox(
                             height: 10.0,
                           ),
-                          const Text(
-                            "NAME ICI MGL",
-                            style: TextStyle(
-                              fontSize: 22.0,
-                              color: Colors.white,
-                            ),
-                          ),
+                          _editTitleTextField(),
                           const SizedBox(
                             height: 40.0,
                           ),
