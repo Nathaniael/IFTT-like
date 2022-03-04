@@ -29,15 +29,18 @@ let UserController = class UserController {
         return this.usersService.addOauthToUsr(usr, body);
     }
     async getUserProfile(usr, res) {
-        if (usr.username !== undefined) {
-            res.status(200).json(usr.username);
+        var userId;
+        if (usr.userId !== undefined) {
+            userId = usr.userId;
         }
         else if (usr["payload"].username !== undefined) {
-            res.status(200).json(usr["payload"].username);
+            userId = usr["payload"].userId;
         }
         else {
-            res.status(200).json("undefined");
+            throw new common_1.BadRequestException("User not found");
         }
+        let user = await this.usersService.getUserFromId(userId);
+        res.status(200).json(user);
     }
     async getAreas(usr, res) {
         var _a;

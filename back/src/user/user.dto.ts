@@ -9,6 +9,9 @@ export class UserCreationDto {
 
     @IsString()
     password: string
+
+    @IsString()
+    image: string
 }
 
 export class UserDto {

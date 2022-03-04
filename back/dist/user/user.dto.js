@@ -25,6 +25,10 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], UserCreationDto.prototype, "password", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], UserCreationDto.prototype, "image", void 0);
 exports.UserCreationDto = UserCreationDto;
 class UserDto {
 }

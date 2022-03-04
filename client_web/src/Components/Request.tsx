@@ -12,7 +12,8 @@ const prefixUrlApi = (process.env.NODE_ENV === 'development') ? process.env.REAC
 type RegisterProps = {
     username: string,
     email: string,
-    password: string
+    password: string,
+    image: string
 };
 
 // Login needed params
@@ -124,7 +125,6 @@ class RequestApi {
         const headers = {
             withCredentials: true
         }
-        console.log(body)
         // Execute request and return status + data
         return await axios.post(url, body, headers).then((res) => {
             return res.data

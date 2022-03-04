@@ -2,6 +2,7 @@ export declare class UserCreationDto {
     username: string;
     email: string;
     password: string;
+    image: string;
 }
 export declare class UserDto {
     id: string;

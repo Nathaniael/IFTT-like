@@ -24,6 +24,7 @@ function GoogleAuthWidget(props: Props) {
         const username = response.profileObj.name
         const email = response.profileObj.email
         const password = response.profileObj.googleId
+        const image = response.profileObj.imageUrl
 
         // Try to log then try to register user from google infos oauth
         Request.login({email: email, password: password}).then((res) => {
@@ -32,7 +33,7 @@ function GoogleAuthWidget(props: Props) {
             // Redirect to profile page
             goToPage("/profile")
         }).catch((err) => {
-            Request.register({username: username, email: email, password: password}).then((res) => {
+            Request.register({username: username, email: email, password: password, image: image}).then((res) => {
                 // Set the cookies to know that the user is now logged
                 setCookies('logged', true)
                 // Redirect to profile page

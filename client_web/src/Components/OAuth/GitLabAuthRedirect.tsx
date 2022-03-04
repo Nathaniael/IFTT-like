@@ -10,7 +10,6 @@ function GitLabAuthRedirect() {
         var code = window.location.href.split("?code=")[1].split("&state=")[0]
         var state = window.location.href.split("?code=")[1].split("&state=")[1]
         Request.getAccessToken(code, state).then((res) => {
-            console.log(res.access_token)
             setCookies('gitlab_token', res.access_token, {path: '/'})
             goToPage('/profile')
         }).catch((err) => {

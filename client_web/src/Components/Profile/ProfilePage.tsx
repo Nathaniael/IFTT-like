@@ -17,15 +17,17 @@ import styles from './styles/Profile.module.css'
 // Types
 import { WhichPage } from '../../Types/Types';
 
+
+// Component
 function ProfilePage() {
-    const [cookies, setCookies, removeCookie] = useCookies(["logged", "access_token", "username", "closeGetStarted", "gitlab_token"])
+    const [cookies, setCookies, removeCookie] = useCookies(["logged", "access_token", "user", "closeGetStarted", "gitlab_token"])
     const [page, setPage] = useState(WhichPage.Profile)
 
     function resetCookie() {
         // Application cookies
         removeCookie("logged")
         removeCookie("access_token")
-        removeCookie("username")
+        removeCookie("user")
         removeCookie("closeGetStarted")
 
         // OAuth cookies
@@ -43,7 +45,7 @@ function ProfilePage() {
         // Get the user profile
         Request.getProfile().then((res) => {
             // Set username if success
-            setCookies("username", res)
+            setCookies("user", res)
         }).catch((err) => {
             // Logout if error (to discourage the viscious ones)
             resetCookie()
@@ -55,7 +57,7 @@ function ProfilePage() {
             <AppBar></AppBar>
             <div className={styles.profilePage}>
                 {page === WhichPage.Profile ? 
-                    <PProfile username={cookies?.username}></PProfile>
+                    <PProfile username={cookies?.user?.username} image={cookies?.user?.image} email={cookies?.user?.email}></PProfile>
                     :
                     null
                 }

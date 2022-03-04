@@ -1,12 +1,18 @@
 import React from 'react'
 
 type Props = {
-    username: string
+    username: string,
+    image: string,
+    email: string
 }
 
 function PProfile(props: Props) {
     return (
-        <div>Profile of {props.username}</div>
+        <div>
+            <div>Profile of {props.username}</div>
+            <img src={props.image}></img>
+            <div>Email {props.email}</div>
+        </div>
     )
 }
 

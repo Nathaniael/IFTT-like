@@ -4,6 +4,7 @@ import { DatabasePool, sql } from 'slonik'
 import { OauthCreationDto, UserCreationDto, UserDto, UserLoginDto } from './user.dto';
 import * as bcrypt from 'bcrypt';
 import { UserAuth } from 'src/auth/auth.controller';
+import { qFirstFieldsFromWhere } from 'src/queries/queries';
 
 @Injectable()
 export class UserService {
@@ -22,11 +23,12 @@ export class UserService {
             throw new BadRequestException("Email already in use")
         }
         await this.pool.query(sql`INSERT INTO usr
-        (username, password, email)
-        values (${usr.username}, ${bcrypt.hashSync(usr.password, 10)}, ${usr.email})`)
+        (username, password, email, image)
+        values (${usr.username}, ${bcrypt.hashSync(usr.password, 10)}, ${usr.email}, ${usr.image})`)
         let ret = await this.pool.query(sql`SELECT *
                 FROM usr
                 WHERE email = ${usr.email}`)
+        console.log(ret.rows[0])
         return ret.rows[0]
     }
 
@@ -46,6 +48,13 @@ export class UserService {
         } else {
             throw new UnauthorizedException("Password doesn't match")
         }
+    }
+
+    async getUserFromId(userId: string) {
+        let res: any;
+
+        res = await qFirstFieldsFromWhere({ pool: this.pool, selectFields: ["*"], from: "usr", where: "id", value: userId})
+        return res
     }
 
     async addOauthToUsr(usr: UserAuth, body: OauthCreationDto) {

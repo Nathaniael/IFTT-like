@@ -6,5 +6,6 @@ export declare class UserService {
     constructor(pool: DatabasePool);
     registerUser(usr: UserCreationDto): Promise<import("slonik").QueryResultRow>;
     getUser(usr: UserLoginDto): Promise<any>;
+    getUserFromId(userId: string): Promise<any>;
     addOauthToUsr(usr: UserAuth, body: OauthCreationDto): Promise<void>;
 }
