@@ -23,9 +23,9 @@ export class OauthController {
     @Post('')
     @UseGuards(AuthGuard('jwt'))
     async getToken(@User() user: UserAuth, @Body() body: TokenCreationDto): Promise<string> {
-        const token = await this.oauthService.getToken(body)
-        await this.oauthService.storeToken(token, user.userId)
-        return
+        // const token = await this.oauthService.getToken(body)
+        await this.oauthService.storeToken(body.token, user.userId)
+        return "Token well added to DB"
     }
 
 }

@@ -9,6 +9,5 @@ export declare class OauthDictionnaryDto {
     scope: string;
 }
 export declare class TokenCreationDto {
-    code: string;
-    serviceName: string;
+    token: string;
 }
