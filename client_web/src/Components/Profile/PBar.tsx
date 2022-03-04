@@ -25,7 +25,7 @@ function PBar(props: Props) {
         <div className={`${styles.container} ${animate ? styles.hideContainer : styles.showContainer}`}>
             <img onClick={() => {setAnimate(!animate)}} src='hide_arrow.png' alt='hide_arrow.png' className={`${styles.hideArrow} ${animate ? styles.turnHideArrow : null}`}></img>
             <div className={styles.infoContainer}>
-                <div className={styles.header}>
+                <div onClick={() => {props.setPage(WhichPage.Profile)}} className={styles.header}>
                     <div className={styles.username}>Welcome,<br/>{props.username}</div>
                     <img className={styles.img} src={props.image} alt='profile_logo'></img>
                 </div>
@@ -33,7 +33,10 @@ function PBar(props: Props) {
                     <div onClick={() => {props.setPage(WhichPage.Profile)}} className={styles.link}>Profile</div>
                     <div onClick={() => {props.setPage(WhichPage.Oauth)}} className={styles.link}>Oauth</div>
                     <div onClick={() => {props.setPage(WhichPage.Services)}} className={styles.link}>Areas</div>
-                    <div onClick={() => {props.deconnexion()}} className={styles.link}>Deconnexion</div>
+                    <div onClick={() => {props.deconnexion()}} className={styles.link}>
+                        <img className={styles.deconnexion} src="deconnexion.png" alt="deconnexion.png"></img>
+                        Logout
+                    </div>
                 </div>
             </div>
         </div>

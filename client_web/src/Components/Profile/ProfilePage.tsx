@@ -20,7 +20,7 @@ import { WhichPage } from '../../Types/Types';
 
 // Component
 function ProfilePage() {
-    const [cookies, setCookies, removeCookie] = useCookies(["logged", "access_token", "user", "closeGetStarted", "gitlab_token"])
+    const [cookies, setCookies, removeCookie] = useCookies(["logged", "access_token", "user", "closeGetStarted", "gitlab_token", "profilePage"])
     const [page, setPage] = useState(WhichPage.Profile)
 
     function resetCookie() {
@@ -46,13 +46,24 @@ function ProfilePage() {
             resetCookie()
         })    
     }
+
+    function setPersistentPage(newPage: WhichPage) {
+        setPage(newPage)
+        setCookies("profilePage", newPage)
+    }
+
     React.useEffect(() => {
         // Redirect to login page if the user isn't logged
         if (cookies?.logged === undefined) {
             goToPage("/login")
         }
+        if (cookies.profilePage === undefined) {
+            setCookies("profilePage", page)
+        } else {
+            setPage(cookies.profilePage)
+        }
         getUserProfile()
-    }, [page])
+    }, [])
 
     return (
         <div className={styles.background}>
@@ -73,7 +84,7 @@ function ProfilePage() {
                     :
                     null
                 }
-                <PBar username={cookies?.user?.username} image={cookies?.user?.image} email={cookies?.user?.email} setPage={setPage} deconnexion={resetCookie}></PBar>
+                <PBar username={cookies?.user?.username} image={cookies?.user?.image} email={cookies?.user?.email} setPage={setPersistentPage} deconnexion={resetCookie}></PBar>
             </div>
         </div>
     )

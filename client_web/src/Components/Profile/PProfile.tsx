@@ -55,7 +55,8 @@ function PProfile(props: Props) {
                 <UsernameWidget username={props.username} update={props.update}></UsernameWidget>
                 <img className={styles.headerImg} src={props.image}></img>
             </div>
-            <div>Email {props.email}</div>
+            <div className={styles.email}>Email {props.email}</div>
+            <div className={styles.delete}>Delete account</div>
         </div>
     )
 }

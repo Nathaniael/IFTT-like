@@ -3,6 +3,13 @@
     margin: 5vw auto;
 }
 
+.title {
+    font-size: 3vw;
+    color: white;
+    text-align: center;
+    margin-bottom: 3vw;
+}
+
 .cardContainer {
     display: flex;
     flex-wrap: wrap;

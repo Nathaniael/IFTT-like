@@ -93,6 +93,7 @@ function PArea() {
     }, [])
     return (
         <div className={styles.areas}>
+            <div className={styles.title}>Your registered Areas ({areas.length})</div>
             <div className={styles.cardContainer}>
                 {areas.map((elem: any, index: number) => {
                     return (
