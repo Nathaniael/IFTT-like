@@ -17,10 +17,12 @@ const axios_1 = require("@nestjs/axios");
 const common_1 = require("@nestjs/common");
 const nestjs_slonik_1 = require("nestjs-slonik");
 const slonik_1 = require("slonik");
+const actions_service_1 = require("../actions/actions.service");
 let AreasService = class AreasService {
-    constructor(pool, httpService) {
+    constructor(pool, httpService, actionsService) {
         this.pool = pool;
         this.httpService = httpService;
+        this.actionsService = actionsService;
     }
     async callReaction(params, type) {
         console.log(params, " ", type);
@@ -57,9 +59,10 @@ let AreasService = class AreasService {
         const reaction_service = await this.pool.query((0, slonik_1.sql) `SELECT * FROM service WHERE id = ${reaction_dico.rows[0].service_id}`);
         const action_dico = await this.pool.query((0, slonik_1.sql) `SELECT * FROM adictionnary WHERE id = ${body.action_id}`);
         const action = await this.pool.query((0, slonik_1.sql) `INSERT INTO action (params, type, dico_id)
-        VALUES (${JSON.stringify(body.action_params)}, ${action_dico.rows[0].params},${body.action_id}) RETURNING id;`);
+        VALUES (${body.action_params}, ${action_dico.rows[0].params},${body.action_id}) RETURNING id;`);
+        this.actionsService.createAction(JSON.parse(body.action_params), userId);
         const reaction = await this.pool.query((0, slonik_1.sql) `INSERT INTO reaction (params, type, reaction_route,dico_id)
-        VALUES (${JSON.stringify(body.reaction_params)}, ${reaction_dico.rows[0].params},${reaction_service.rows[0].name} ,${body.reaction_id}) RETURNING id;`);
+        VALUES (${body.reaction_params}, ${reaction_dico.rows[0].params},${reaction_service.rows[0].name} ,${body.reaction_id}) RETURNING id;`);
         const area = await this.pool.query((0, slonik_1.sql) `INSERT INTO area (
             id_act,
             id_react,
@@ -79,7 +82,8 @@ let AreasService = class AreasService {
 AreasService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, nestjs_slonik_1.InjectPool)()),
-    __metadata("design:paramtypes", [Object, axios_1.HttpService])
+    __metadata("design:paramtypes", [Object, axios_1.HttpService,
+        actions_service_1.ActionsService])
 ], AreasService);
 exports.AreasService = AreasService;
 //# sourceMappingURL=areas.service.js.map

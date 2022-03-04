@@ -29,7 +29,7 @@ let OauthController = class OauthController {
     }
     async getToken(user, body) {
         const token = await this.oauthService.getToken(body);
-        await this.oauthService.storeToken(token, user.userId);
+        await this.oauthService.storeToken(token, user.userId, body.serviceName);
         return;
     }
 };

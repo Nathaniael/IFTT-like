@@ -15,6 +15,7 @@ CREATE TABLE oauth (
     refresh_token TEXT NOT NULL,
     duration TEXT NOT NULL,
     generated_at TEXT NOT NULL,
+    service TEXT NOT NULL,
     usr_id uuid NOT NULL,
     CONSTRAINT fk_usr FOREIGN KEY(usr_id) REFERENCES usr(id)
 );

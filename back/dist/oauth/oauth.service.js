@@ -48,8 +48,15 @@ let OauthService = class OauthService {
         });
         return map.get('access_token');
     }
-    async storeToken(token, userId) {
-        this.pool.query((0, slonik_1.sql) `INSERT INTO oauth (token, refresh_token, duration, generated_at, usr_id) VALUES (${token}, 'none', 'none', now(), ${userId})`);
+    async storeToken(token, userId, service) {
+        this.pool.query((0, slonik_1.sql) `INSERT INTO oauth (token, refresh_token, duration, generated_at, usr_id, service) VALUES (${token}, 'none', 'none', now(), ${userId}, ${service})`);
+    }
+    async getTokenForService(userId, service) {
+        const tokenList = await this.pool.query((0, slonik_1.sql) `SELECT token FROM oauth WHERE service = ${service} AND usr_id = ${userId}`);
+        if (tokenList.rowCount >= 1) {
+            return tokenList.rows[0];
+        }
+        throw new common_1.NotFoundException('no token registered for this user and service');
     }
 };
 OauthService = __decorate([

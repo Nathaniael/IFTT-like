@@ -9,5 +9,6 @@ export declare class OauthService {
     getLink(serviceName: string): Promise<string>;
     getTokenLink(body: TokenCreationDto): Promise<string>;
     getToken(body: TokenCreationDto): Promise<string>;
-    storeToken(token: string, userId: string): Promise<void>;
+    storeToken(token: string, userId: string, service: string): Promise<void>;
+    getTokenForService(userId: string, service: string): Promise<import("slonik").QueryResultRow>;
 }

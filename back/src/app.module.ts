@@ -16,6 +16,7 @@ import { AboutModule } from './about/about.module';
 import { ServicesService } from './services/services.service';
 import { ServicesController } from './services/services.controller';
 import { ServicesModule } from './services/services.module';
+import { ActionsModule } from './actions/actions.module';
 
 
 @Module({
@@ -35,7 +36,8 @@ import { ServicesModule } from './services/services.module';
     AreasModule,
     ReactionsModule,
     AboutModule,
-    ServicesModule,],
+    ServicesModule,
+    ActionsModule,],
   controllers: [AppController, ServicesController],
   providers: [AppService, ServicesService],
 })

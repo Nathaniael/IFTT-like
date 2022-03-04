@@ -7,14 +7,14 @@ export class AreaCreationDto {
     @IsString()
     action_id: string
 
-    @IsJSON()
-    action_params: JSON
+    @IsString()
+    action_params: string
 
     @IsString()
     reaction_id: string
 
-    @IsJSON()
-    reaction_params: JSON
+    @IsString()
+    reaction_params: string
 }
 
 export class DicoDto {

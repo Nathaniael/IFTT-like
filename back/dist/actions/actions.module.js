@@ -6,21 +6,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AreasModule = void 0;
+exports.ActionsModule = void 0;
 const axios_1 = require("@nestjs/axios");
 const common_1 = require("@nestjs/common");
-const actions_service_1 = require("../actions/actions.service");
 const oauth_service_1 = require("../oauth/oauth.service");
-const areas_controller_1 = require("./areas.controller");
-const areas_service_1 = require("./areas.service");
-let AreasModule = class AreasModule {
+const actions_controller_1 = require("./actions.controller");
+const actions_service_1 = require("./actions.service");
+let ActionsModule = class ActionsModule {
 };
-AreasModule = __decorate([
+ActionsModule = __decorate([
     (0, common_1.Module)({
         imports: [axios_1.HttpModule],
-        providers: [areas_service_1.AreasService, actions_service_1.ActionsService, oauth_service_1.OauthService],
-        controllers: [areas_controller_1.AreasController]
+        controllers: [actions_controller_1.ActionsController],
+        providers: [actions_service_1.ActionsService, oauth_service_1.OauthService]
     })
-], AreasModule);
-exports.AreasModule = AreasModule;
-//# sourceMappingURL=areas.module.js.map
+], ActionsModule);
+exports.ActionsModule = ActionsModule;
+//# sourceMappingURL=actions.module.js.map

@@ -2,13 +2,16 @@ import { HttpModule, HttpService } from '@nestjs/axios';
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectPool } from 'nestjs-slonik';
 import { DatabasePool, sql } from 'slonik';
+import { ActionsService } from 'src/actions/actions.service';
+import { UserAuth } from 'src/auth/auth.controller';
 import { AreaCreationDto, DicoDto } from './areas.dto';
 @Injectable()
 export class AreasService {
     constructor(
         @InjectPool()
         private readonly pool: DatabasePool,
-        private readonly httpService: HttpService
+        private readonly httpService: HttpService,
+        private readonly actionsService: ActionsService
     ) { }
 
     async callReaction(params: string, type: string) {
@@ -53,9 +56,10 @@ export class AreasService {
         const reaction_service = await this.pool.query(sql`SELECT * FROM service WHERE id = ${reaction_dico.rows[0].service_id}`)
         const action_dico = await this.pool.query(sql<DicoDto>`SELECT * FROM adictionnary WHERE id = ${body.action_id}`)
         const action = await this.pool.query(sql`INSERT INTO action (params, type, dico_id)
-        VALUES (${JSON.stringify(body.action_params)}, ${action_dico.rows[0].params},${body.action_id}) RETURNING id;`)
+        VALUES (${body.action_params}, ${action_dico.rows[0].params},${body.action_id}) RETURNING id;`)
+        this.actionsService.createAction(JSON.parse(body.action_params), userId)
         const reaction = await this.pool.query(sql`INSERT INTO reaction (params, type, reaction_route,dico_id)
-        VALUES (${JSON.stringify(body.reaction_params)}, ${reaction_dico.rows[0].params},${reaction_service.rows[0].name} ,${body.reaction_id}) RETURNING id;`)
+        VALUES (${body.reaction_params}, ${reaction_dico.rows[0].params},${reaction_service.rows[0].name} ,${body.reaction_id}) RETURNING id;`)
 
         const area = await this.pool.query(sql`INSERT INTO area (
             id_act,
