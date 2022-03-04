@@ -49,6 +49,7 @@ let AreasController = class AreasController {
         else {
             throw new common_1.BadRequestException("Can't get user");
         }
+        this.areasServices.deleteArea(body.id);
         res.status(200).send("Area deleted successfully");
     }
     async getAreasByUser(user, body, res) {
@@ -77,13 +78,13 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AreasController.prototype, "createArea", null);
 __decorate([
-    (0, common_1.Delete)('/delete'),
+    (0, common_1.Post)('/delete'),
     (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
     __param(0, (0, user_decorator_1.User)()),
     __param(1, (0, common_1.Body)()),
     __param(2, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, Object]),
+    __metadata("design:paramtypes", [Object, areas_dto_1.AreaId, Object]),
     __metadata("design:returntype", Promise)
 ], AreasController.prototype, "deleteArea", null);
 __decorate([

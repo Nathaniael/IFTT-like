@@ -12,7 +12,8 @@ const prefixUrlApi = (process.env.NODE_ENV === 'development') ? process.env.REAC
 type RegisterProps = {
     username: string,
     email: string,
-    password: string
+    password: string,
+    image: string
 };
 
 // Login needed params
@@ -124,7 +125,6 @@ class RequestApi {
         const headers = {
             withCredentials: true
         }
-        console.log(body)
         // Execute request and return status + data
         return await axios.post(url, body, headers).then((res) => {
             return res.data
@@ -170,6 +170,72 @@ class RequestApi {
 
         // Execute request and return status + data
         return await axios.get(url, headers).then((res) => {
+            return res.data
+        }).catch((err) => {
+            // If there is a custom error message
+            if (err?.response?.data?.message) {
+                throw err.response.data.message
+            }
+            // Default message
+            throw err.message
+        })
+    }
+
+    async postToken(token: string) {
+        // Configure options
+        const url = prefixUrlApi + "oauth/"
+        const headers = {
+            withCredentials: true
+        }
+        const body = {
+            "token": token
+        }
+        // Execute request and return status + data
+        return await axios.post(url, body, headers).then((res) => {
+            return res.data
+        }).catch((err) => {
+            // If there is a custom error message
+            if (err?.response?.data?.message) {
+                throw err.response.data.message
+            }
+            // Default message
+            throw err.message
+        })
+    }
+
+    async postUsername(username: string) {
+        // Configure options
+        const url = prefixUrlApi + "user/username/"
+        const headers = {
+            withCredentials: true
+        }
+        const body = {
+            "username": username
+        }
+        // Execute request and return status + data
+        return await axios.post(url, body, headers).then((res) => {
+            return res.data
+        }).catch((err) => {
+            // If there is a custom error message
+            if (err?.response?.data?.message) {
+                throw err.response.data.message
+            }
+            // Default message
+            throw err.message
+        })
+    }
+
+    async deleteArea(id: number) {
+        // Configure options
+        const url = prefixUrlApi + "areas/delete/"
+        const headers = {
+            withCredentials: true
+        }
+        const body = {
+            "id": id
+        }
+        // Execute request and return status + data
+        return await axios.post(url, body, headers).then((res) => {
             return res.data
         }).catch((err) => {
             // If there is a custom error message

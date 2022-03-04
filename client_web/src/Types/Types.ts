@@ -22,9 +22,9 @@ type Service = {
 };
 
 export enum WhichPage {
-    Profile,
-    Oauth,
-    Services
+    Profile = "PROFILE",
+    Oauth = "OAUTH",
+    Services = "SERVICES"
 }
 
 export type {

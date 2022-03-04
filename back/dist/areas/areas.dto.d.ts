@@ -13,3 +13,6 @@ export declare class DicoDto {
     id: string;
     reaction_route: string;
 }
+export declare class AreaId {
+    id: number;
+}

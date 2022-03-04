@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const nestjs_slonik_1 = require("nestjs-slonik");
 const slonik_1 = require("slonik");
 const bcrypt = require("bcrypt");
+const queries_1 = require("../queries/queries");
 let UserService = class UserService {
     constructor(pool) {
         this.pool = pool;
@@ -31,11 +32,12 @@ let UserService = class UserService {
             throw new common_1.BadRequestException("Email already in use");
         }
         await this.pool.query((0, slonik_1.sql) `INSERT INTO usr
-        (username, password, email)
-        values (${usr.username}, ${bcrypt.hashSync(usr.password, 10)}, ${usr.email})`);
+        (username, password, email, image)
+        values (${usr.username}, ${bcrypt.hashSync(usr.password, 10)}, ${usr.email}, ${usr.image})`);
         let ret = await this.pool.query((0, slonik_1.sql) `SELECT *
                 FROM usr
                 WHERE email = ${usr.email}`);
+        console.log(ret.rows[0]);
         return ret.rows[0];
     }
     async getUser(usr) {
@@ -56,6 +58,11 @@ let UserService = class UserService {
             throw new common_1.UnauthorizedException("Password doesn't match");
         }
     }
+    async getUserFromId(userId) {
+        let res;
+        res = await (0, queries_1.qFirstFieldsFromWhere)({ pool: this.pool, selectFields: ["*"], from: "usr", where: "id", value: userId });
+        return res;
+    }
     async addOauthToUsr(usr, body) {
         console.log(body.token, body.refresh_token, body.duration, body.generated_at, usr);
         try {
@@ -67,6 +74,12 @@ let UserService = class UserService {
             console.log('hello');
             throw error;
         }
+    }
+    async changeUsername(userId, username) {
+        await this.pool.query((0, slonik_1.sql) `UPDATE usr
+            SET username = ${username}
+            WHERE id = ${userId}`);
+        return "Username well changed !";
     }
 };
 UserService = __decorate([

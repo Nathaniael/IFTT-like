@@ -109,7 +109,6 @@ function ConfigArea(props: ConfigAreaProps) {
             action_params: action_params,
             reaction_params: reaction_params
         }).then((res) => {
-            console.log(res)
             goToPage('/profile')
         }).catch((err) => {
             console.log(err)

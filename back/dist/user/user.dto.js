@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.OauthCreationDto = exports.UserLoginDto = exports.UserDto = exports.UserCreationDto = void 0;
+exports.Username = exports.OauthCreationDto = exports.UserLoginDto = exports.UserDto = exports.UserCreationDto = void 0;
 const class_validator_1 = require("class-validator");
 class UserCreationDto {
 }
@@ -25,6 +25,10 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], UserCreationDto.prototype, "password", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], UserCreationDto.prototype, "image", void 0);
 exports.UserCreationDto = UserCreationDto;
 class UserDto {
 }
@@ -79,4 +83,11 @@ __decorate([
     __metadata("design:type", String)
 ], OauthCreationDto.prototype, "generated_at", void 0);
 exports.OauthCreationDto = OauthCreationDto;
+class Username {
+}
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], Username.prototype, "username", void 0);
+exports.Username = Username;
 //# sourceMappingURL=user.dto.js.map

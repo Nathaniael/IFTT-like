@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './styles/PServices.module.css'
+import styles from './styles/POauth.module.css'
 import GitLabAuthWidget from '../OAuth/GitLabAuthWidget'
 import { useCookies } from 'react-cookie'
 
@@ -8,7 +8,6 @@ function POauth() {
     const [cookies] = useCookies(['gitlab_token'])
 
     React.useEffect(() => {
-        console.log(cookies.gitlab_token)
     }, [cookies.gitlab_token])
     return (
         <div className={styles.container}>
