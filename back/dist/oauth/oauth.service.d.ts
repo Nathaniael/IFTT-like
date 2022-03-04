@@ -9,4 +9,5 @@ export declare class OauthService {
     getLink(serviceName: string): Promise<string>;
     getTokenLink(body: TokenCreationDto): Promise<string>;
     getToken(body: TokenCreationDto): Promise<string>;
+    storeToken(token: string, userId: string): Promise<void>;
 }

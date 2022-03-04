@@ -48,6 +48,9 @@ let OauthService = class OauthService {
         });
         return map.get('access_token');
     }
+    async storeToken(token, userId) {
+        this.pool.query((0, slonik_1.sql) `INSERT INTO oauth (token, refresh_token, duration, generated_at, usr_id) VALUES (${token}, 'none', 'none', now(), ${userId})`);
+    }
 };
 OauthService = __decorate([
     (0, common_1.Injectable)(),
