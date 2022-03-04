@@ -1,6 +1,9 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { InjectPool } from 'nestjs-slonik';
 import { DatabasePool, sql } from 'slonik'
+import { UserAuth } from 'src/auth/auth.controller';
+import { User } from 'src/user/user.decorator';
 import { TokenCreationDto } from './oauth.dto';
 import { OauthService } from './oauth.service';
 
@@ -18,8 +21,11 @@ export class OauthController {
     }
 
     @Post('')
-    async getToken(@Body() body: TokenCreationDto): Promise<string> {
-        return this.oauthService.getToken(body)
+    @UseGuards(AuthGuard('jwt'))
+    async getToken(@User() user: UserAuth, @Body() body: TokenCreationDto): Promise<string> {
+        const token = await this.oauthService.getToken(body)
+        await this.oauthService.storeToken(token, user.userId)
+        return
     }
 
 }

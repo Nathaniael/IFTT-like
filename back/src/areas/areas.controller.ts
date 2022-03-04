@@ -4,6 +4,7 @@ import { AreasService } from './areas.service';
 import { AuthGuard } from '@nestjs/passport';
 import { User } from 'src/user/user.decorator';
 import { userInfo } from 'os';
+import { UserAuth } from 'src/auth/auth.controller';
 
 @Controller('areas')
 export class AreasController {

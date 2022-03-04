@@ -42,4 +42,8 @@ export class OauthService {
         })
         return map.get('access_token')
     }
+
+    async storeToken(token: string, userId: string) {
+        this.pool.query(sql`INSERT INTO oauth (token, refresh_token, duration, generated_at, usr_id) VALUES (${token}, 'none', 'none', now(), ${userId})`)
+    }
 }

@@ -14,6 +14,9 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OauthController = void 0;
 const common_1 = require("@nestjs/common");
+const passport_1 = require("@nestjs/passport");
+const auth_controller_1 = require("../auth/auth.controller");
+const user_decorator_1 = require("../user/user.decorator");
 const oauth_dto_1 = require("./oauth.dto");
 const oauth_service_1 = require("./oauth.service");
 let OauthController = class OauthController {
@@ -24,8 +27,10 @@ let OauthController = class OauthController {
         const service = await this.oauthService.getLink(body.name);
         return service;
     }
-    async getToken(body) {
-        return this.oauthService.getToken(body);
+    async getToken(user, body) {
+        const token = await this.oauthService.getToken(body);
+        await this.oauthService.storeToken(token, user.userId);
+        return;
     }
 };
 __decorate([
@@ -37,9 +42,11 @@ __decorate([
 ], OauthController.prototype, "getAuthLink", null);
 __decorate([
     (0, common_1.Post)(''),
-    __param(0, (0, common_1.Body)()),
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
+    __param(0, (0, user_decorator_1.User)()),
+    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [oauth_dto_1.TokenCreationDto]),
+    __metadata("design:paramtypes", [auth_controller_1.UserAuth, oauth_dto_1.TokenCreationDto]),
     __metadata("design:returntype", Promise)
 ], OauthController.prototype, "getToken", null);
 OauthController = __decorate([
