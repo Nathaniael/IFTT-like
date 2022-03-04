@@ -42,6 +42,7 @@ let UserAreas = class UserAreas {
         var res = [];
         for (const area of areas) {
             var elem = {
+                "id": area["id"],
                 "action": await this.getActionOrReactionInfos(area, queries_1.AorREA.Action),
                 "reaction": await this.getActionOrReactionInfos(area, queries_1.AorREA.Reaction)
             };

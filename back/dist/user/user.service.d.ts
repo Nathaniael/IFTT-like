@@ -8,4 +8,5 @@ export declare class UserService {
     getUser(usr: UserLoginDto): Promise<any>;
     getUserFromId(userId: string): Promise<any>;
     addOauthToUsr(usr: UserAuth, body: OauthCreationDto): Promise<void>;
+    changeUsername(userId: string, username: string): Promise<string>;
 }

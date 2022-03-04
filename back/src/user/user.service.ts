@@ -68,4 +68,12 @@ export class UserService {
             throw error
         }
     }
+
+    async changeUsername(userId: string, username: string) {
+        await this.pool.query(
+            sql`UPDATE usr
+            SET username = ${username}
+            WHERE id = ${userId}`)
+        return "Username well changed !"     
+    }
 }

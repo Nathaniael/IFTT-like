@@ -15,8 +15,10 @@ type AreaCard = {
 }
 
 type CardProps = {
+    areaId: number,
     action: AreaCard,
-    reaction: AreaCard
+    reaction: AreaCard,
+    getAreas: Function
 };
 
 function Params(params: object) {
@@ -52,8 +54,17 @@ function BaseCard(props: AreaCard) {
 }
 
 function CardArea(props: CardProps) {
+    function deleteArea() {
+        Request.deleteArea(props.areaId).then((res) => {
+            props.getAreas()
+        }).catch((err) => {
+            console.log(err)
+        })
+        props.getAreas()
+    }
     return (
         <div className={styles.card}>
+            <img onClick={() => {deleteArea()}} className={styles.trashImg} src="trash.png" alt="trash.png"></img>
             <div className={styles.subCard}>
                 {BaseCard(props.action)}
                 {Params(props.action.params)}
@@ -70,19 +81,22 @@ function CardArea(props: CardProps) {
 function PArea() {
     const [areas, setAreas] = React.useState([])
 
-    React.useEffect(() => {
+    function getAreas() {
         Request.getAreas().then((res) => {
             setAreas(res)
         }).catch((err) => {
             console.log(err)
         })
+    }
+    React.useEffect(() => {
+       getAreas()
     }, [])
     return (
         <div className={styles.areas}>
             <div className={styles.cardContainer}>
                 {areas.map((elem: any, index: number) => {
                     return (
-                        <CardArea key={index} action={elem?.action} reaction={elem?.reaction}></CardArea>
+                        <CardArea areaId={elem?.id} getAreas={getAreas} key={index} action={elem?.action} reaction={elem?.reaction}></CardArea>
                     )
                 })}
             </div>

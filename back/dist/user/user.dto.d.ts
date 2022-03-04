@@ -21,3 +21,6 @@ export declare class OauthCreationDto {
     duration: string;
     generated_at: string;
 }
+export declare class Username {
+    username: string;
+}

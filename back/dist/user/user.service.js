@@ -75,6 +75,12 @@ let UserService = class UserService {
             throw error;
         }
     }
+    async changeUsername(userId, username) {
+        await this.pool.query((0, slonik_1.sql) `UPDATE usr
+            SET username = ${username}
+            WHERE id = ${userId}`);
+        return "Username well changed !";
+    }
 };
 UserService = __decorate([
     (0, common_1.Injectable)(),

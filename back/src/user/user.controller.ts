@@ -2,7 +2,7 @@ import { Body, Controller, Get, Post, UseGuards, Res, BadRequestException } from
 import { AuthGuard } from '@nestjs/passport';
 import { UserAuth } from 'src/auth/auth.controller';
 import { User } from './user.decorator';
-import { OauthCreationDto } from './user.dto';
+import { OauthCreationDto, Username } from './user.dto';
 import { UserService } from './user.service';
 import { UserAreas } from './user.areas';
 
@@ -19,6 +19,19 @@ export class UserController {
         return this.usersService.addOauthToUsr(usr, body)
     }
 
+    @Post('username')
+    @UseGuards(AuthGuard('jwt'))
+    async changeUsername(@User() usr: UserAuth, @Body() body: Username) {
+        var userId;
+        if (usr.userId !== undefined) {
+            userId = usr.userId
+        } else if (usr["payload"].username !== undefined) {
+            userId = usr["payload"].userId
+        } else {
+            throw new BadRequestException("User not found")
+        }
+        return this.usersService.changeUsername(userId, body.username)
+    }
     @Get('profile')
     @UseGuards(AuthGuard('jwt'))
     async getUserProfile(@User() usr: UserAuth, @Res() res) {

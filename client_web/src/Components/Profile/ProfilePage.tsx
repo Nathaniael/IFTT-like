@@ -36,12 +36,7 @@ function ProfilePage() {
         goToPage("/login")
     }
 
-    React.useState(() => {
-        // Redirect to login page if the user isn't logged
-        if (cookies?.logged === undefined) {
-            goToPage("/login")
-        }
-
+    function getUserProfile() {
         // Get the user profile
         Request.getProfile().then((res) => {
             // Set username if success
@@ -50,14 +45,21 @@ function ProfilePage() {
             // Logout if error (to discourage the viscious ones)
             resetCookie()
         })    
-    })
+    }
+    React.useEffect(() => {
+        // Redirect to login page if the user isn't logged
+        if (cookies?.logged === undefined) {
+            goToPage("/login")
+        }
+        getUserProfile()
+    }, [page])
 
     return (
         <div className={styles.background}>
             <AppBar></AppBar>
             <div className={styles.profilePage}>
-                {page === WhichPage.Profile ? 
-                    <PProfile username={cookies?.user?.username} image={cookies?.user?.image} email={cookies?.user?.email}></PProfile>
+                {page === WhichPage.Profile ?
+                    <PProfile username={cookies?.user?.username} image={cookies?.user?.image} email={cookies?.user?.email} update={() => {getUserProfile()}}></PProfile>
                     :
                     null
                 }
@@ -71,7 +73,7 @@ function ProfilePage() {
                     :
                     null
                 }
-                <PBar setPage={setPage} deconnexion={resetCookie}></PBar>
+                <PBar username={cookies?.user?.username} image={cookies?.user?.image} email={cookies?.user?.email} setPage={setPage} deconnexion={resetCookie}></PBar>
             </div>
         </div>
     )

@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DicoDto = exports.AreaCreationDto = void 0;
+exports.AreaId = exports.DicoDto = exports.AreaCreationDto = void 0;
 const class_validator_1 = require("class-validator");
 class AreaCreationDto {
 }
@@ -61,4 +61,11 @@ __decorate([
     __metadata("design:type", String)
 ], DicoDto.prototype, "reaction_route", void 0);
 exports.DicoDto = DicoDto;
+class AreaId {
+}
+__decorate([
+    (0, class_validator_1.IsNumber)(),
+    __metadata("design:type", Number)
+], AreaId.prototype, "id", void 0);
+exports.AreaId = AreaId;
 //# sourceMappingURL=areas.dto.js.map

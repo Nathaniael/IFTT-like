@@ -202,6 +202,50 @@ class RequestApi {
             throw err.message
         })
     }
+
+    async postUsername(username: string) {
+        // Configure options
+        const url = prefixUrlApi + "user/username/"
+        const headers = {
+            withCredentials: true
+        }
+        const body = {
+            "username": username
+        }
+        // Execute request and return status + data
+        return await axios.post(url, body, headers).then((res) => {
+            return res.data
+        }).catch((err) => {
+            // If there is a custom error message
+            if (err?.response?.data?.message) {
+                throw err.response.data.message
+            }
+            // Default message
+            throw err.message
+        })
+    }
+
+    async deleteArea(id: number) {
+        // Configure options
+        const url = prefixUrlApi + "areas/delete/"
+        const headers = {
+            withCredentials: true
+        }
+        const body = {
+            "id": id
+        }
+        // Execute request and return status + data
+        return await axios.post(url, body, headers).then((res) => {
+            return res.data
+        }).catch((err) => {
+            // If there is a custom error message
+            if (err?.response?.data?.message) {
+                throw err.response.data.message
+            }
+            // Default message
+            throw err.message
+        })
+    }
 }
 
 export default new RequestApi()
