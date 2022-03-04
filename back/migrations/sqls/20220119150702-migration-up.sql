@@ -37,6 +37,7 @@ CREATE TABLE adictionnary (
     name TEXT NOT NULL,
     description TEXT NOT NULL,
     params TEXT NOT NULL,
+    help TEXT NOT NULL,
     service_id INT NOT NULL,
     CONSTRAINT fk_service FOREIGN KEY(service_id) REFERENCES service(id)
 );
@@ -46,6 +47,7 @@ CREATE TABLE readictionnary (
     name TEXT NOT NULL,
     description TEXT NOT NULL,
     params TEXT NOT NULL,
+    help TEXT NOT NULL,
     service_id INT NOT NULL,
     CONSTRAINT fk_service FOREIGN KEY(service_id) REFERENCES service(id)
 );
@@ -86,12 +88,12 @@ VALUES ('Github', '1', 'https://github.com/login/oauth/authorize', 'https://gith
     ('Sms', '0', '', '', '/sms.png', '', '', '', ''); -- ID: 5 Sms
 
 -- ACTIONS DICO
-INSERT INTO "adictionnary" ("name", "description", "params", "service_id")
-VALUES ('Any new repository event', 'This trigger reaction every time a new event occurs in a repository.', '[{"number":"repoId"},{"string":"secret"}]', '1'), -- id 1
-('Push event', 'This triggers reaction everytime someone pushes something on a precise repository', '[{"string":"ProjectID"}]', '3'); -- id 2
+INSERT INTO "adictionnary" ("name", "description", "params", "help", "service_id")
+VALUES ('Any new repository event', 'This trigger reaction every time a new event occurs in a repository.', '[{"string":"url"},{"string":"secret"}]', 'In your github repository webhook, you have to set Payload URL to pantharea.fun:8081/webhooks/Github and to have a Secret code to enter in the parameters above', '1'), -- id 1
+('Any new repository event', 'This trigger reaction every time a new event occurs in a repository', '[{"string":"ProjectID"}, {"string":"secret"}]', 'In your gitlab repository webhook, you have to set Payload URL to pantharea.fun:8081/webhooks/Gitlab and to have a Secret token to enter in the parameters above. Remember to disable SSL verification.', '3'); -- id 2
 
 -- REACTIONS DICO
-INSERT INTO "readictionnary" ("name", "description", "params","service_id")
-VALUES ('Send an email', 'When triggered, send an email to a chosen recipient, a subject and a body', '[{"string":"username"}, {"string":"recipient"},{"string":"subject"}, {"string":"body"}]' , '2'), -- ID:1
-('Send a discord message', 'When triggered, send a discord message in your server using Discord webhooks', '[{"string":"url"}, {"string":"hookusername"},{"string":"message"}]' , '4'), -- ID:2
-('Send a SMS', 'When triggered, send a message to the phone number you set', '[{"string":"number"}, {"string":"message"}]' , '5') -- ID:3
+INSERT INTO "readictionnary" ("name", "description", "params", "help", "service_id")
+VALUES ('Send an email', 'When triggered, send an email to a chosen recipient, a subject and a body', '[{"string":"username"}, {"string":"recipient"},{"string":"subject"}, {"string":"body"}]','' , '2'), -- ID:1
+('Send a discord message', 'When triggered, send a discord message in your server using Discord webhooks', '[{"string":"url"}, {"string":"hookusername"},{"string":"message"}]', '', '4'), -- ID:2
+('Send a SMS', 'When triggered, send a message to the phone number you set', '[{"string":"number"}, {"string":"message"}]', '','5') -- ID:3
