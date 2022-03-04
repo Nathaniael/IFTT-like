@@ -1,9 +1,10 @@
 import { Body, Controller, Get, Post, UseGuards, Res, BadRequestException, Delete } from '@nestjs/common';
-import { AreaCreationDto } from './areas.dto';
+import { AreaCreationDto, AreaId } from './areas.dto';
 import { AreasService } from './areas.service';
 import { AuthGuard } from '@nestjs/passport';
 import { User } from 'src/user/user.decorator';
 import { userInfo } from 'os';
+import { UserAuth } from 'src/auth/auth.controller';
 
 @Controller('areas')
 export class AreasController {
@@ -26,9 +27,9 @@ export class AreasController {
         res.status(200).send("Area well created")
     }
 
-    @Delete('/delete')
+    @Post('/delete')
     @UseGuards(AuthGuard('jwt'))
-    async deleteArea(@User() user, @Body() body, @Res() res) {
+    async deleteArea(@User() user, @Body() body: AreaId, @Res() res) {
         var userId;
         if (user["payload"]?.userId != undefined) {
             userId = user["payload"].userId
@@ -37,6 +38,7 @@ export class AreasController {
         } else {
             throw new BadRequestException("Can't get user")
         }
+        this.areasServices.deleteArea(body.id)
         res.status(200).send("Area deleted successfully")
     }
 

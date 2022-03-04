@@ -42,6 +42,7 @@ export class UserAreas {
         var res = []
         for (const area of areas) {
             var elem = {
+                "id": area["id"],
                 "action": await this.getActionOrReactionInfos(area, AorREA.Action),
                 "reaction": await this.getActionOrReactionInfos(area, AorREA.Reaction)
             }

@@ -52,10 +52,6 @@ class TokenCreationDto {
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], TokenCreationDto.prototype, "code", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], TokenCreationDto.prototype, "serviceName", void 0);
+], TokenCreationDto.prototype, "token", void 0);
 exports.TokenCreationDto = TokenCreationDto;
 //# sourceMappingURL=oauth.dto.js.map

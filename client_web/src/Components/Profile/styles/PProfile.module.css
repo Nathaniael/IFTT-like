@@ -1,0 +1,69 @@
+.profile {
+    width: 50%;
+    height: 50%;
+    margin: 5vw auto;
+    color: rgba(11, 10, 29, 0.8);
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.headerRow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    column-gap: 2vw;
+}
+
+.headerText {
+    color: white;
+    font-size: 1.5vw;
+    border: 1px solid white;
+    padding: 1vw;
+    border-radius: 1.071vw;
+}
+
+.headerUsername {
+    text-align: center;
+    color: white;
+    font-size: 3vw;
+    background: none;
+    border: none;
+    padding: 1vw;
+    margin: 1vw 0;
+}
+
+.headerUsername:focus {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 25px;
+}
+
+.headerImg {
+    width: 10vw;
+    border-radius: 100%;
+    margin: 3vw;
+}
+
+.email {
+    text-align: center;
+}
+
+.delete {
+    margin: 3vw auto;
+    color: rgba(143, 51, 51, 0.959);
+    background-color: white;
+    width: 20%;
+    padding: 0.5vw;
+    text-align: center;
+    box-shadow: 0px 0px 10px 2px rgba(143, 51, 51, 0.959);
+    border-radius: 1.786vw;
+    cursor: pointer;
+}
+
+.delete:hover {
+    box-shadow: 0px 0px 10px 5px rgba(143, 51, 51, 0.959);
+}

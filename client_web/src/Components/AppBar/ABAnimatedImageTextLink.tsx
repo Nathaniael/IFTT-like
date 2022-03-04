@@ -25,15 +25,17 @@ function ABAnimatedImageTextLink(props: Props) {
             // Double animation on hover, when one elem fade out the other fade in
             onMouseEnter={() => {setAnimate(true)}}
             onMouseLeave={() => {setAnimate(false)}}>
-            <div
-                className={`${styles.text} ${animate ? styles.animateText : null}`}>
-                    {props.linkTitle}
+            <div className={styles.container}>
+                <div
+                    className={`${styles.text} ${animate ? styles.animateText : null}`}>
+                        {props.linkTitle}
+                </div>
+                <img 
+                    className={`${styles.img} ${animate ? styles.animateImg : null}`}
+                    src={props.imgUrl}
+                    alt={props.imgUrl}
+                ></img>
             </div>
-            <img 
-                className={`${styles.img} ${animate ? styles.animateImg : null}`}
-                src={props.imgUrl}
-                alt={props.imgUrl}
-            ></img>
         </Link>
     )
 }

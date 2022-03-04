@@ -1,6 +1,7 @@
 .servicePage {
     background: radial-gradient(rgb(0, 126, 167), rgb(0, 13, 77));
-    min-height: 250vh;
+    min-height: 100vh;
+    padding-bottom: 10vw;
 }
 
 .titlePage {
@@ -60,7 +61,6 @@
 .descriptionService {
     position: absolute;
     width: 30vw;
-    height: 50vh;
     transition: 1s;
 }
 

@@ -37,3 +37,8 @@ export class DicoDto {
     @IsString()
     reaction_route: string
 }
+
+export class AreaId {
+    @IsNumber()
+    id: number
+}

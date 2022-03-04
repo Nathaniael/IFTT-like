@@ -9,6 +9,9 @@ export class UserCreationDto {
 
     @IsString()
     password: string
+
+    @IsString()
+    image: string
 }
 
 export class UserDto {
@@ -48,4 +51,9 @@ export class OauthCreationDto {
 
     @IsString()
     generated_at: string
+}
+
+export class Username {
+    @IsString()
+    username: string
 }

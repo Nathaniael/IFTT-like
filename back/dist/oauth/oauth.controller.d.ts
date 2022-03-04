@@ -1,3 +1,4 @@
+import { UserAuth } from 'src/auth/auth.controller';
 import { TokenCreationDto } from './oauth.dto';
 import { OauthService } from './oauth.service';
 export declare class OauthController {
@@ -6,5 +7,5 @@ export declare class OauthController {
     getAuthLink(body: {
         name: string;
     }): Promise<string>;
-    getToken(body: TokenCreationDto): Promise<string>;
+    getToken(user: UserAuth, body: TokenCreationDto): Promise<string>;
 }

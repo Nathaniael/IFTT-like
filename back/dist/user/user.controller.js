@@ -28,16 +28,32 @@ let UserController = class UserController {
     async addOauthToUsr(usr, body) {
         return this.usersService.addOauthToUsr(usr, body);
     }
-    async getUserProfile(usr, res) {
-        if (usr.username !== undefined) {
-            res.status(200).json(usr.username);
+    async changeUsername(usr, body) {
+        var userId;
+        if (usr.userId !== undefined) {
+            userId = usr.userId;
         }
         else if (usr["payload"].username !== undefined) {
-            res.status(200).json(usr["payload"].username);
+            userId = usr["payload"].userId;
         }
         else {
-            res.status(200).json("undefined");
+            throw new common_1.BadRequestException("User not found");
         }
+        return this.usersService.changeUsername(userId, body.username);
+    }
+    async getUserProfile(usr, res) {
+        var userId;
+        if (usr.userId !== undefined) {
+            userId = usr.userId;
+        }
+        else if (usr["payload"].username !== undefined) {
+            userId = usr["payload"].userId;
+        }
+        else {
+            throw new common_1.BadRequestException("User not found");
+        }
+        let user = await this.usersService.getUserFromId(userId);
+        res.status(200).json(user);
     }
     async getAreas(usr, res) {
         var _a;
@@ -64,6 +80,15 @@ __decorate([
     __metadata("design:paramtypes", [auth_controller_1.UserAuth, user_dto_1.OauthCreationDto]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "addOauthToUsr", null);
+__decorate([
+    (0, common_1.Post)('username'),
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
+    __param(0, (0, user_decorator_1.User)()),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [auth_controller_1.UserAuth, user_dto_1.Username]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "changeUsername", null);
 __decorate([
     (0, common_1.Get)('profile'),
     (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),

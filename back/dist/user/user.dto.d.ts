@@ -2,6 +2,7 @@ export declare class UserCreationDto {
     username: string;
     email: string;
     password: string;
+    image: string;
 }
 export declare class UserDto {
     id: string;
@@ -19,4 +20,7 @@ export declare class OauthCreationDto {
     refresh_token: string;
     duration: string;
     generated_at: string;
+}
+export declare class Username {
+    username: string;
 }

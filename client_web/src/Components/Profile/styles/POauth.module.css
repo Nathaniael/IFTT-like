@@ -1,16 +1,17 @@
 .container {
     background-color: rgba(0, 0, 0, 0.2);
     width: 50vw;
-    height: 30vh;
-    margin: auto;
+    height: 50vh;
+    margin: 6vw auto;
     padding: 5vw;
     border: 1px solid black;
     border-radius: 3.571vw;
 }
 
 .imgContainer {
-    width: 5vw;
-    height: 5vw;
+    width: 20vw;
+    height: 20vw;
+    margin: 3vw auto;
     position: relative;
 }
 
