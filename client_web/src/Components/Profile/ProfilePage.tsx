@@ -8,7 +8,7 @@ import Request from '../Request'
 import { goToPage } from '../Utils';
 import PBar from './PBar';
 import PProfile from './PProfile';
-import PServices from './PServices';
+import PArea from './PArea';
 import POauth from './POauth';
 
 // Styles
@@ -65,7 +65,7 @@ function ProfilePage() {
                     null
                 }
                 {page === WhichPage.Services ?
-                    <PServices></PServices>
+                    <PArea></PArea>
                     :
                     null
                 }

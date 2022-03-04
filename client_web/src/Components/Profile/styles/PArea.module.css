@@ -1,0 +1,90 @@
+.areas {
+    width: 80%;
+    margin: 5vw auto;
+}
+
+.cardContainer {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card {
+    width: 30%;
+    background-color: rgba(255, 255, 255, 0.1);
+    margin: auto;
+    border: 1px solid white;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    column-gap: 3vw;
+    border-radius: 1.786vw;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transition: 0.5s;
+    opacity: 1;
+    animation: glow 3s infinite;
+}
+
+@keyframes glow {
+    50% {
+        box-shadow: 0px 0px 10px 0px white;
+    }
+}
+.cardImg {
+    width: 6vw;
+    height: 6vw;
+}
+
+.cardHeader {
+    margin-top: 1vw;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-top-right-radius: 3.571vw;
+}
+
+.titleContainer {
+    width: 90%;
+    margin-top: 1vw;
+}
+
+.subCard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.separator {
+    width: 100%;
+    margin: 1vw 0;
+}
+
+.params {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 1vw;
+    padding: 1vw;
+    border-radius: 1.071vw;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.paramsItem {
+    width: 50%;
+}
+
+.serviceName {
+    font-size: 2vw;
+}
+
+.name {
+    font-size: 1.5vw;
+}
+
+.description {
+    font-size: 1vw;
+}

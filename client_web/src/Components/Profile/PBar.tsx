@@ -8,7 +8,7 @@ type Props = {
 };
 
 function PBar(props: Props) {
-    const [animate, setAnimate] = React.useState(true)
+    const [animate, setAnimate] = React.useState(false)
 
     return (
         <div className={`${styles.container} ${animate ? styles.hideContainer : styles.showContainer}`}>
@@ -21,7 +21,7 @@ function PBar(props: Props) {
                 <div>
                     <div onClick={() => {props.setPage(WhichPage.Profile)}} className={styles.link}>Profile</div>
                     <div onClick={() => {props.setPage(WhichPage.Oauth)}} className={styles.link}>Oauth</div>
-                    <div onClick={() => {props.setPage(WhichPage.Services)}} className={styles.link}>Services</div>
+                    <div onClick={() => {props.setPage(WhichPage.Services)}} className={styles.link}>Areas</div>
                     <div onClick={() => {props.deconnexion()}} className={styles.link}>Deconnexion</div>
                 </div>
             </div>

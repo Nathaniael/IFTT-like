@@ -9,6 +9,8 @@ const texturesPathList = [
     "github.png",
     "gitlab.png",
     "mail.png",
+    "discord.png",
+    "sms.png"
 ]
 
 // Export to use it in HomeThree.js

@@ -1,13 +1,14 @@
 .container {
-    position: absolute;
+    position: fixed;
     right: 0;
-    height: 100%;
+    min-height: 79vh;
     width: 20vw;
     display: flex;
     justify-content: start;
     flex-direction: column;
     box-shadow: 0px 0px 10px 0px;
-    /* border-radius: 50px; */
+    background-color: rgba(19, 27, 53, 0.8);
+    border-radius: 50px;
 }
 
 .hideArrow {
@@ -18,12 +19,13 @@
     height: 2vw;
     padding: 1vw;
     box-shadow: 0px 0px 10px 0px;
-    background-color: rgba(255, 255, 255, 0.15);
+    background-color: rgb(21, 47, 97);
     transition: 0.3s;
+    border-radius: 50px;
 }
 
 .hideArrow:hover {
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: rgb(46, 137, 212);
 }
 
 .turnHideArrow {
@@ -84,7 +86,6 @@
 
 .header {
     position: relative;
-    border-bottom: 1px white solid;
     cursor: pointer;
 }
 
@@ -92,7 +93,7 @@
     cursor: pointer;
     color: white;
     font-size: 1.5vw;
-    border-bottom: 1px white solid;
+    border-top: 1px white solid;
     padding: 1vw;
 }
 
