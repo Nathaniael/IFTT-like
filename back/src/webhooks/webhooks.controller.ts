@@ -20,11 +20,9 @@ export class WebhooksController {
     async actionGitlab(@Req() req, @Body() body) {
         const type = JSON.stringify({
             ProjectID: body.project_id,
-            secret: req.headers["x-gitlab-token"]
         })
         const params = JSON.stringify({
             ProjectID: body.project_id,
-            secret: req.headers["x-gitlab-token"]
         })
         this.areasServices.callReaction(params, type)
     }

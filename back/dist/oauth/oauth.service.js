@@ -32,6 +32,9 @@ let OauthService = class OauthService {
         return `${service.query_code}?client_id=${service.client_id}&redirect_uri=${service.redirect_uri}&response_type=code&scope=${service.scope}`;
     }
     async storeToken(token, userId, service) {
+        console.log(token);
+        console.log(userId);
+        console.log(service);
         const tok = await this.pool.query((0, slonik_1.sql) `SELECT * FROM oauth WHERE service = ${service} AND usr_id = ${userId}`);
         if (tok.rowCount === 1) {
             await this.pool.query((0, slonik_1.sql) `UPDATE oauth SET token = ${token} WHERE service = ${service} AND usr_id = ${userId}`);

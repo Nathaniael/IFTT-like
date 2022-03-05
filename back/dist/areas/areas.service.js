@@ -52,14 +52,20 @@ let AreasService = class AreasService {
     }
     async createArea(userId, body) {
         this.checkBodyCreateArea(body);
+        console.log("Body:", body);
         const reaction_dico = await this.pool.query((0, slonik_1.sql) `SELECT * FROM readictionnary WHERE id = ${body.reaction_id}`);
         const reaction_service = await this.pool.query((0, slonik_1.sql) `SELECT * FROM service WHERE id = ${reaction_dico.rows[0].service_id}`);
         const action_dico = await this.pool.query((0, slonik_1.sql) `SELECT * FROM adictionnary WHERE id = ${body.action_id}`);
+        console.log(body.action_params);
+        console.log(action_dico.rows[0].params);
+        console.log(body.action_id);
         const action = await this.pool.query((0, slonik_1.sql) `INSERT INTO action (params, type, dico_id)
-        VALUES (${body.action_params}, ${action_dico.rows[0].params},${body.action_id}) RETURNING id;`);
-        this.actionsService.createAction(JSON.parse(body.action_params), userId);
+        VALUES (${JSON.stringify(body.action_params)}, ${JSON.stringify(action_dico.rows[0].params)},${body.action_id}) RETURNING id;`);
+        console.log("l'action créé", action);
+        const action_service = await this.pool.query((0, slonik_1.sql) `SELECT * FROM service WHERE id = ${action_dico.rows[0].service_id}`);
+        this.actionsService.createAction(body.action_params, action_service.rows[0].name.toString(), userId, action_dico.rows[0].name);
         const reaction = await this.pool.query((0, slonik_1.sql) `INSERT INTO reaction (params, type, reaction_route,dico_id)
-        VALUES (${body.reaction_params}, ${reaction_dico.rows[0].params},${reaction_service.rows[0].name} ,${body.reaction_id}) RETURNING id;`);
+        VALUES (${JSON.stringify(body.reaction_params)}, ${JSON.stringify(reaction_dico.rows[0].params)},${reaction_service.rows[0].name} ,${body.reaction_id}) RETURNING id;`);
         const area = await this.pool.query((0, slonik_1.sql) `INSERT INTO area (
             id_act,
             id_react,
