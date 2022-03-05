@@ -31,4 +31,7 @@ export class OauthDictionnaryDto {
 export class TokenCreationDto {
     @IsString()
     token: string
+
+    @IsString()
+    serviceName: string
 }

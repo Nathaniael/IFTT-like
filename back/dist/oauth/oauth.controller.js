@@ -28,7 +28,7 @@ let OauthController = class OauthController {
         return service;
     }
     async getToken(user, body) {
-        await this.oauthService.storeToken(body.token, user.userId);
+        await this.oauthService.storeToken(body.token, user.userId, body.serviceName);
         return "Token well added to DB";
     }
 };

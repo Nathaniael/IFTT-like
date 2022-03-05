@@ -1,9 +1,9 @@
 export declare class AreaCreationDto {
     user_id: string;
     action_id: string;
-    action_params: JSON;
+    action_params: string;
     reaction_id: string;
-    reaction_params: JSON;
+    reaction_params: string;
 }
 export declare class DicoDto {
     params: string;

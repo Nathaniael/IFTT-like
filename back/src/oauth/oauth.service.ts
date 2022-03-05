@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectPool } from 'nestjs-slonik';
 import { DatabasePool, sql } from 'slonik'
 import { OauthDictionnaryDto, TokenCreationDto } from './oauth.dto';
 import { HttpService } from '@nestjs/axios';
+import { ReactionsService } from 'src/reactions/reactions.service';
 
 @Injectable()
 export class OauthService {
@@ -43,7 +44,20 @@ export class OauthService {
     //     return map.get('access_token')
     // }
 
-    async storeToken(token: string, userId: string) {
-        this.pool.query(sql`INSERT INTO oauth (token, refresh_token, duration, generated_at, usr_id) VALUES (${token}, 'none', 'none', now(), ${userId})`)
+    async storeToken(token: string, userId: string, service: string) {
+        const tok = await this.pool.query(sql`SELECT * FROM oauth WHERE service = ${service} AND usr_id = ${userId}`)
+        if (tok.rowCount === 1) {
+            await this.pool.query(sql`UPDATE oauth SET token = ${token} WHERE service = ${service} AND usr_id = ${userId}`)
+            return
+        }
+        await this.pool.query(sql`INSERT INTO oauth (token, refresh_token, duration, generated_at, usr_id, service) VALUES (${token}, 'none', 'none', now(), ${userId}, ${service})`)
+    }
+
+    async getTokenForService(userId: string, service: string) {
+        const tokenList = await this.pool.query(sql`SELECT token FROM oauth WHERE service = ${service} AND usr_id = ${userId}`)
+        if (tokenList.rowCount >= 1) {
+            return tokenList.rows[0]
+        }
+        throw new NotFoundException('no token registered for this user and service')
     }
 }

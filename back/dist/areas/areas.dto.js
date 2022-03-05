@@ -22,16 +22,16 @@ __decorate([
     __metadata("design:type", String)
 ], AreaCreationDto.prototype, "action_id", void 0);
 __decorate([
-    (0, class_validator_1.IsJSON)(),
-    __metadata("design:type", Object)
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
 ], AreaCreationDto.prototype, "action_params", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], AreaCreationDto.prototype, "reaction_id", void 0);
 __decorate([
-    (0, class_validator_1.IsJSON)(),
-    __metadata("design:type", Object)
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
 ], AreaCreationDto.prototype, "reaction_params", void 0);
 exports.AreaCreationDto = AreaCreationDto;
 class DicoDto {

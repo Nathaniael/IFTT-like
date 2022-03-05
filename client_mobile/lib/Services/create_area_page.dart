@@ -171,20 +171,51 @@ class CreateAreaPageState extends State<CreateAreaPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: Navbar(context: context),
-        body: Container(
-          alignment: Alignment.center,
-          decoration: const BoxDecoration(
-              gradient: RadialGradient(
-            radius: 0.8,
-            colors: [
-              Color(0xff007EA7),
-              Color(0xff000D4D),
-            ],
-          )),
-          child: _buildContent(),
-        ));
+      body: NestedScrollView(
+        headerSliverBuilder: ((BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
+            const SliverAppBar(
+              pinned: true,
+              title: Text('Flutter Demo'),
+            )
+          ];
+        }),
+        body: Column(
+          children: <Widget>[
+            const FlutterLogo(size: 100.0, textColor: Colors.purple),
+            SizedBox(
+              height: 300.0,
+              child: ListView.builder(
+                itemCount: 3,
+                itemBuilder: (BuildContext context, int index) {
+                  return const SizedBox(child: Card(child: Text("data")));
+                },
+              ),
+            ),
+            const FlutterLogo(size: 100.0, textColor: Colors.orange),
+          ],
+        ),
+      ),
+    );
   }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //       appBar: Navbar(context: context),
+  //       body: Container(
+  //         alignment: Alignment.center,
+  //         decoration: const BoxDecoration(
+  //             gradient: RadialGradient(
+  //           radius: 0.8,
+  //           colors: [
+  //             Color(0xff007EA7),
+  //             Color(0xff000D4D),
+  //           ],
+  //         )),
+  //         child: _buildContent(),
+  //       ));
+  // }
 
   Widget _buildContent() {
     return Stack(

@@ -29,7 +29,6 @@ let ServicesController = class ServicesController {
         return this.servicesService.getActionsByServiceId(body.id);
     }
     async getReactionsByServiceId(usr, body) {
-        console.log(usr);
         return this.servicesService.getReactionsByServiceId(body.id);
     }
 };

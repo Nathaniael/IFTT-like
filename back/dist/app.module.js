@@ -23,6 +23,7 @@ const about_module_1 = require("./about/about.module");
 const services_service_1 = require("./services/services.service");
 const services_controller_1 = require("./services/services.controller");
 const services_module_1 = require("./services/services.module");
+const actions_module_1 = require("./actions/actions.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -44,6 +45,7 @@ AppModule = __decorate([
             reactions_module_1.ReactionsModule,
             about_module_1.AboutModule,
             services_module_1.ServicesModule,
+            actions_module_1.ActionsModule,
         ],
         controllers: [app_controller_1.AppController, services_controller_1.ServicesController],
         providers: [app_service_1.AppService, services_service_1.ServicesService],

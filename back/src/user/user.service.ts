@@ -28,7 +28,6 @@ export class UserService {
         let ret = await this.pool.query(sql`SELECT *
                 FROM usr
                 WHERE email = ${usr.email}`)
-        console.log(ret.rows[0])
         return ret.rows[0]
     }
 
@@ -56,13 +55,11 @@ export class UserService {
     }
 
     async addOauthToUsr(usr: UserAuth, body: OauthCreationDto) {
-        console.log(body.token, body.refresh_token, body.duration, body.generated_at, usr)
         try {
             await this.pool.query(sql`INSERT INTO oauth (
                 token, refresh_token, duration, generated_at, usr_id
                 ) values (${body.token}, ${body.refresh_token}, ${body.duration}, ${body.generated_at}, ${usr.userId})`)
         } catch (error) {
-            console.log('hello')
             throw error
         }
     }

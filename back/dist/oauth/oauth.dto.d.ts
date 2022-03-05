@@ -10,4 +10,5 @@ export declare class OauthDictionnaryDto {
 }
 export declare class TokenCreationDto {
     token: string;
+    serviceName: string;
 }

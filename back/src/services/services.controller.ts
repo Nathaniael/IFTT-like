@@ -25,7 +25,6 @@ export class ServicesController {
     @Get('reactions')
     @UseGuards(AuthGuard('jwt'))
     async getReactionsByServiceId(@User() usr: UserAuth, @Body() body: { id: number }) {
-        console.log(usr)
         return this.servicesService.getReactionsByServiceId(body.id);
     }
 }
