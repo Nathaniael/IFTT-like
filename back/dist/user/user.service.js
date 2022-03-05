@@ -37,7 +37,6 @@ let UserService = class UserService {
         let ret = await this.pool.query((0, slonik_1.sql) `SELECT *
                 FROM usr
                 WHERE email = ${usr.email}`);
-        console.log(ret.rows[0]);
         return ret.rows[0];
     }
     async getUser(usr) {
@@ -64,14 +63,12 @@ let UserService = class UserService {
         return res;
     }
     async addOauthToUsr(usr, body) {
-        console.log(body.token, body.refresh_token, body.duration, body.generated_at, usr);
         try {
             await this.pool.query((0, slonik_1.sql) `INSERT INTO oauth (
                 token, refresh_token, duration, generated_at, usr_id
                 ) values (${body.token}, ${body.refresh_token}, ${body.duration}, ${body.generated_at}, ${usr.userId})`);
         }
         catch (error) {
-            console.log('hello');
             throw error;
         }
     }

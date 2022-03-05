@@ -15,23 +15,16 @@ export class AreasService {
     ) { }
 
     async callReaction(params: string, type: string) {
-        console.log(params, " ", type)
         var action = await this.pool.query(sql`SELECT * FROM action WHERE params = ${params} AND type = ${type}`)
         if (action.rowCount === 0) {
             return
         }
         let area = await this.pool.query(sql`SELECT * FROM area WHERE id_act = ${action.rows[0].id}`)
-        console.log(area.rows)
         for (var elem of area.rows) {
             let reaction = await this.pool.query(sql`SELECT * FROM reaction WHERE id = ${elem.id_react}`)
             let data = JSON.parse(reaction.rows[0].params.toString())
             this.httpService.post(`http://localhost:8080/reactions/${reaction.rows[0].reaction_route}`, data).toPromise()
         }
-        // let reaction = await this.pool.query(sql`SELECT * FROM reaction WHERE id = ${area.rows[0].id_react}`)
-        // console.log(reaction.rows[0].params)
-        // let data = JSON.parse(reaction.rows[0].params.toString())
-        // console.log("data:", data)
-        // this.httpService.post(`http://localhost:8080/reactions/${reaction.rows[0].reaction_route}`, data).toPromise()
     }
 
     checkBodyCreateArea(body: AreaCreationDto) {
@@ -50,7 +43,6 @@ export class AreasService {
     }
 
     async createArea(userId: string, body: AreaCreationDto) {
-        console.log(body)
         this.checkBodyCreateArea(body)
         const reaction_dico = await this.pool.query(sql<DicoDto>`SELECT * FROM readictionnary WHERE id = ${body.reaction_id}`)
         const reaction_service = await this.pool.query(sql`SELECT * FROM service WHERE id = ${reaction_dico.rows[0].service_id}`)

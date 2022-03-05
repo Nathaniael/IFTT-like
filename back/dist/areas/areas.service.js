@@ -25,13 +25,11 @@ let AreasService = class AreasService {
         this.actionsService = actionsService;
     }
     async callReaction(params, type) {
-        console.log(params, " ", type);
         var action = await this.pool.query((0, slonik_1.sql) `SELECT * FROM action WHERE params = ${params} AND type = ${type}`);
         if (action.rowCount === 0) {
             return;
         }
         let area = await this.pool.query((0, slonik_1.sql) `SELECT * FROM area WHERE id_act = ${action.rows[0].id}`);
-        console.log(area.rows);
         for (var elem of area.rows) {
             let reaction = await this.pool.query((0, slonik_1.sql) `SELECT * FROM reaction WHERE id = ${elem.id_react}`);
             let data = JSON.parse(reaction.rows[0].params.toString());
@@ -53,7 +51,6 @@ let AreasService = class AreasService {
         });
     }
     async createArea(userId, body) {
-        console.log(body);
         this.checkBodyCreateArea(body);
         const reaction_dico = await this.pool.query((0, slonik_1.sql) `SELECT * FROM readictionnary WHERE id = ${body.reaction_id}`);
         const reaction_service = await this.pool.query((0, slonik_1.sql) `SELECT * FROM service WHERE id = ${reaction_dico.rows[0].service_id}`);

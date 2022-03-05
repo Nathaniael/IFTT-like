@@ -36,8 +36,14 @@ let ActionsService = class ActionsService {
             },
             data: data
         };
-        const a = await this.httpService.post(`https://gitlab.com/api/v4/projects/${params.project_id}/hooks?url=${url}`, data, config).toPromise();
-        console.log(a);
+        console.log(token.token);
+        try {
+            const a = await this.httpService.post(`https://gitlab.com/api/v4/projects/${params.project_id}/hooks?url=${url}`, data, config).toPromise();
+            console.log(a);
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
     async createAction(params, userId) {
         switch (params.service) {
