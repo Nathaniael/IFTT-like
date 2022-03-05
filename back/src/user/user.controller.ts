@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards, Res, BadRequestException } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards, Res, BadRequestException, Delete } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { UserAuth } from 'src/auth/auth.controller';
 import { User } from './user.decorator';
@@ -22,43 +22,27 @@ export class UserController {
     @Post('username')
     @UseGuards(AuthGuard('jwt'))
     async changeUsername(@User() usr: UserAuth, @Body() body: Username) {
-        var userId;
-        if (usr.userId !== undefined) {
-            userId = usr.userId
-        } else if (usr["payload"].username !== undefined) {
-            userId = usr["payload"].userId
-        } else {
-            throw new BadRequestException("User not found")
-        }
-        return this.usersService.changeUsername(userId, body.username)
+        return this.usersService.changeUsername(usr.userId, body.username)
     }
+
     @Get('profile')
     @UseGuards(AuthGuard('jwt'))
     async getUserProfile(@User() usr: UserAuth, @Res() res) {
-        var userId;
-        if (usr.userId !== undefined) {
-            userId = usr.userId
-        } else if (usr["payload"].username !== undefined) {
-            userId = usr["payload"].userId
-        } else {
-            throw new BadRequestException("User not found")
-        }
-        let user = await this.usersService.getUserFromId(userId)
+        const user = await this.usersService.getUserFromId(usr.userId)
         res.status(200).json(user)
     }
 
     @Get('areas')
     @UseGuards(AuthGuard('jwt'))
     async getAreas(@User() usr: UserAuth, @Res() res) {
-        var userId;
-        if (usr["payload"]?.userId !== undefined) {
-            userId = usr["payload"].userId
-        } else if (usr?.userId !== undefined) {
-            userId = usr.userId
-        } else {
-            throw new BadRequestException("User not found")
-        }
-        const areas = await this.userAreas.getAreas(userId)
+        const areas = await this.userAreas.getAreas(usr.userId)
         res.status(200).json(areas)
+    }
+
+    @Delete('')
+    @UseGuards(AuthGuard('jwt'))
+    async deleteUsr(@User() usr: UserAuth, @Res() res) {
+        const status = await this.usersService.deleteUser(usr.userId)
+        res.status(200).json(status)
     }
 }

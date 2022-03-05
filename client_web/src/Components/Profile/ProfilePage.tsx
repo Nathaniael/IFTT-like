@@ -29,7 +29,7 @@ function ProfilePage() {
         removeCookie("access_token")
         removeCookie("user")
         removeCookie("closeGetStarted")
-
+        removeCookie("profilePage")
         // OAuth cookies
         removeCookie("gitlab_token")
 
@@ -70,7 +70,7 @@ function ProfilePage() {
             <AppBar></AppBar>
             <div className={styles.profilePage}>
                 {page === WhichPage.Profile ?
-                    <PProfile username={cookies?.user?.username} image={cookies?.user?.image} email={cookies?.user?.email} update={() => {getUserProfile()}}></PProfile>
+                    <PProfile username={cookies?.user?.username} image={cookies?.user?.image} email={cookies?.user?.email} update={() => {getUserProfile()}} logout={resetCookie}></PProfile>
                     :
                     null
                 }

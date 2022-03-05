@@ -6,7 +6,8 @@ type Props = {
     username: string,
     image: string,
     email: string,
-    update: Function
+    update: () => void,
+    logout: () => void
 }
 
 type UsernameProps = {
@@ -48,7 +49,18 @@ function UsernameWidget(props: UsernameProps) {
 }
 
 function PProfile(props: Props) {
+    const [error, setError] = React.useState("Warning, this will be definitive")
 
+    function deleteAccount() {
+        Request.deleteUsr().then((res) => {
+            console.log(res)
+            console.log("IGBEKLIEF")
+            props.logout()
+        }).catch((err) => {
+            console.log(err)
+            setError("Unexpected error")
+        })
+    }
     return (
         <div className={styles.profile}>
             <div className={styles.header}>
@@ -56,7 +68,8 @@ function PProfile(props: Props) {
                 <img className={styles.headerImg} src={props.image}></img>
             </div>
             <div className={styles.email}>Email {props.email}</div>
-            <div className={styles.delete}>Delete account</div>
+            <div onClick={() => {deleteAccount()}} className={styles.delete}>Delete account</div>
+            <div className={styles.error}>{error}</div>
         </div>
     )
 }

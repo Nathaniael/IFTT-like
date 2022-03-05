@@ -41,11 +41,9 @@ let UserService = class UserService {
         return ret.rows[0];
     }
     async getUser(usr) {
-        let res;
-        if (usr.email)
-            res = await this.pool.query((0, slonik_1.sql) `SELECT * FROM usr WHERE email =  ${usr.email}`);
-        else
+        if (!usr.email)
             throw new common_1.BadRequestException("Fields are missing");
+        let res = await this.pool.query((0, slonik_1.sql) `SELECT * FROM usr WHERE email =  ${usr.email}`);
         if (!usr.password)
             throw new common_1.BadRequestException("Fields are missing");
         if (res.rowCount != 1)
@@ -80,6 +78,10 @@ let UserService = class UserService {
             SET username = ${username}
             WHERE id = ${userId}`);
         return "Username well changed !";
+    }
+    async deleteUser(userId) {
+        await (0, queries_1.qDeleteFieldsFromWhere)({ pool: this.pool, from: "usr", where: "id", value: userId });
+        return "User deleted";
     }
 };
 UserService = __decorate([

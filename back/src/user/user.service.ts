@@ -1,10 +1,10 @@
 import { BadRequestException, Injectable, UnauthorizedException, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectPool } from 'nestjs-slonik';
-import { DatabasePool, sql } from 'slonik'
 import { OauthCreationDto, UserCreationDto, UserDto, UserLoginDto } from './user.dto';
+import { DatabasePool, sql } from 'slonik'
 import * as bcrypt from 'bcrypt';
 import { UserAuth } from 'src/auth/auth.controller';
-import { qFirstFieldsFromWhere } from 'src/queries/queries';
+import { qFirstFieldsFromWhere, qDeleteFieldsFromWhere } from 'src/queries/queries';
 
 @Injectable()
 export class UserService {
@@ -33,11 +33,9 @@ export class UserService {
     }
 
     async getUser(usr: UserLoginDto) {
-        let res: any;
-        if (usr.email)
-            res = await this.pool.query(sql`SELECT * FROM usr WHERE email =  ${usr.email}`)
-        else
+        if (!usr.email)
             throw new BadRequestException("Fields are missing")
+        let res = await this.pool.query(sql`SELECT * FROM usr WHERE email =  ${usr.email}`)
         if (!usr.password)
             throw new BadRequestException("Fields are missing")
         if (res.rowCount != 1)
@@ -75,5 +73,10 @@ export class UserService {
             SET username = ${username}
             WHERE id = ${userId}`)
         return "Username well changed !"     
+    }
+
+    async deleteUser(userId: string) {
+        await qDeleteFieldsFromWhere({ pool: this.pool, from: "usr", where: "id", value: userId})
+        return "User deleted"
     }
 }

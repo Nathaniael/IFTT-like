@@ -246,6 +246,25 @@ class RequestApi {
             throw err.message
         })
     }
+    async deleteUsr() {
+        // Configure options
+        const url = prefixUrlApi + "user/"
+        const headers = {
+            withCredentials: true
+        }
+        // Execute request and return status + data
+        return await axios.delete(url, headers).then((res) => {
+            console.log(res)
+            return res.data
+        }).catch((err) => {
+            // If there is a custom error message
+            if (err?.response?.data?.message) {
+                throw err.response.data.message
+            }
+            // Default message
+            throw err.message
+        })
+    }
 }
 
 export default new RequestApi()
