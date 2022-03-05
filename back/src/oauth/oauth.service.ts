@@ -45,6 +45,9 @@ export class OauthService {
     // }
 
     async storeToken(token: string, userId: string, service: string) {
+        console.log(token)
+        console.log(userId)
+        console.log(service)
         const tok = await this.pool.query(sql`SELECT * FROM oauth WHERE service = ${service} AND usr_id = ${userId}`)
         if (tok.rowCount === 1) {
             await this.pool.query(sql`UPDATE oauth SET token = ${token} WHERE service = ${service} AND usr_id = ${userId}`)

@@ -91,11 +91,15 @@ VALUES ('Github', '1', 'https://github.com/login/oauth/authorize', 'https://gith
 
 -- ACTIONS DICO
 INSERT INTO "adictionnary" ("name", "description", "params", "help", "service_id")
-VALUES ('Any new repository event', 'This trigger reaction every time a new event occurs in a repository.', '[{"string":"url"},{"string":"secret"}]', 'In your github repository webhook, you have to set Payload URL to pantharea.fun:8081/webhooks/Github and to have a Secret code to enter in the parameters above', '1'), -- id 1
-('Any new repository event', 'This trigger reaction every time a new event occurs in a repository', '[{"string":"ProjectID"}, {"string":"secret"}]', 'In your gitlab repository webhook, you have to set Payload URL to pantharea.fun:8081/webhooks/Gitlab and to have a Secret token to enter in the parameters above. Remember to disable SSL verification.', '3'); -- id 2
+VALUES ('Any new repository event', 'This trigger reaction every time a new event occurs in a repository.', '[{"string":"url"},{"string":"secret"}]', 'In your github repository webhook, you have to set Payload URL to pantharea.fun:8081/webhooks/Github and to have a Secret code to enter in the parameters above', '1'),
+('Push event', 'This trigger reaction when a push occurs in your repository', '[{"string":"project_id"}]', '', '3'),
+('Merge request event', 'This trigger reaction when a merge request occurs in your repository', '[{"string":"project_id"}]', '', '3'),
+('Issues event', 'This trigger reaction when a Issue occurs in your repository', '[{"string":"project_id"}]', '', '3'),
+('Deployment event', 'This trigger reaction when a Deployment occurs in your repository', '[{"string":"project_id"}]', '', '3'),
+('Confidential issues event', 'This trigger reaction when a confidential issue occurs in your repository', '[{"string":"project_id"}]', '', '3');
 
 -- REACTIONS DICO
 INSERT INTO "readictionnary" ("name", "description", "params", "help", "service_id")
 VALUES ('Send an email', 'When triggered, send an email to a chosen recipient, a subject and a body', '[{"string":"username"}, {"string":"recipient"},{"string":"subject"}, {"string":"body"}]','' , '2'), -- ID:1
 ('Send a discord message', 'When triggered, send a discord message in your server using Discord webhooks', '[{"string":"url"}, {"string":"hookusername"},{"string":"message"}]', '', '4'), -- ID:2
-('Send a SMS', 'When triggered, send a message to the phone number you set', '[{"string":"number"}, {"string":"message"}]', '','5') -- ID:3
+('Send a SMS', 'When triggered, send a message to the phone number you set', '[{"string":"number"}, {"string":"message"}]', '','5'); -- ID:3

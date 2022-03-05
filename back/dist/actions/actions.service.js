@@ -23,10 +23,25 @@ let ActionsService = class ActionsService {
         this.httpService = httpService;
         this.oauthService = oauthService;
     }
-    async createHookGitlab(params, userId) {
+    async createHookGitlab(params, userId, action_name) {
+        let event;
+        switch (action_name) {
+            case "Push event":
+                event = "push_events";
+            case "Merge request event":
+                event = "merge_requests_events";
+            case "Issues event":
+                event = "issues_events";
+            case "Deployment event":
+                event = "deployment_events";
+            case "Confidential issues event":
+                event = "confidential_issues_events";
+            default:
+                break;
+        }
         const token = await this.oauthService.getTokenForService(userId, params.service);
         const url = `http://pantharea.fun:8080/webhooks/${params.service}`;
-        var data = `{"id": ${params.project_id.toString()},"url": ${url},${params.scope}:true}`;
+        var data = `{"id": ${params.project_id.toString()},"url": ${url},${event}:true}`;
         var config = {
             method: 'post',
             url: `https://gitlab.com/api/v4/projects/${params.project_id}/hooks?url=${url}`,
@@ -45,10 +60,10 @@ let ActionsService = class ActionsService {
             console.log(error);
         }
     }
-    async createAction(params, userId) {
-        switch (params.service) {
+    async createAction(params, service, userId, action_name) {
+        switch (service) {
             case "Gitlab":
-                this.createHookGitlab({ project_id: params.project_id, service: "Gitlab", scope: params.scope }, userId);
+                await this.createHookGitlab({ project_id: params.project_id, service: "Gitlab", scope: params.scope }, userId, action_name);
                 break;
             default:
                 console.log("no action found");

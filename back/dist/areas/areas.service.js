@@ -55,12 +55,13 @@ let AreasService = class AreasService {
         this.checkBodyCreateArea(body);
         const reaction_dico = await (0, queries_1.qFirstFieldsFromWhere)({ pool: this.pool, selectFields: ["service_id", "params"], from: "readictionnary", where: "id", value: body.reaction_id });
         const reaction_service = await (0, queries_1.qFirstFieldsFromWhere)({ pool: this.pool, selectFields: ["name"], from: "service", where: "id", value: reaction_dico["service_id"] });
-        const action_dico = await (0, queries_1.qFirstFieldsFromWhere)({ pool: this.pool, selectFields: ["params"], from: "adictionnary", where: "id", value: body.action_id });
+        const action_dico = await (0, queries_1.qFirstFieldsFromWhere)({ pool: this.pool, selectFields: ["service_id", "params"], from: "adictionnary", where: "id", value: body.action_id });
         const action = await this.pool.query((0, slonik_1.sql) `INSERT INTO action (params, type, dico_id)
-        VALUES (${body.action_params}, ${action_dico["params"]} ,${body.action_id}) RETURNING id;`);
-        this.actionsService.createAction(JSON.parse(body.action_params), userId);
+        VALUES (${JSON.stringify(body.action_params)}, ${JSON.stringify(action_dico["params"])}, ${body.action_id}) RETURNING id;`);
+        const action_service = await (0, queries_1.qFirstFieldsFromWhere)({ pool: this.pool, selectFields: ["*"], from: "service", where: "id", value: action_dico["service_id"] });
+        await this.actionsService.createAction(body.action_params, action_service["name"].toString(), userId, action_dico["name"]);
         const reaction = await this.pool.query((0, slonik_1.sql) `INSERT INTO reaction (params, type, reaction_route,dico_id)
-        VALUES (${body.reaction_params}, ${reaction_dico["params"]}, ${reaction_service["name"]} ,${body.reaction_id}) RETURNING id;`);
+        VALUES (${JSON.stringify(body.reaction_params)}, ${JSON.stringify(reaction_dico["params"])}, ${reaction_service["name"]} ,${body.reaction_id}) RETURNING id;`);
         const area = await this.pool.query((0, slonik_1.sql) `INSERT INTO area (
             id_act,
             id_react,

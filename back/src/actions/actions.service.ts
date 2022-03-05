@@ -16,15 +16,30 @@ export class ActionsService {
         private readonly oauthService: OauthService
     ) { }
 
-    async createHookGitlab(params: HookCreationDto, userId: string) {
+    async createHookGitlab(params: HookCreationDto, userId: string, action_name:string) {
+        let event: string
+        switch(action_name) {
+            case "Push event":
+                event = "push_events"
+            case "Merge request event":
+                event = "merge_requests_events"
+            case "Issues event":
+                event = "issues_events"
+            case "Deployment event":
+                event = "deployment_events"
+            case "Confidential issues event":
+                event = "confidential_issues_events"
+            default:
+                break
+        }
         const token = await this.oauthService.getTokenForService(userId, params.service)
         const url = `http://pantharea.fun:8080/webhooks/${params.service}`
-        var data = `{"id": ${params.project_id.toString()},"url": ${url},${params.scope}:true}`;
+        var data = `{"id": ${params.project_id.toString()},"url": ${url},${event}:true}`;
         var config: AxiosRequestConfig = {
             method: 'post',
             url: `https://gitlab.com/api/v4/projects/${params.project_id}/hooks?url=${url}`,
-            headers: { 
-                'Authorization': `Bearer ${token.token}`, 
+            headers: {
+                'Authorization': `Bearer ${token.token}`,
                 'Content-Type': 'application/json'
             },
             data : data
@@ -38,10 +53,10 @@ export class ActionsService {
         }
     }
 
-    async createAction(params: any, userId: string) {
-        switch (params.service) {
+    async createAction(params: any, service:string ,userId: string, action_name: string) {
+        switch (service) {
             case "Gitlab":
-                this.createHookGitlab({project_id: params.project_id, service: "Gitlab", scope: params.scope}, userId)
+                await this.createHookGitlab({project_id: params.project_id, service: "Gitlab", scope: params.scope}, userId, action_name)
                 break;
             default:
                 console.log("no action found")
