@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 const defaultProfileImage = "/baptiste.png";
 
-class LoginRequest {
+class RegisterRequest {
   final String username;
   final String email;
   final String password;
   final String image;
 
-  LoginRequest(this.username, this.email, this.password,
+  RegisterRequest(this.username, this.email, this.password,
       {this.image = defaultProfileImage});
 
   Map toJson() => {
@@ -16,5 +16,17 @@ class LoginRequest {
         "email": email,
         "password": password,
         "image": image
+      };
+}
+
+class LoginRequest {
+  final String email;
+  final String password;
+
+  LoginRequest(this.email, this.password);
+
+  Map toJson() => {
+        "email": email,
+        "password": password,
       };
 }
