@@ -48,7 +48,7 @@ List<Area> listarea = [
 ];
 
 class Userpage extends StatefulWidget {
-  List<Area> area = listarea;
+  final List<Area> area = listarea;
   Userpage({Key? key}) : super(key: key);
 
   @override
