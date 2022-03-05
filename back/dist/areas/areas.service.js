@@ -18,6 +18,7 @@ const common_1 = require("@nestjs/common");
 const nestjs_slonik_1 = require("nestjs-slonik");
 const slonik_1 = require("slonik");
 const actions_service_1 = require("../actions/actions.service");
+const queries_1 = require("../queries/queries");
 let AreasService = class AreasService {
     constructor(pool, httpService, actionsService) {
         this.pool = pool;
@@ -52,14 +53,14 @@ let AreasService = class AreasService {
     }
     async createArea(userId, body) {
         this.checkBodyCreateArea(body);
-        const reaction_dico = await this.pool.query((0, slonik_1.sql) `SELECT * FROM readictionnary WHERE id = ${body.reaction_id}`);
-        const reaction_service = await this.pool.query((0, slonik_1.sql) `SELECT * FROM service WHERE id = ${reaction_dico.rows[0].service_id}`);
-        const action_dico = await this.pool.query((0, slonik_1.sql) `SELECT * FROM adictionnary WHERE id = ${body.action_id}`);
+        const reaction_dico = await (0, queries_1.qFirstFieldsFromWhere)({ pool: this.pool, selectFields: ["service_id", "params"], from: "readictionnary", where: "id", value: body.reaction_id });
+        const reaction_service = await (0, queries_1.qFirstFieldsFromWhere)({ pool: this.pool, selectFields: ["name"], from: "service", where: "id", value: reaction_dico["service_id"] });
+        const action_dico = await (0, queries_1.qFirstFieldsFromWhere)({ pool: this.pool, selectFields: ["params"], from: "adictionnary", where: "id", value: body.action_id });
         const action = await this.pool.query((0, slonik_1.sql) `INSERT INTO action (params, type, dico_id)
-        VALUES (${body.action_params}, ${action_dico.rows[0].params},${body.action_id}) RETURNING id;`);
+        VALUES (${body.action_params}, ${action_dico["params"]} ,${body.action_id}) RETURNING id;`);
         this.actionsService.createAction(JSON.parse(body.action_params), userId);
         const reaction = await this.pool.query((0, slonik_1.sql) `INSERT INTO reaction (params, type, reaction_route,dico_id)
-        VALUES (${body.reaction_params}, ${reaction_dico.rows[0].params},${reaction_service.rows[0].name} ,${body.reaction_id}) RETURNING id;`);
+        VALUES (${body.reaction_params}, ${reaction_dico["params"]}, ${reaction_service["name"]} ,${body.reaction_id}) RETURNING id;`);
         const area = await this.pool.query((0, slonik_1.sql) `INSERT INTO area (
             id_act,
             id_react,

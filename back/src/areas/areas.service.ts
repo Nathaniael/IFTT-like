@@ -5,6 +5,8 @@ import { DatabasePool, sql } from 'slonik';
 import { ActionsService } from 'src/actions/actions.service';
 import { UserAuth } from 'src/auth/auth.controller';
 import { AreaCreationDto, DicoDto } from './areas.dto';
+import { qFirstFieldsFromWhere } from 'src/queries/queries';
+
 @Injectable()
 export class AreasService {
     constructor(
@@ -44,14 +46,15 @@ export class AreasService {
 
     async createArea(userId: string, body: AreaCreationDto) {
         this.checkBodyCreateArea(body)
-        const reaction_dico = await this.pool.query(sql<DicoDto>`SELECT * FROM readictionnary WHERE id = ${body.reaction_id}`)
-        const reaction_service = await this.pool.query(sql`SELECT * FROM service WHERE id = ${reaction_dico.rows[0].service_id}`)
-        const action_dico = await this.pool.query(sql<DicoDto>`SELECT * FROM adictionnary WHERE id = ${body.action_id}`)
+    
+        const reaction_dico = await qFirstFieldsFromWhere({ pool: this.pool, selectFields: ["service_id", "params"], from: "readictionnary", where: "id", value: body.reaction_id});
+        const reaction_service = await qFirstFieldsFromWhere({ pool: this.pool, selectFields: ["name"], from: "service", where: "id", value: reaction_dico["service_id"]})
+        const action_dico = await qFirstFieldsFromWhere({ pool: this.pool, selectFields: ["params"], from: "adictionnary", where: "id", value: body.action_id})
         const action = await this.pool.query(sql`INSERT INTO action (params, type, dico_id)
-        VALUES (${body.action_params}, ${action_dico.rows[0].params},${body.action_id}) RETURNING id;`)
+        VALUES (${body.action_params}, ${action_dico["params"]} ,${body.action_id}) RETURNING id;`)
         this.actionsService.createAction(JSON.parse(body.action_params), userId)
         const reaction = await this.pool.query(sql`INSERT INTO reaction (params, type, reaction_route,dico_id)
-        VALUES (${body.reaction_params}, ${reaction_dico.rows[0].params},${reaction_service.rows[0].name} ,${body.reaction_id}) RETURNING id;`)
+        VALUES (${body.reaction_params}, ${reaction_dico["params"]}, ${reaction_service["name"]} ,${body.reaction_id}) RETURNING id;`)
 
         const area = await this.pool.query(sql`INSERT INTO area (
             id_act,
