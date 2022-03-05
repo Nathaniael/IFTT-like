@@ -1,5 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:client_mobile/Widgets/Navbar/navbar.dart';
+import 'package:client_mobile/apiprovider.dart';
+
+var session = Session();
+var uriServices = Uri.parse('http://localhost:8080/services/');
 
 @immutable
 class NestedServicesLists extends StatefulWidget {
@@ -9,67 +15,93 @@ class NestedServicesLists extends StatefulWidget {
   NestedServicesListsState createState() => NestedServicesListsState();
 }
 
+Placeholder getOnePlaceHolder(ItemType type) {
+  const defaultImagePath = 'web/png/baptiste.png';
+  return (Placeholder(
+      name: type == ItemType.action ? "Action" : "Reaction",
+      type: type,
+      imageProvider: const AssetImage(defaultImagePath),
+      item: Item(
+          type: type,
+          name: type == ItemType.action ? "No action" : "No reaction",
+          description: "",
+          id: type == ItemType.action ? 1 : 2,
+          image: const AssetImage(defaultImagePath))));
+}
+
+List<Placeholder> getPlaceHolders() {
+  return ([
+    getOnePlaceHolder(ItemType.action),
+    getOnePlaceHolder(ItemType.reaction)
+  ]);
+}
+
+Future<List<Service>> getServices() async {
+  Response res = await session.get(uriServices);
+  List<Service> services = [];
+  if (res.status == Status.success) {
+    for (var elem in res.data) {
+      List<Item> listItems = [];
+      for (var it in elem["actions"]) {
+        Item item = Item(
+            type: ItemType.action,
+            name: it["name"],
+            description: it["description"],
+            id: it["id"],
+            image: AssetImage("web/png" + elem["logo"]));
+        listItems.add(item);
+      }
+      for (var it in elem["reactions"]) {
+        Item item = Item(
+            type: ItemType.reaction,
+            name: it["name"],
+            description: it["description"],
+            id: it["id"],
+            image: AssetImage("web/png" + elem["logo"]));
+        listItems.add(item);
+      }
+      Service service = Service(
+          id: elem["id"],
+          name: elem["name"],
+          logo: AssetImage("web/png" + elem["logo"]),
+          items: listItems);
+      services.add(service);
+    }
+    return services;
+  } else {
+    return [];
+  }
+}
+
 class NestedServicesListsState extends State<NestedServicesLists>
     with TickerProviderStateMixin {
-  final List<Service> _services = [
-    Service(
-        id: 1,
-        name: 'Github',
-        logo: const AssetImage('web/png/github.png'),
-        items: <Item>[
-          Item(
-              type: ItemType.action,
-              name: 'Push event',
-              description: 'Trigger a reaction when a new push occurs',
-              id: 1,
-              imageProvider: const AssetImage('web/png/baptiste.png'))
-        ]),
-    Service(
-        id: 2,
-        name: 'Email',
-        logo: const AssetImage('web/png/mail.png'),
-        items: <Item>[
-          Item(
-              type: ItemType.reaction,
-              name: 'Send an email',
-              description: 'Send a customizable email',
-              id: 1,
-              imageProvider: const AssetImage('web/png/baptiste.png'))
-        ]),
-  ];
+  List<Service> _services = [];
 
-  final List<Placeholder> _placeholder = [
-    Placeholder(
-        name: "Action",
-        type: ItemType.action,
-        imageProvider: const AssetImage('web/png/baptiste.png'),
-        item: Item(
-            type: ItemType.none,
-            name: "No action",
-            description: "",
-            id: 1,
-            imageProvider: const AssetImage('web/png/baptiste.png'))),
-    Placeholder(
-        name: "Réaction",
-        type: ItemType.reaction,
-        imageProvider: const AssetImage('web/png/baptiste.png'),
-        item: Item(
-            type: ItemType.none,
-            name: "No réaction",
-            description: "",
-            id: 1,
-            imageProvider: const AssetImage('web/png/baptiste.png'))),
-  ];
+  final List<Placeholder> _placeholder = getPlaceHolders();
 
   final GlobalKey _draggableKey = GlobalKey();
 
+//Here
   void _itemDroppedOnPlaceholderCart({
     required Item item,
     required Placeholder placeholder,
   }) {
     setState(() {
-      if (item.type == placeholder.type) placeholder.item = item;
+      if (item.type == placeholder.type) {
+        print("DROPPED");
+        placeholder.item = item;
+        placeholder.imageProvider = item.image;
+      }
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getServices().then((services) => {
+          print("Actualize"),
+          setState(() => {_services = services})
+        });
   }
 
   @override
@@ -78,7 +110,8 @@ class NestedServicesListsState extends State<NestedServicesLists>
         appBar: Navbar(context: context),
         backgroundColor: Colors.white,
         body: Column(children: [
-          ListView.separated(
+          Expanded(
+              child: ListView.separated(
             separatorBuilder: (context, index) {
               return const SizedBox(
                 height: 12.0,
@@ -161,15 +194,17 @@ class NestedServicesListsState extends State<NestedServicesLists>
                 ],
               );
             },
-          ),
-          Expanded(child: _buildPlaceholderRow())
+          )),
+          _buildPlaceholderRow()
         ]));
   }
 
   Widget _buildPlaceholderRow() {
+    Size size = MediaQuery.of(context).size;
+
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: 8.0,
+        horizontal: 0,
         vertical: 20.0,
       ),
       child: Row(
@@ -192,6 +227,7 @@ class NestedServicesListsState extends State<NestedServicesLists>
               placeholder: placeholder,
             );
           },
+          //Here
           onAccept: (item) {
             _itemDroppedOnPlaceholderCart(
               item: item,
@@ -204,28 +240,39 @@ class NestedServicesListsState extends State<NestedServicesLists>
   }
 }
 
-class PlaceholderCart extends StatelessWidget {
-  const PlaceholderCart({
+class PlaceholderCart extends StatefulWidget {
+  Placeholder placeholder;
+  final bool highlighted;
+  final bool hasItem;
+
+  PlaceholderCart({
     Key? key,
     required this.placeholder,
     this.highlighted = false,
     this.hasItem = false,
   }) : super(key: key);
 
-  final Placeholder placeholder;
-  final bool highlighted;
-  final bool hasItem;
+  @override
+  State<PlaceholderCart> createState() => _PlaceholderCartState();
+}
+
+class _PlaceholderCartState extends State<PlaceholderCart> {
+  // removeFromPlaceholder() {
+  //   setState(() {
+  //     widget.placeholder = getOnePlaceHolder(widget.placeholder.type);
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
-    final textColor = highlighted ? Colors.white : Colors.black;
+    final textColor = widget.highlighted ? Colors.white : Colors.black;
 
     return Transform.scale(
-      scale: highlighted ? 1.075 : 1.0,
+      scale: widget.highlighted ? 1.075 : 1.0,
       child: Material(
-        elevation: highlighted ? 8.0 : 4.0,
+        elevation: widget.highlighted ? 8.0 : 4.0,
         borderRadius: BorderRadius.circular(22.0),
-        color: highlighted ? const Color(0xFFF64209) : Colors.white,
+        color: widget.highlighted ? const Color(0xff007EA7) : Colors.white,
         child: Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 12.0,
@@ -234,27 +281,39 @@ class PlaceholderCart extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                Align(
+                    alignment: Alignment.topRight,
+                    child: GestureDetector(
+                      onTap: () => {
+                        setState(() => {
+                              widget.placeholder =
+                                  getOnePlaceHolder(widget.placeholder.type)
+                            })
+                      },
+                      child: const Icon(Icons.delete, color: Colors.grey),
+                    )),
                 ClipOval(
                   child: SizedBox(
                     width: 46,
                     height: 46,
                     child: Image(
-                      image: placeholder.imageProvider,
+                      image: widget.placeholder.imageProvider,
                       fit: BoxFit.cover,
                     ),
                   ),
                 ),
                 const SizedBox(height: 8.0),
                 Text(
-                  placeholder.name,
+                  widget.placeholder.name,
                   style: Theme.of(context).textTheme.subtitle1?.copyWith(
                         color: textColor,
-                        fontWeight:
-                            hasItem ? FontWeight.normal : FontWeight.bold,
+                        fontWeight: widget.hasItem
+                            ? FontWeight.normal
+                            : FontWeight.bold,
                       ),
                 ),
                 Visibility(
-                  visible: hasItem,
+                  visible: widget.hasItem,
                   maintainState: true,
                   maintainAnimation: true,
                   maintainSize: true,
@@ -262,19 +321,12 @@ class PlaceholderCart extends StatelessWidget {
                     children: [
                       const SizedBox(height: 4.0),
                       Text(
-                        placeholder.getItem.name,
+                        widget.placeholder.getItem.name,
+                        textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.caption!.copyWith(
                               color: textColor,
                               fontSize: 16.0,
                               fontWeight: FontWeight.bold,
-                            ),
-                      ),
-                      const SizedBox(height: 4.0),
-                      Text(
-                        placeholder.getItem.description,
-                        style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                              color: textColor,
-                              fontSize: 12.0,
                             ),
                       ),
                     ],
@@ -325,13 +377,13 @@ class Item {
   String name;
   String description;
   int id;
-  ImageProvider imageProvider;
+  ImageProvider image;
   Item(
       {required this.type,
       required this.name,
       required this.description,
       required this.id,
-      required this.imageProvider});
+      required this.image});
 }
 
 class Service {

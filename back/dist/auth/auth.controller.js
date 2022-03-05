@@ -39,7 +39,7 @@ let AuthController = class AuthController {
             domain: (process.env.NODE_ENV === 'development') ? 'localhost' : 'pantharea.fun',
             sameSite: false,
             expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
-        }).send("You had been well registered");
+        }).send({ "message": "You had been well registered" });
     }
     async loginUser(body, res) {
         const user = await this.userService.getUser(body);
@@ -50,7 +50,7 @@ let AuthController = class AuthController {
             domain: (process.env.NODE_ENV === 'development') ? 'localhost' : 'pantharea.fun',
             sameSite: false,
             expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
-        }).send("You had been well logged");
+        }).send({ "message": "You had been well logged" });
     }
 };
 __decorate([
