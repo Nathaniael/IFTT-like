@@ -7,7 +7,7 @@ enum Status { success, error }
 class Response {
   Status status;
   String? message;
-  Map<String, dynamic>? data;
+  dynamic data;
 
   Response({required this.status, this.data, this.message});
 }

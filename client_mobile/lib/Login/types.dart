@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const defaultProfileImage = "/baptiste.png";
+const defaultProfileImage = "/web/png/baptiste.png";
 
 class RegisterRequest {
   final String username;
