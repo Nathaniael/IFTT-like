@@ -32,8 +32,8 @@ let AuthController = class AuthController {
     }
     async registerUser(body, res) {
         const user = await this.userService.registerUser(body);
-        const payload = { userId: user.id, username: user.username };
-        const signed_payload = this.jwtService.sign(payload);
+        const payload = new UserAuth({ userId: user.id.toString(), username: user.username.toString() });
+        const signed_payload = this.jwtService.sign({ payload: payload });
         res.cookie('access_token', signed_payload, {
             httpOnly: false,
             domain: (process.env.NODE_ENV === 'development') ? 'localhost' : 'pantharea.fun',
@@ -43,8 +43,8 @@ let AuthController = class AuthController {
     }
     async loginUser(body, res) {
         const user = await this.userService.getUser(body);
-        const payload = new UserAuth({ userId: user.id, username: user.username });
-        const signed_payload = this.jwtService.sign({ payload });
+        const payload = new UserAuth({ userId: user.id.toString(), username: user.username.toString() });
+        const signed_payload = this.jwtService.sign({ payload: payload });
         res.cookie('access_token', signed_payload, {
             httpOnly: false,
             domain: (process.env.NODE_ENV === 'development') ? 'localhost' : 'pantharea.fun',

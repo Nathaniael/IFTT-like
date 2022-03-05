@@ -10,4 +10,5 @@ export declare class UserController {
     changeUsername(usr: UserAuth, body: Username): Promise<string>;
     getUserProfile(usr: UserAuth, res: any): Promise<void>;
     getAreas(usr: UserAuth, res: any): Promise<void>;
+    deleteUsr(usr: UserAuth, res: any): Promise<void>;
 }

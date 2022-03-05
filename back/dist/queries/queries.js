@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.qAllFieldsFromWhere = exports.qFirstFieldsFromWhere = exports.AorREA = void 0;
+exports.qDeleteFieldsFromWhere = exports.qAllFieldsFromWhere = exports.qFirstFieldsFromWhere = exports.AorREA = void 0;
 const common_1 = require("@nestjs/common");
 var AorREA;
 (function (AorREA) {
@@ -8,8 +8,8 @@ var AorREA;
     AorREA[AorREA["Reaction"] = 1] = "Reaction";
 })(AorREA = exports.AorREA || (exports.AorREA = {}));
 ;
-function checkIsThereResult(list, error) {
-    if (list.length == 0) {
+function checkIsThereResult(res, error) {
+    if (res.rowCount == 0) {
         throw new common_1.BadRequestException(error);
     }
 }
@@ -35,4 +35,14 @@ async function qAllFieldsFromWhere(props) {
     return res.rows;
 }
 exports.qAllFieldsFromWhere = qAllFieldsFromWhere;
+async function qDeleteFieldsFromWhere(props) {
+    let res = await props.pool.query({
+        sql: 'DELETE FROM ' + props.from + ' WHERE ' + props.where + ' = $1',
+        type: 'SLONIK_TOKEN_SQL',
+        values: [props.value]
+    });
+    checkIsThereResult(res, "[ERROR] " + props.from + " not found with the given " + props.where);
+    return res.rows;
+}
+exports.qDeleteFieldsFromWhere = qDeleteFieldsFromWhere;
 //# sourceMappingURL=queries.js.map

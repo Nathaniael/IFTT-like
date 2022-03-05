@@ -40,7 +40,7 @@ function Params(params: object) {
     }
 }
 
-function BaseCard(props: AreaCard) {
+function BaseCard({...props}: AreaCard) {
     return (
         <div className={styles.cardHeader}>
             <img className={styles.cardImg} src={props.service.logo} alt="logo"></img>
@@ -66,12 +66,12 @@ function CardArea(props: CardProps) {
         <div className={styles.card}>
             <img onClick={() => {deleteArea()}} className={styles.trashImg} src="trash.png" alt="trash.png"></img>
             <div className={styles.subCard}>
-                {BaseCard(props.action)}
+                <BaseCard {...props.action}></BaseCard>
                 {Params(props.action.params)}
             </div>
             <img className={styles.separator} src="separator.png"></img>
             <div className={styles.subCard}>
-                {BaseCard(props.reaction)}
+                <BaseCard {...props.reaction}></BaseCard>
                 {Params(props.reaction.params)}
             </div>
         </div>

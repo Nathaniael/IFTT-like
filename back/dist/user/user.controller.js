@@ -29,46 +29,19 @@ let UserController = class UserController {
         return this.usersService.addOauthToUsr(usr, body);
     }
     async changeUsername(usr, body) {
-        var userId;
-        if (usr.userId !== undefined) {
-            userId = usr.userId;
-        }
-        else if (usr["payload"].username !== undefined) {
-            userId = usr["payload"].userId;
-        }
-        else {
-            throw new common_1.BadRequestException("User not found");
-        }
-        return this.usersService.changeUsername(userId, body.username);
+        return this.usersService.changeUsername(usr.userId, body.username);
     }
     async getUserProfile(usr, res) {
-        var userId;
-        if (usr.userId !== undefined) {
-            userId = usr.userId;
-        }
-        else if (usr["payload"].username !== undefined) {
-            userId = usr["payload"].userId;
-        }
-        else {
-            throw new common_1.BadRequestException("User not found");
-        }
-        let user = await this.usersService.getUserFromId(userId);
+        const user = await this.usersService.getUserFromId(usr.userId);
         res.status(200).json(user);
     }
     async getAreas(usr, res) {
-        var _a;
-        var userId;
-        if (((_a = usr["payload"]) === null || _a === void 0 ? void 0 : _a.userId) !== undefined) {
-            userId = usr["payload"].userId;
-        }
-        else if ((usr === null || usr === void 0 ? void 0 : usr.userId) !== undefined) {
-            userId = usr.userId;
-        }
-        else {
-            throw new common_1.BadRequestException("User not found");
-        }
-        const areas = await this.userAreas.getAreas(userId);
+        const areas = await this.userAreas.getAreas(usr.userId);
         res.status(200).json(areas);
+    }
+    async deleteUsr(usr, res) {
+        const status = await this.usersService.deleteUser(usr.userId);
+        res.status(200).json(status);
     }
 };
 __decorate([
@@ -107,6 +80,15 @@ __decorate([
     __metadata("design:paramtypes", [auth_controller_1.UserAuth, Object]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "getAreas", null);
+__decorate([
+    (0, common_1.Delete)(''),
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
+    __param(0, (0, user_decorator_1.User)()),
+    __param(1, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [auth_controller_1.UserAuth, Object]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "deleteUsr", null);
 UserController = __decorate([
     (0, common_1.Controller)('user'),
     __metadata("design:paramtypes", [user_service_1.UserService,
