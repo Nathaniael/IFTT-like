@@ -3,7 +3,7 @@ if not exists pgcrypto;
 
 CREATE TABLE usr (
     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-    username TEXT NOT NULL UNIQUE,
+    username TEXT NOT NULL,
     email TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
     image TEXT NOT NULL,

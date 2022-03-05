@@ -36,29 +36,22 @@ class Session {
     } on SocketException {
       return Response(status: Status.error, message: "Unexpected error");
     }
+    updateCookie(response);
     return Response(status: Status.success, data: json.decode(response.body));
   }
 
   Future<Response> post(Uri url, dynamic body) async {
     http.Response response;
-    print(body.toJson());
     try {
       response = await http.post(url, headers: headers, body: body.toJson());
     } on Exception {
       return Response(status: Status.error, message: "Unexpected error");
     }
+    if (response.statusCode >= 400) {
+      return Response(
+          status: Status.error, message: json.decode(response.body)["message"]);
+    }
+    updateCookie(response);
     return Response(status: Status.success, data: json.decode(response.body));
-  }
-
-  Future<Map> getWithCookies(Uri url) async {
-    http.Response response = await http.get(url, headers: headers);
-    updateCookie(response);
-    return json.decode(response.body);
-  }
-
-  Future<Map> postWithCookies(Uri url, dynamic data) async {
-    http.Response response = await http.post(url, body: data, headers: headers);
-    updateCookie(response);
-    return json.decode(response.body);
   }
 }

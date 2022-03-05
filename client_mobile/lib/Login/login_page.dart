@@ -3,22 +3,8 @@ import 'package:client_mobile/Widgets/background.dart';
 import 'package:client_mobile/apiprovider.dart';
 import 'package:client_mobile/Request/types.dart';
 
-var session = Session();
-var uri = Uri.parse('http://localhost:8080/auth/register/');
-
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
-
-  void getDatas() async {
-    LoginRequest body =
-        LoginRequest("kilian", "kilian", "kilian", "/baptiste.png");
-    Response res = await session.post(uri, body);
-    if (res.status == Status.success) {
-      print(res.data);
-    } else {
-      print(res.message);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +50,6 @@ class LoginPage extends StatelessWidget {
               margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: ElevatedButton(
                 onPressed: () {
-                  getDatas();
                   // Navigator.popAndPushNamed(context, '/area');
                 },
                 style: ElevatedButton.styleFrom(
