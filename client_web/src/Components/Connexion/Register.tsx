@@ -75,7 +75,7 @@ function Register(props: Props) {
             <p>{errorMessage}</p>
             {/* Switch to the login form if the user already has an account */}
             <div className={styles.optionsContainer}>
-                <GoogleAuthWidget setErrorMessage={setErrorMessage}></GoogleAuthWidget>
+            <GoogleAuthWidget setErrorMessage={setErrorMessage}></GoogleAuthWidget>
                 <p className={styles.gotAccount} onClick={() => {props.setGotAccount(!props.gotAccount)}}>Already have an account ?</p>
             </div>
         </div>
