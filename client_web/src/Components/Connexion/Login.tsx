@@ -52,9 +52,9 @@ function Login(props: Props) {
             <form className={styles.form} onSubmit={(e) => login(e)}>
                 <input
                     className={styles.input}
-                    placeholder='email'
+                    placeholder='Email'
                     type='text'
-                    name='Email'/>
+                    name='email'/>
                 <input
                     className={styles.input}
                     placeholder='Password'

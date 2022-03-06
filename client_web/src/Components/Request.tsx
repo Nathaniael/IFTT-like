@@ -67,8 +67,10 @@ class RequestApi {
 
         // Execute request and return status + data
         return await axios.post(url, body, headers).then((res) => {
+            console.log(res)
             return res.data
         }).catch((err) => {
+            console.log(err)
             // If there is a custom error message
             if (err?.response?.data?.message) {
                 throw err.response.data.message
