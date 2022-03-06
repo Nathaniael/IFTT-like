@@ -37,8 +37,10 @@ List<Placeholder> getPlaceHolders() {
 
 Future<List<Service>> getServices() async {
   Response res = await session.get(uriServices);
+
   List<Service> services = [];
   if (res.status == Status.success) {
+    print(res.data);
     for (var elem in res.data) {
       List<Item> listItems = [];
       for (var it in elem["actions"]) {
@@ -68,6 +70,7 @@ Future<List<Service>> getServices() async {
     }
     return services;
   } else {
+    print(res.message);
     return [];
   }
 }
@@ -171,20 +174,18 @@ class NestedServicesListsState extends State<NestedServicesLists>
                                             fontFamily: 'AvenirNext'),
                                       ),
                                       SizedBox(
-                                          width: 100,
                                           child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Center(
-                                              child: Text(
-                                                  _services[serviceIndex]
-                                                      .items[indexItem]
-                                                      .description,
-                                                  style: const TextStyle(
-                                                      color: Colors.white,
-                                                      fontFamily:
-                                                          'AvenirNext')),
-                                            ),
-                                          ))
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Center(
+                                          child: Text(
+                                              _services[serviceIndex]
+                                                  .items[indexItem]
+                                                  .description,
+                                              style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontFamily: 'AvenirNext')),
+                                        ),
+                                      ))
                                     ],
                                   ),
                                 ),
