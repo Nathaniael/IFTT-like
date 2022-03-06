@@ -91,12 +91,12 @@ VALUES ('Gitlab', '1', 'https://gitlab.com/oauth/authorize', 'https://gitlab.com
 -- ACTIONS DICO
 INSERT INTO "adictionnary" ("name", "description", "params", "help", "service_id")
 VALUES ('Any new repository event', 'This trigger reaction every time a new event occurs in a repository.', '[{"string":"url"},{"string":"secret"}]', 'In your github repository webhook, you have to set Payload URL to pantharea.fun:8081/webhooks/Github and to have a Secret code to enter in the parameters above', '3'),
-('Push event', 'This trigger reaction when a push occurs in your repository', '[{"number":"project_id"}]', '', '1'),
-('Merge request event', 'This trigger reaction when a merge request occurs in your repository', '[{"number":"project_id"}]', '', '1'),
-('Issues event', 'This trigger reaction when a Issue occurs in your repository', '[{"number":"project_id"}]', '', '1'),
-('Deployment event', 'This trigger reaction when a Deployment occurs in your repository', '[{"number":"project_id"}]', '', '1'),
-('Confidential issues event', 'This trigger reaction when a confidential issue occurs in your repository', '[{"number":"project_id"}]', '', '1'),
-('Change in temperature', 'This trigger a reaction when the temperature in Celsius changes in the defined location', '[{"string":"city"},{"number":"previous_value"},{"service":"weather"}]', '', '6');
+('Push event', 'This trigger reaction when a push occurs in your repository', '[{"number":"project_id"}]', 'No hint available', '1'),
+('Merge request event', 'This trigger reaction when a merge request occurs in your repository', '[{"number":"project_id"}]', 'No hint available', '1'),
+('Issues event', 'This trigger reaction when a Issue occurs in your repository', '[{"number":"project_id"}]', 'No hint available', '1'),
+('Deployment event', 'This trigger reaction when a Deployment occurs in your repository', '[{"number":"project_id"}]', 'No hint available', '1'),
+('Confidential issues event', 'This trigger reaction when a confidential issue occurs in your repository', '[{"number":"project_id"}]', 'No hint available', '1'),
+('Change in temperature', 'This trigger a reaction when the temperature in Celsius changes in the defined location', '[{"string":"city"},{"number":"previous_value"},{"service":"weather"}]', 'No hint available', '6');
 
 -- REACTIONS DICO
 INSERT INTO "readictionnary" ("name", "description", "params", "help", "service_id")

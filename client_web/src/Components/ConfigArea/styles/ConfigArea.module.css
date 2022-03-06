@@ -67,3 +67,29 @@
     text-align: center;
     font-size: 1vw;
 }
+
+.hint {
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.5);
+    font-size: 1.5vw;
+    width: 2vw;
+    height: auto;
+    padding: 0.2vw;
+    text-align: center;
+    border-radius: 7.143vw;
+}
+
+.hint:hover {
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.helper {
+    position: absolute;
+    margin-top: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    text-align: center;
+    font-size: 1vw;
+    width: 40vw;
+    border-radius: 0.5vw;
+}

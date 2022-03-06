@@ -46,7 +46,7 @@
     }
 }
 .serviceTitle {
-    color: rgba(0, 0, 0, 0.8);
+    color: rgba(255, 255, 255, 0.8);
     font-size: 3vw;
     font-weight: bold;
     text-align: center;
@@ -91,7 +91,7 @@
 
 .subDescription {
     text-align: center;
-    color: #849ee6;
+    color: rgba(255, 255, 255, 0.5);
 }
 
 .button {

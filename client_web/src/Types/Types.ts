@@ -10,7 +10,8 @@ type ActionReactionConfig = {
     id: number,
     imgUrl: string,
     params: string,
-    title: string
+    title: string,
+    help: string
 };
 
 type Service = {

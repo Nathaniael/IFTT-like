@@ -6,10 +6,7 @@ function AorReaList({ title, service, isAction, setAorReaction }) {
     const list = isAction ? service?.actions : service?.reactions
     return (
         <div className={styles.subDescriptionAction}>
-            <div className={styles.littleTitle}>
-                {title}
-            </div>
-            <div>
+            <div className={styles.cardContainer}>
                 {list?.map((elem, index) => {
                     return (
                         <ButtonService

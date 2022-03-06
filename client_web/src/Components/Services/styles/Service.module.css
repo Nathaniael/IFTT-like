@@ -4,7 +4,7 @@
 .pagination {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
 }
 
@@ -39,40 +39,62 @@
     }
 }
 
-.littleTitle {
+.littleTitleLeft {
+    color: white;
+    text-align: left;
+    margin: 0 36vw;
     font-size: 2.5vw;
-    padding: 1vw 0;
+    margin-bottom: 5vw;
 }
 
-.button {
+.littleTitleRight {
+    color: white;
+    text-align: right;
+    margin: 0 35vw;
+    font-size: 2.5vw;
+    margin-bottom: 5vw;
+}
+
+.cardContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 3vw;
+    column-gap: 3vw;
+}
+
+.card {
+    width: 10vw;
+    height: 10vw;
     cursor: pointer;
-    border-radius: 1.071vw;
+    border-radius: 1vw;
     font-size: 1.5vw;
-    padding: 1.071vw 1.429vw;
-    background-color: #D9DBF1; 
-    color: rgb(0, 13, 77); 
-    border: 0.143vw solid #007EA7;
-    transition : 0.4s;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 3px white solid;
+    color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
-.button:hover{
-    background-color: #007EA7;
-    color: Black;
+.card:hover{
+    background-color: rgba(255, 255, 255, 0.3);
 }
 
 .subDescriptionAction {
     text-align: center;
     color: #D9DBF1;
+    width: 50%;
 }
 
 .subDescriptionReAction {
     text-align: center;
     color: #D9DBF1;
 }
-
+/* 
 .buttonPadding {
     padding: 0.5vw 0;
-}
+} */
 
 .draggable {
     opacity: 1;
