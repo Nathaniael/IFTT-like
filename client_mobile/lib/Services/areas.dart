@@ -151,52 +151,57 @@ class NestedServicesListsState extends State<NestedServicesLists>
                   Container(
                     color: Colors.white,
                     margin: const EdgeInsets.only(left: 8, right: 8),
-                    height: 150,
+                    height: 175,
                     child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: _services[serviceIndex].items.length,
                         itemBuilder: (context, indexItem) {
-                          return Padding(
-                              padding: const EdgeInsets.all(2.0),
-                              child: LongPressDraggable(
-                                data: _services[serviceIndex].items[indexItem],
-                                dragAnchorStrategy: pointerDragAnchorStrategy,
-                                feedback: DraggingListItem(
-                                    dragKey: _draggableKey,
-                                    photoProvider:
-                                        _services[serviceIndex].logo),
-                                child: Card(
-                                  color: const Color(0xff007EA7),
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        _services[serviceIndex]
-                                            .items[indexItem]
-                                            .name,
-                                        style: const TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 22.0,
-                                            fontFamily: 'AvenirNext'),
+                          return SizedBox(
+                              width: 200,
+                              child: Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Center(
+                                      child: LongPressDraggable(
+                                    data: _services[serviceIndex]
+                                        .items[indexItem],
+                                    dragAnchorStrategy:
+                                        pointerDragAnchorStrategy,
+                                    feedback: DraggingListItem(
+                                        dragKey: _draggableKey,
+                                        photoProvider:
+                                            _services[serviceIndex].logo),
+                                    child: Card(
+                                      color: const Color(0xff007EA7),
+                                      child: Column(
+                                        children: [
+                                          Padding(
+                                              padding: EdgeInsets.all(10.0),
+                                              child: Center(
+                                                  child: Text(
+                                                _services[serviceIndex]
+                                                    .items[indexItem]
+                                                    .name,
+                                                style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 20.0,
+                                                    fontFamily: 'AvenirNext'),
+                                              ))),
+                                          Padding(
+                                              padding: EdgeInsets.all(10.0),
+                                              child: Center(
+                                                child: Text(
+                                                    _services[serviceIndex]
+                                                        .items[indexItem]
+                                                        .description,
+                                                    style: const TextStyle(
+                                                        color: Colors.white,
+                                                        fontFamily:
+                                                            'AvenirNext')),
+                                              ))
+                                        ],
                                       ),
-                                      SizedBox(
-                                          width: 100,
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Center(
-                                              child: Text(
-                                                  _services[serviceIndex]
-                                                      .items[indexItem]
-                                                      .description,
-                                                  style: const TextStyle(
-                                                      color: Colors.white,
-                                                      fontFamily:
-                                                          'AvenirNext')),
-                                            ),
-                                          ))
-                                    ],
-                                  ),
-                                ),
-                              ));
+                                    ),
+                                  ))));
                         }),
                   ),
                 ],
