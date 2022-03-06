@@ -93,6 +93,7 @@
     padding: 1vw;
     border-radius: 1.071vw;
     background-color: rgba(255, 255, 255, 0.2);
+    font-size: 2vw;
 }
 
 .paramsItem {
@@ -128,4 +129,35 @@
 .buttonCreate:hover {
     transition: 0.3s;
     background-color: rgba(255, 255, 255, 0.5);
+}
+
+@media (width < 800px) {
+    .card {
+        width: 45%;
+    }
+
+    .subCard {
+        width: 100%;
+    }
+
+    .serviceName {
+        font-size: 4vw;
+    }
+
+    .name {
+        font-size: 3vw;
+    }
+
+    .description {
+        font-size: 2vw;
+    }
+
+    .params {
+        font-size: 4vw;
+    }
+    
+    .cardImg {
+        width: 10vw;
+        height: 10vw;
+    }
 }

@@ -9,6 +9,13 @@
     min-height: 15vw;
 }
 
+@media (width < 800px) {
+    .configContainer {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
 .noMinHeight {
     min-height: 0vw;
 }
@@ -57,15 +64,28 @@
     }
 }
 
+@media (width < 800px) {
+    .rouage {
+        margin-bottom: 4vw;
+    } 
+}
+
 .errorContainer {
     min-width: 5.5vw;
     min-height: 5.7vw;
 }
+
 .errorMessage {
-    margin-top: 2vw;
     color: white;
     text-align: center;
     font-size: 1vw;
+}
+
+@media (width < 400px) {
+    .errorMessage {
+        margin: 0 0 5vw 0;
+        font-size: 3vw;
+    }
 }
 
 .hint {

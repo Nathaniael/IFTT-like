@@ -7,7 +7,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 5vw;
+    padding-top: 11vw;
 }
 
 .title {
@@ -175,5 +175,23 @@
     }
     66% {
         transform: rotate(5deg);
+    }
+}
+
+@media (width < 800px) {
+    .getStartedPage {
+        padding-top: 18vh;
+    }
+
+    .summary {
+        font-size: 4vw;
+    }
+
+    .hints {
+        font-size: 3vw;
+    }
+    
+    .stepTitle {
+        font-size: 4vw;
     }
 }

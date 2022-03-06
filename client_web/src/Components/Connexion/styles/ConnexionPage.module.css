@@ -3,10 +3,17 @@
     min-height: 100vh;
 }
 
+.centerRow {
+    display: flex;
+    height: 100vh;
+    flex-direction: row;
+    align-items: center;
+}
+
 .logWidget {
     margin: auto;
-    width: 42.857vw;
-    height: 42.857vw;
+    width: 43vw;
+    height: 43vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -14,4 +21,10 @@
 
 .sizedBox100pxH {
     height: 7.143vw;
+}
+
+@media (width < 800px) {
+    .logWidget {
+        width: 70vw;
+    }
 }

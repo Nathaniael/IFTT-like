@@ -9,6 +9,13 @@
   font-weight: bold;
 }
 
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
 body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
@@ -30,6 +37,7 @@ input {
 }
 
 .background {
+  position: relative;
   min-height: 100vh;
   padding-bottom: 10vw;
   background: linear-gradient(270deg, rgb(0, 13, 77), rgb(0, 78, 167));

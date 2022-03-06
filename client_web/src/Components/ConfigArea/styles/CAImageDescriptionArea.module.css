@@ -16,3 +16,24 @@
     width: 7.143vw;
     width: 7.143vw;
 }
+
+@media (width < 800px) {
+    .container {
+        cursor: pointer;
+        position: relative;
+        width: 70vw;
+        height: 11vw;
+        border: 0.071vw solid white;
+        border-radius: 7.143vw;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        color: white;
+        align-items: center;
+    }
+    
+    .container > img {
+        width: 15vw;
+        width: 15vw;
+    }    
+}
