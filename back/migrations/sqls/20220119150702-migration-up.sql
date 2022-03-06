@@ -108,4 +108,5 @@ INSERT INTO "readictionnary" ("name", "description", "params", "help", "service_
 VALUES ('Send an email', 'When triggered, send an email to a chosen recipient, a subject and a body', '[{"string":"username"}, {"string":"recipient"},{"string":"subject"}, {"string":"body"}]','' , '2'), -- ID:1
 ('Send a discord message', 'When triggered, send a discord message in your server using Discord webhooks', '[{"string":"url"}, {"string":"hookusername"},{"string":"message"}]', '', '4'), -- ID:2
 ('Send a discord embed', 'When triggered, send a discord embed in your server using Discord webhooks', '[{"string":"url"},{"string":"hookusername"},{"string":"message"},{"string":"fieldname"},{"string":"fielddescription"},{"string":"title"}]', '', '4'), -- ID:3
-('Send a SMS', 'When triggered, send a message to the phone number you set', '[{"string":"number"}, {"string":"message"}]', '','5'); -- ID:4
+('Send a SMS', 'When triggered, send a message to the phone number you set', '[{"string":"number"}, {"string":"message"}]', '','5'), -- ID:4
+('Change username', 'When triggered, changes your area username', '[{"string":"newUsername"}]', 'WARNING! DO NOT USE THIS REACTION COMBINED WITH THE "Username changed" action','3'); -- ID:5

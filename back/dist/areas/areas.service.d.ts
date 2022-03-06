@@ -10,6 +10,7 @@ export declare class AreasService {
     callReaction(params: string): Promise<void>;
     checkBodyCreateArea(body: AreaCreationDto): void;
     createArea(userId: string, body: AreaCreationDto): Promise<void>;
+    createReaction(serviceName: string, user_id: string, id: number): Promise<void>;
     deleteArea(id: string): Promise<void>;
     getAreaByUser(usrId: string): Promise<readonly import("slonik").QueryResultRow[]>;
 }
