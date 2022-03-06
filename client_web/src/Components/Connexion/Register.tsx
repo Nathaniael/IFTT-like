@@ -64,7 +64,7 @@ function Register(props: Props) {
                 <input
                     className={styles.input}
                     placeholder='Password'
-                    type='text'
+                    type='password'
                     name='password'/>
                 <input
                     className={styles.button}
@@ -74,8 +74,10 @@ function Register(props: Props) {
             {/* Zone of error message if a problem is encountered during registration */}
             <p>{errorMessage}</p>
             {/* Switch to the login form if the user already has an account */}
-            <p className={styles.gotAccount} onClick={() => {props.setGotAccount(!props.gotAccount)}}>Already have an account ?</p>
+            <div className={styles.optionsContainer}>
             <GoogleAuthWidget setErrorMessage={setErrorMessage}></GoogleAuthWidget>
+                <p className={styles.gotAccount} onClick={() => {props.setGotAccount(!props.gotAccount)}}>Already have an account ?</p>
+            </div>
         </div>
     )
 }

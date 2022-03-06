@@ -1,9 +1,3 @@
-.servicePage {
-    background: radial-gradient(rgb(0, 126, 167), rgb(0, 13, 77));
-    min-height: 100vh;
-    padding-bottom: 10vw;
-}
-
 .titlePage {
     margin-top: 3vw;
     font-size: 5vw;
@@ -98,4 +92,27 @@
 .subDescription {
     text-align: center;
     color: #849ee6;
+}
+
+.button {
+    padding: 1vw;
+    cursor: pointer;
+    animation: agitate 0.5s infinite;
+    margin: 3vw auto;
+}
+
+.button:hover {
+    animation: agitate 0.5s;
+}
+
+@keyframes agitate {
+    0% {
+        transform: rotate(-5deg);
+    }
+    33% {
+        transform: rotate(0deg);        
+    }
+    66% {
+        transform: rotate(5deg);
+    }
 }

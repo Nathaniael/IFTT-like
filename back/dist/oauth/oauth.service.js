@@ -32,6 +32,9 @@ let OauthService = class OauthService {
         return `${service.query_code}?client_id=${service.client_id}&redirect_uri=${service.redirect_uri}&response_type=code&scope=${service.scope}`;
     }
     async storeToken(token, userId, service) {
+        console.log(token);
+        console.log(userId);
+        console.log(service);
         const tok = await this.pool.query((0, slonik_1.sql) `SELECT * FROM oauth WHERE service = ${service} AND usr_id = ${userId}`);
         if (tok.rowCount === 1) {
             await this.pool.query((0, slonik_1.sql) `UPDATE oauth SET token = ${token} WHERE service = ${service} AND usr_id = ${userId}`);
@@ -44,7 +47,7 @@ let OauthService = class OauthService {
         if (tokenList.rowCount >= 1) {
             return tokenList.rows[0];
         }
-        throw new common_1.NotFoundException('no token registered for this user and service');
+        throw new common_1.NotFoundException('No token registered for this service');
     }
 };
 OauthService = __decorate([

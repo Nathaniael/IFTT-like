@@ -188,7 +188,8 @@ class RequestApi {
             withCredentials: true
         }
         const body = {
-            "token": token
+            "token": token,
+            "serviceName": "Gitlab"
         }
         // Execute request and return status + data
         return await axios.post(url, body, headers).then((res) => {
@@ -254,7 +255,6 @@ class RequestApi {
         }
         // Execute request and return status + data
         return await axios.delete(url, headers).then((res) => {
-            console.log(res)
             return res.data
         }).catch((err) => {
             // If there is a custom error message

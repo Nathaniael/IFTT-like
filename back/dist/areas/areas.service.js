@@ -18,20 +18,23 @@ const common_1 = require("@nestjs/common");
 const nestjs_slonik_1 = require("nestjs-slonik");
 const slonik_1 = require("slonik");
 const actions_service_1 = require("../actions/actions.service");
+const queries_1 = require("../queries/queries");
 let AreasService = class AreasService {
     constructor(pool, httpService, actionsService) {
         this.pool = pool;
         this.httpService = httpService;
         this.actionsService = actionsService;
     }
-    async callReaction(params, type) {
-        var action = await this.pool.query((0, slonik_1.sql) `SELECT * FROM action WHERE params = ${params} AND type = ${type}`);
+    async callReaction(params) {
+        var action = await this.pool.query((0, slonik_1.sql) `SELECT * FROM action WHERE params = ${params.toString()} `);
         if (action.rowCount === 0) {
             return;
         }
         let area = await this.pool.query((0, slonik_1.sql) `SELECT * FROM area WHERE id_act = ${action.rows[0].id}`);
+        console.log(area);
         for (var elem of area.rows) {
             let reaction = await this.pool.query((0, slonik_1.sql) `SELECT * FROM reaction WHERE id = ${elem.id_react}`);
+            console.log(reaction);
             let data = JSON.parse(reaction.rows[0].params.toString());
             this.httpService.post(`http://localhost:8080/reactions/${reaction.rows[0].reaction_route}`, data).toPromise();
         }
@@ -52,14 +55,16 @@ let AreasService = class AreasService {
     }
     async createArea(userId, body) {
         this.checkBodyCreateArea(body);
-        const reaction_dico = await this.pool.query((0, slonik_1.sql) `SELECT * FROM readictionnary WHERE id = ${body.reaction_id}`);
-        const reaction_service = await this.pool.query((0, slonik_1.sql) `SELECT * FROM service WHERE id = ${reaction_dico.rows[0].service_id}`);
-        const action_dico = await this.pool.query((0, slonik_1.sql) `SELECT * FROM adictionnary WHERE id = ${body.action_id}`);
-        const action = await this.pool.query((0, slonik_1.sql) `INSERT INTO action (params, type, dico_id)
-        VALUES (${body.action_params}, ${action_dico.rows[0].params},${body.action_id}) RETURNING id;`);
-        this.actionsService.createAction(JSON.parse(body.action_params), userId, action.rows[0]);
-        const reaction = await this.pool.query((0, slonik_1.sql) `INSERT INTO reaction (params, type, reaction_route,dico_id)
-        VALUES (${body.reaction_params}, ${reaction_dico.rows[0].params},${reaction_service.rows[0].name} ,${body.reaction_id}) RETURNING id;`);
+        const reaction_dico = await (0, queries_1.qFirstFieldsFromWhere)({ pool: this.pool, selectFields: ["service_id", "params"], from: "readictionnary", where: "id", value: body.reaction_id });
+        const reaction_service = await (0, queries_1.qFirstFieldsFromWhere)({ pool: this.pool, selectFields: ["name"], from: "service", where: "id", value: reaction_dico["service_id"] });
+        const action_dico = await (0, queries_1.qFirstFieldsFromWhere)({ pool: this.pool, selectFields: ["service_id", "params"], from: "adictionnary", where: "id", value: body.action_id });
+        const action = await this.pool.query((0, slonik_1.sql) `INSERT INTO action (params, dico_id)
+        VALUES (${JSON.stringify(body.action_params)}, ${body.action_id}) RETURNING id;`);
+        const action_service = await (0, queries_1.qFirstFieldsFromWhere)({ pool: this.pool, selectFields: ["*"], from: "service", where: "id", value: action_dico["service_id"] });
+        await this.actionsService.createAction(body.action_params, action_service["name"].toString(), userId, action_dico["name"], action.rows[0]);
+        console.log('henlo');
+        const reaction = await this.pool.query((0, slonik_1.sql) `INSERT INTO reaction (params, reaction_route,dico_id)
+        VALUES (${JSON.stringify(body.reaction_params)}, ${reaction_service["name"]} ,${body.reaction_id}) RETURNING id;`);
         const area = await this.pool.query((0, slonik_1.sql) `INSERT INTO area (
             id_act,
             id_react,
@@ -69,7 +74,7 @@ let AreasService = class AreasService {
                 ${userId})`);
     }
     async deleteArea(id) {
-        const deleted_area = await this.pool.query((0, slonik_1.sql) `DELETE FROM area WHERE id = ${id}`);
+        await (0, queries_1.qDeleteFieldsFromWhere)({ pool: this.pool, from: "area", where: "id", value: id });
     }
     async getAreaByUser(usrId) {
         const areas = await this.pool.query((0, slonik_1.sql) `SELECT * FROM area WHERE usr_id = ${usrId}`);

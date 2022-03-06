@@ -23,18 +23,13 @@ let WebhooksController = class WebhooksController {
     }
     async actionGithub(req, body) {
         let params = JSON.stringify({ url: body.repository.html_url, secret: req.headers["x-hub-signature"] });
-        this.areasServices.callReaction(params, "");
+        this.areasServices.callReaction(params);
     }
     async actionGitlab(req, body) {
-        const type = JSON.stringify({
-            ProjectID: body.project_id,
-            secret: req.headers["x-gitlab-token"]
-        });
         const params = JSON.stringify({
-            ProjectID: body.project_id,
-            secret: req.headers["x-gitlab-token"]
+            project_id: body.project_id,
         });
-        this.areasServices.callReaction(params, type);
+        this.areasServices.callReaction(params);
     }
 };
 __decorate([

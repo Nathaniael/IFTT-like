@@ -54,7 +54,6 @@ function PProfile(props: Props) {
     function deleteAccount() {
         Request.deleteUsr().then((res) => {
             console.log(res)
-            console.log("IGBEKLIEF")
             props.logout()
         }).catch((err) => {
             console.log(err)

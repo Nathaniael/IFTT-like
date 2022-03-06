@@ -19,6 +19,7 @@ export enum AorREA {
 
 function checkIsThereResult(res: any, error: string) {
     if (res.rowCount == 0) {
+        console.log("EXCEPT " + error)
         throw new BadRequestException(error)
     }
 }
@@ -29,7 +30,7 @@ export async function qFirstFieldsFromWhere(props: SelectFieldsFromWhere) {
         sql: 'SELECT ' + listFields + ' FROM ' + props.from + ' WHERE ' + props.where + ' = $1',
         type: 'SLONIK_TOKEN_SQL',
         values: [props.value] })
-    checkIsThereResult(res.rows, "[ERROR] " + props.from + " not found with the given " + props.where)
+    checkIsThereResult(res, "[ERROR] " + props.from + " not found with the given " + props.where)
     return res.rows[0]
 }
 
@@ -39,7 +40,7 @@ export async function qAllFieldsFromWhere(props: SelectFieldsFromWhere) {
         sql: 'SELECT ' + listFields + ' FROM ' + props.from + ' WHERE ' + props.where + ' = $1',
         type: 'SLONIK_TOKEN_SQL',
         values: [props.value] })
-    checkIsThereResult(res.rows, "[ERROR] " + props.from + " not found with the given " + props.where)
+    checkIsThereResult(res, "[ERROR] " + props.from + " not found with the given " + props.where)
     return res.rows
 }
 

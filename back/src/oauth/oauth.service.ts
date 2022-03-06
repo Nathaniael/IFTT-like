@@ -45,6 +45,9 @@ export class OauthService {
     // }
 
     async storeToken(token: string, userId: string, service: string) {
+        console.log(token)
+        console.log(userId)
+        console.log(service)
         const tok = await this.pool.query(sql`SELECT * FROM oauth WHERE service = ${service} AND usr_id = ${userId}`)
         if (tok.rowCount === 1) {
             await this.pool.query(sql`UPDATE oauth SET token = ${token} WHERE service = ${service} AND usr_id = ${userId}`)
@@ -58,6 +61,6 @@ export class OauthService {
         if (tokenList.rowCount >= 1) {
             return tokenList.rows[0]
         }
-        throw new NotFoundException('no token registered for this user and service')
+        throw new NotFoundException('No token registered for this service')
     }
 }

@@ -11,6 +11,6 @@ export class WebhooksService {
     @Cron('*/30 * * * * *')
     async getActions() {
         console.log('hello')
-        // this.actionService.updateWeather()
+        this.actionService.updateWeather()
     }
 }

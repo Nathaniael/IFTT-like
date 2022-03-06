@@ -5,6 +5,8 @@ import { DatabasePool, sql } from 'slonik';
 import { ActionsService } from 'src/actions/actions.service';
 import { UserAuth } from 'src/auth/auth.controller';
 import { AreaCreationDto, DicoDto } from './areas.dto';
+import { qFirstFieldsFromWhere, qDeleteFieldsFromWhere } from 'src/queries/queries';
+
 @Injectable()
 export class AreasService {
     constructor(
@@ -14,14 +16,16 @@ export class AreasService {
         private readonly actionsService: ActionsService
     ) { }
 
-    async callReaction(params: string, type: string) {
-        var action = await this.pool.query(sql`SELECT * FROM action WHERE params = ${params} AND type = ${type}`)
+    async callReaction(params: string) {
+        var action = await this.pool.query(sql`SELECT * FROM action WHERE params = ${params.toString()} `)
         if (action.rowCount === 0) {
             return
         }
         let area = await this.pool.query(sql`SELECT * FROM area WHERE id_act = ${action.rows[0].id}`)
+        console.log(area)
         for (var elem of area.rows) {
             let reaction = await this.pool.query(sql`SELECT * FROM reaction WHERE id = ${elem.id_react}`)
+            console.log(reaction)
             let data = JSON.parse(reaction.rows[0].params.toString())
             this.httpService.post(`http://localhost:8080/reactions/${reaction.rows[0].reaction_route}`, data).toPromise()
         }
@@ -44,15 +48,20 @@ export class AreasService {
 
     async createArea(userId: string, body: AreaCreationDto) {
         this.checkBodyCreateArea(body)
-        const reaction_dico = await this.pool.query(sql<DicoDto>`SELECT * FROM readictionnary WHERE id = ${body.reaction_id}`)
-        const reaction_service = await this.pool.query(sql`SELECT * FROM service WHERE id = ${reaction_dico.rows[0].service_id}`)
-        const action_dico = await this.pool.query(sql<DicoDto>`SELECT * FROM adictionnary WHERE id = ${body.action_id}`)
-        const action = await this.pool.query(sql<{id: number}>`INSERT INTO action (params, type, dico_id)
-        VALUES (${body.action_params}, ${action_dico.rows[0].params},${body.action_id}) RETURNING id;`)
-        this.actionsService.createAction(JSON.parse(body.action_params), userId, action.rows[0])
-        const reaction = await this.pool.query(sql`INSERT INTO reaction (params, type, reaction_route,dico_id)
-        VALUES (${body.reaction_params}, ${reaction_dico.rows[0].params},${reaction_service.rows[0].name} ,${body.reaction_id}) RETURNING id;`)
 
+        const reaction_dico = await qFirstFieldsFromWhere({ pool: this.pool, selectFields: ["service_id", "params"], from: "readictionnary", where: "id", value: body.reaction_id});
+        const reaction_service = await qFirstFieldsFromWhere({ pool: this.pool, selectFields: ["name"], from: "service", where: "id", value: reaction_dico["service_id"]})
+        const action_dico = await qFirstFieldsFromWhere({ pool: this.pool, selectFields: ["service_id", "params"], from: "adictionnary", where: "id", value: body.action_id})
+        const action = await this.pool.query(sql<{id: number}>`INSERT INTO action (params, dico_id)
+        VALUES (${JSON.stringify(body.action_params)}, ${body.action_id}) RETURNING id;`)
+
+        const action_service = await qFirstFieldsFromWhere({ pool: this.pool, selectFields: ["*"], from: "service", where: "id", value: action_dico["service_id"]})
+
+        await this.actionsService.createAction(body.action_params, action_service["name"].toString(), userId, action_dico["name"], action.rows[0])
+
+        console.log('henlo')
+        const reaction = await this.pool.query(sql`INSERT INTO reaction (params, reaction_route,dico_id)
+        VALUES (${JSON.stringify(body.reaction_params)}, ${reaction_service["name"]} ,${body.reaction_id}) RETURNING id;`)
         const area = await this.pool.query(sql`INSERT INTO area (
             id_act,
             id_react,
@@ -62,8 +71,8 @@ export class AreasService {
                 ${userId})`)
     }
 
-    async deleteArea(id: number) {
-        const deleted_area = await this.pool.query(sql`DELETE FROM area WHERE id = ${id}`)
+    async deleteArea(id: string) {
+        await qDeleteFieldsFromWhere({ pool: this.pool, from: "area", where: "id", value: id})
     }
 
     async getAreaByUser(usrId: string) {

@@ -15,30 +15,14 @@ export class AreasController {
     @Post('/create')
     @UseGuards(AuthGuard('jwt'))
     async createArea(@User() user, @Body() body: AreaCreationDto, @Res() res) {
-        var userId;
-        if (user["payload"]?.userId != undefined) {
-            userId = user["payload"].userId
-        } else if (user.userId != undefined) {
-            userId = user.userId
-        } else {
-            throw new BadRequestException("Can't get user")
-        }
-        await this.areasServices.createArea(userId, body)
+        await this.areasServices.createArea(user.userId, body)
         res.status(200).send("Area well created")
     }
 
     @Post('/delete')
     @UseGuards(AuthGuard('jwt'))
     async deleteArea(@User() user, @Body() body: AreaId, @Res() res) {
-        var userId;
-        if (user["payload"]?.userId != undefined) {
-            userId = user["payload"].userId
-        } else if (user.userId != undefined) {
-            userId = user.userId
-        } else {
-            throw new BadRequestException("Can't get user")
-        }
-        this.areasServices.deleteArea(body.id)
+        await this.areasServices.deleteArea(body.id.toString())
         res.status(200).send("Area deleted successfully")
     }
 

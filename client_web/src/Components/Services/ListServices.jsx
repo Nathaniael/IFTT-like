@@ -6,6 +6,7 @@ import ConfigArea from '../ConfigArea/ConfigArea';
 import Request from '../Request';
 import { useCookies } from 'react-cookie';
 import Service from './Service';
+import { goToPage } from '../Utils';
 
 function SubDescription({ title, list }) {
     return (
@@ -53,7 +54,7 @@ function ServiceWidget({setActiveService, service, onLeft }) {
 
 function ListServices() {
     const [listServices, setListServices] = React.useState([])
-    const [cookies] = useCookies()
+    const [cookies,,removeCookies] = useCookies('closeGetStarted')
     const [activeService, setActiveService] = React.useState()
     const [action, setAction] = React.useState()
     const [reaction, setReaction] = React.useState()
@@ -66,8 +67,12 @@ function ListServices() {
         })
     }, [action, reaction])
 
+    function enableIt() {
+        removeCookies('closeGetStarted')
+    }
+
     return (
-        <div className={styles.servicePage}>
+        <div className="background">
             <AppBar></AppBar>
             <ConfigArea activeService={activeService} setActiveService={setActiveService} action={action} reaction={reaction} setAction={setAction} setReaction={setReaction}></ConfigArea>
             {activeService === undefined ?
@@ -81,7 +86,9 @@ function ListServices() {
                                 )
                             })}
                         </div>
-                        : <Link to="/getStarted">GET STARTED</Link>
+                        : <a onClick={() => {enableIt()}} className={styles.listServices} href='https://picsum.photos/1080/720' target='_blank'>
+                            <button className={styles.button}>Read the get started !</button>
+                        </a>
                     }
                 </div>
                 : <Service setActiveService={setActiveService} service={activeService} setAction={setAction} setReaction={setReaction}></Service>

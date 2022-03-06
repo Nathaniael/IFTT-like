@@ -13,19 +13,14 @@ export class WebhooksController {
     @Post('Github')
     async actionGithub(@Req() req, @Body() body) {
         let params = JSON.stringify({url:body.repository.html_url,secret:req.headers["x-hub-signature"]})
-        this.areasServices.callReaction(params, "")
+        this.areasServices.callReaction(params)
     }
 
     @Post('Gitlab')
     async actionGitlab(@Req() req, @Body() body) {
-        const type = JSON.stringify({
-            ProjectID: body.project_id,
-            secret: req.headers["x-gitlab-token"]
-        })
         const params = JSON.stringify({
-            ProjectID: body.project_id,
-            secret: req.headers["x-gitlab-token"]
+            project_id: body.project_id,
         })
-        this.areasServices.callReaction(params, type)
+        this.areasServices.callReaction(params)
     }
 }

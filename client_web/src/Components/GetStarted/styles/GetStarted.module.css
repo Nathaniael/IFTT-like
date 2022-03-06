@@ -21,3 +21,159 @@
     padding: 1vw;
     margin-bottom: 2vw;
 }
+
+.row {
+    display: flex;
+    padding: 5vw 0;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}
+
+.hints {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 2vw;
+    width: 30vw;
+}
+
+.imgContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.img {
+    z-index: 1;
+    width: 60vw;
+    border-radius: 10px;
+    border: 3px solid black;
+}
+
+.img:hover {
+    box-shadow: 0px 0px 10px 0px white;
+}
+
+.zigzag {
+    width: 50vw;
+    z-index: 0;
+}
+
+.zigzag:hover {
+    animation: looping 1s;
+    animation-iteration-count: 1;
+}
+
+@keyframes looping {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.stepTitle {
+    font-size: 2vw;
+    color: white;
+    padding: 3vw;
+}
+
+.summary {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 0.8vw;
+    border: 1px solid white;
+    padding: 3vw;
+    color: white;
+    font-size: 2.5vw;
+    background-color: rgba(255, 255, 255, 0.1);
+    animation: theFlow 5s infinite;
+    transition: 1s;
+}
+
+.summary:hover {
+    transition: 1s;
+    box-shadow: 0px 0px 10px 0px white;
+}
+
+.summary > a {
+    color: aliceblue;
+}
+
+@keyframes theFlow {
+    6% {
+        border-top-right-radius: 0px;
+        border-top-left-radius: 0px;
+    }
+    22% {
+        border-top-right-radius: 100px;
+        border-bottom-right-radius: 0px;
+        border-top-left-radius: 0px;
+    }
+    48% {
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 100px;
+        border-bottom-left-radius: 0px;
+        border-top-left-radius: 0px;
+    }
+    64% {
+        border-bottom-right-radius: 0px;
+        border-bottom-left-radius: 100px;
+        border-top-left-radius: 0px;
+    }
+    80% {
+        border-bottom-left-radius: 0px;
+        border-top-left-radius: 100px;
+    }
+    100% {
+        border-top-left-radius: 0px;
+    }
+}
+
+.summary > * {
+    padding: 0.5vw;
+    border-radius: 10px;
+}
+.summary > *:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    animation: burp 0.5s;
+}
+
+@keyframes burp {
+    0%{
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1, 0.8) translateY(-10%);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.button {
+    cursor: pointer;
+    animation: agitate 0.5s infinite;
+}
+
+.button:hover {
+    animation: agitate 0.5s;
+}
+
+@keyframes agitate {
+    0% {
+        transform: rotate(-5deg);
+    }
+    33% {
+        transform: rotate(0deg);        
+    }
+    66% {
+        transform: rotate(5deg);
+    }
+}

@@ -67,7 +67,6 @@ function OneParam(props: any) {
 
 // Component
 function CAParams(props: Props) {
-    console.log(props.params)
     return (
         <div className={styles.params}>
             {/* Action for every params model given by the server to set action / reaction parameters in area */}

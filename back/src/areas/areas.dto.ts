@@ -20,10 +20,9 @@ export class AreaCreationDto {
 export class DicoDto {
     @IsString()
     params: string
-    
+
     @IsString()
     name: string
-
 
     @IsString()
     description: string

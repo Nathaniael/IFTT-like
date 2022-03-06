@@ -19,6 +19,7 @@ let WebhooksService = class WebhooksService {
     }
     async getActions() {
         console.log('hello');
+        this.actionService.updateWeather();
     }
 };
 __decorate([
