@@ -12,12 +12,15 @@ const user_service_1 = require("./user.service");
 const user_areas_1 = require("./user.areas");
 const user_controller_1 = require("./user.controller");
 const axios_1 = require("@nestjs/axios");
+const areas_service_1 = require("../areas/areas.service");
+const actions_service_1 = require("../actions/actions.service");
+const oauth_service_1 = require("../oauth/oauth.service");
 let UserModule = class UserModule {
 };
 UserModule = __decorate([
     (0, common_1.Module)({
         imports: [axios_1.HttpModule],
-        providers: [user_service_1.UserService, user_areas_1.UserAreas],
+        providers: [user_service_1.UserService, user_areas_1.UserAreas, areas_service_1.AreasService, actions_service_1.ActionsService, oauth_service_1.OauthService],
         exports: [user_service_1.UserService, user_areas_1.UserAreas],
         controllers: [user_controller_1.UserController]
     })

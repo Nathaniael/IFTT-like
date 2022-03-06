@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReactionsController = void 0;
 require('dotenv').config();
 const common_1 = require("@nestjs/common");
+const discord_webhook_node_1 = require("discord-webhook-node");
 const reactions_dto_1 = require("./reactions.dto");
 const { Webhook } = require('discord-webhook-node');
 const twilio = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
@@ -54,6 +55,15 @@ let ReactionsController = class ReactionsController {
     async reactionDiscord(body) {
         const hook = new Webhook(body.url);
         hook.setUsername(body.hookusername);
+        if (body.title !== null && body.title !== undefined) {
+            const embed = new discord_webhook_node_1.MessageBuilder();
+            embed.setFooter('Sent with :heart: by AREA');
+            embed.setTitle(body.title);
+            embed.addField(body.fieldname, body.fielddescription);
+            embed.setDescription(body.message);
+            hook.send(embed);
+            return;
+        }
         hook.send(body.message);
     }
     async reactionSms(body) {

@@ -1,8 +1,10 @@
 import { DatabasePool } from 'slonik';
+import { AreasService } from 'src/areas/areas.service';
 import { AorREA } from 'src/queries/queries';
 export declare class UserAreas {
     private readonly pool;
-    constructor(pool: DatabasePool);
+    private readonly areaService;
+    constructor(pool: DatabasePool, areaService: AreasService);
     getActionOrReactionInfos(area: any, aor: AorREA): Promise<{
         name: any;
         description: any;
@@ -13,4 +15,5 @@ export declare class UserAreas {
         };
     }>;
     getAreas(userId: string): Promise<any[]>;
+    AreaNumber(userId: string): Promise<void>;
 }

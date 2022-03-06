@@ -89,6 +89,9 @@ export class ActionsService {
         if (action_name === "Area deleted") {
             params = JSON.stringify({action_type: action_name, user_id: user_id, id: param.id})
         }
+        if (action_name === "Detect number of areas") {
+            params = JSON.stringify({action_type: action_name, user_id: user_id, nb: param.nb})
+        }
         this.pool.query(sql`UPDATE action SET params = ${params} WHERE id = ${id}`)
     }
 

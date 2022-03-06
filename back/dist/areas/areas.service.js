@@ -31,14 +31,17 @@ let AreasService = class AreasService {
             console.log("PARAMS", params);
             return;
         }
-        console.log("nonono");
-        let area = await this.pool.query((0, slonik_1.sql) `SELECT * FROM area WHERE id_act = ${action.rows[0].id}`);
-        console.log(area);
-        for (var elem of area.rows) {
-            let reaction = await this.pool.query((0, slonik_1.sql) `SELECT * FROM reaction WHERE id = ${elem.id_react}`);
-            console.log(reaction);
-            let data = JSON.parse(reaction.rows[0].params.toString());
-            this.httpService.post(`http://localhost:8080/reactions/${reaction.rows[0].reaction_route}`, data).toPromise();
+        console.log(action.rows);
+        for (var test of action.rows) {
+            let area = await this.pool.query((0, slonik_1.sql) `SELECT * FROM area WHERE id_act = ${test.id}`);
+            console.log(area);
+            for (var elem of area.rows) {
+                console.log("REACTION");
+                let reaction = await this.pool.query((0, slonik_1.sql) `SELECT * FROM reaction WHERE id = ${elem.id_react}`);
+                console.log(reaction);
+                let data = JSON.parse(reaction.rows[0].params.toString());
+                this.httpService.post(`http://localhost:8080/reactions/${reaction.rows[0].reaction_route}`, data).toPromise();
+            }
         }
     }
     checkBodyCreateArea(body) {
