@@ -44,8 +44,10 @@ class Session {
     http.Response response;
     try {
       response = await http.post(url, headers: headers, body: body.toJson());
-    } on Exception {
-      return Response(status: Status.error, message: "Unexpected error");
+    } on Exception catch (e) {
+      print(e.toString());
+      return Response(
+          status: Status.error, message: "ptin c'est la?????????? error");
     }
     if (response.statusCode >= 400) {
       return Response(

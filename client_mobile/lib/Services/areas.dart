@@ -137,7 +137,9 @@ class NestedServicesListsState extends State<NestedServicesLists>
                               Text(
                                 _services[serviceIndex].name,
                                 style: const TextStyle(
-                                    fontSize: 24, color: Colors.white),
+                                    fontSize: 24,
+                                    color: Colors.white,
+                                    fontFamily: 'AvenirNext'),
                               ),
                             ],
                           ))),
@@ -167,9 +169,9 @@ class NestedServicesListsState extends State<NestedServicesLists>
                                             .items[indexItem]
                                             .name,
                                         style: const TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 22.0,
-                                        ),
+                                            color: Colors.white,
+                                            fontSize: 22.0,
+                                            fontFamily: 'AvenirNext'),
                                       ),
                                       SizedBox(
                                           width: 100,
@@ -181,8 +183,9 @@ class NestedServicesListsState extends State<NestedServicesLists>
                                                       .items[indexItem]
                                                       .description,
                                                   style: const TextStyle(
-                                                    color: Colors.white,
-                                                  )),
+                                                      color: Colors.white,
+                                                      fontFamily:
+                                                          'AvenirNext')),
                                             ),
                                           ))
                                     ],
@@ -307,6 +310,7 @@ class _PlaceholderCartState extends State<PlaceholderCart> {
                   widget.placeholder.name,
                   style: Theme.of(context).textTheme.subtitle1?.copyWith(
                         color: textColor,
+                        fontFamily: 'AvenirNext',
                         fontWeight: widget.hasItem
                             ? FontWeight.normal
                             : FontWeight.bold,
@@ -325,6 +329,7 @@ class _PlaceholderCartState extends State<PlaceholderCart> {
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.caption!.copyWith(
                               color: textColor,
+                              fontFamily: 'AvenirNext',
                               fontSize: 16.0,
                               fontWeight: FontWeight.bold,
                             ),
