@@ -33,6 +33,12 @@ Mobile Front-end: Flutter
 
 Back-end: NestJS, a progressive framework of Node.js
 
+### Documentation
+
+You can see our back-end documentation using the following command
+```sh
+npx @compodoc/compodoc -p tsconfig.json -s
+```
 
 ## Services
 
