@@ -10,6 +10,7 @@ export declare class ActionsService {
     createHookGitlab(params: HookCreationDto, userId: string, action_name: string): Promise<void>;
     updateWeather(): Promise<void>;
     createWeather(params: any, id: any): Promise<void>;
+    createArea(id: number, action_name: string, user_id: string, param: any): Promise<void>;
     createAction(params: any, service: string, userId: string, action_name: string, action: {
         id: number;
     }): Promise<void>;

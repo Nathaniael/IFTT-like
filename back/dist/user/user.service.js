@@ -18,9 +18,11 @@ const nestjs_slonik_1 = require("nestjs-slonik");
 const slonik_1 = require("slonik");
 const bcrypt = require("bcrypt");
 const queries_1 = require("../queries/queries");
+const axios_1 = require("@nestjs/axios");
 let UserService = class UserService {
-    constructor(pool) {
+    constructor(pool, httpService) {
         this.pool = pool;
+        this.httpService = httpService;
     }
     async registerUser(usr) {
         if (!usr.email || !usr.username || !usr.password)
@@ -74,6 +76,12 @@ let UserService = class UserService {
         await this.pool.query((0, slonik_1.sql) `UPDATE usr
             SET username = ${username}
             WHERE id = ${userId}`);
+        try {
+            const res = await this.httpService.post('http://localhost:8080/webhooks/Area', { action_type: "Username change", userId: userId }).toPromise();
+        }
+        catch (err) {
+            console.log(err);
+        }
         return "Username well changed !";
     }
     async deleteUser(userId) {
@@ -92,7 +100,7 @@ let UserService = class UserService {
 UserService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, nestjs_slonik_1.InjectPool)()),
-    __metadata("design:paramtypes", [Object])
+    __metadata("design:paramtypes", [Object, axios_1.HttpService])
 ], UserService);
 exports.UserService = UserService;
 //# sourceMappingURL=user.service.js.map

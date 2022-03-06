@@ -8,6 +8,7 @@ const twilio = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWI
 export class ReactionsController {
     @Post('/Mailjet')
     async reactionMail(@Body() config: MailReactionDto) {
+        console.log("JE PASSE ICI")
         const mailjet = require ('node-mailjet')
         .connect('95d7f3e348ada34e2587a04a86442e33', 'ea353c779dbd2fa1d3d4372b194a6f95')
         const request = mailjet

@@ -18,9 +18,12 @@ const areas_dto_1 = require("./areas.dto");
 const areas_service_1 = require("./areas.service");
 const passport_1 = require("@nestjs/passport");
 const user_decorator_1 = require("../user/user.decorator");
+const auth_controller_1 = require("../auth/auth.controller");
+const axios_1 = require("@nestjs/axios");
 let AreasController = class AreasController {
-    constructor(areasServices) {
+    constructor(areasServices, httpService) {
         this.areasServices = areasServices;
+        this.httpService = httpService;
     }
     async createArea(user, body, res) {
         await this.areasServices.createArea(user.userId, body);
@@ -28,6 +31,7 @@ let AreasController = class AreasController {
     }
     async deleteArea(user, body, res) {
         await this.areasServices.deleteArea(body.id.toString());
+        const r = await this.httpService.post('http://localhost:8080/webhooks/Area', { action_type: "Area deleted", userId: user.userId, id: body.id }).toPromise();
         res.status(200).send("Area deleted successfully");
     }
     async getAreasByUser(user, body, res) {
@@ -62,7 +66,7 @@ __decorate([
     __param(1, (0, common_1.Body)()),
     __param(2, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, areas_dto_1.AreaId, Object]),
+    __metadata("design:paramtypes", [auth_controller_1.UserAuth, areas_dto_1.AreaId, Object]),
     __metadata("design:returntype", Promise)
 ], AreasController.prototype, "deleteArea", null);
 __decorate([
@@ -77,7 +81,8 @@ __decorate([
 ], AreasController.prototype, "getAreasByUser", null);
 AreasController = __decorate([
     (0, common_1.Controller)('areas'),
-    __metadata("design:paramtypes", [areas_service_1.AreasService])
+    __metadata("design:paramtypes", [areas_service_1.AreasService,
+        axios_1.HttpService])
 ], AreasController);
 exports.AreasController = AreasController;
 //# sourceMappingURL=areas.controller.js.map
