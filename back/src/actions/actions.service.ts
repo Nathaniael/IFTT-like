@@ -76,7 +76,7 @@ export class ActionsService {
     async createWeather(params: any, id) {
         console.log(params)
         const res = await this.httpService.get(`http://api.weatherapi.com/v1/current.json?key=bc3eb83b600343afb4e184537220503&q=${params.city}&aqi=no`).toPromise()
-        
+
         const tmp = params
         tmp.previous_value = res.data.current.temp_c
         const newparams = JSON.stringify(tmp)
