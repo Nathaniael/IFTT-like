@@ -9,12 +9,14 @@ void main() {
   runApp(const MyApp());
 }
 
+//main Class
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        //all possible routes of Pantharea
         initialRoute: '/',
         routes: {
           '/': (context) => const HomePage(),

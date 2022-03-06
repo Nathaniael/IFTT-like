@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:client_mobile/Widgets/Navbar/navbar.dart';
 import 'package:client_mobile/Widgets/bleuradialbackground.dart';
 
+//create List area
 List<Area> listarea = [
   Area(
     id: 0,
@@ -55,10 +56,12 @@ class Userpage extends StatefulWidget {
   _UserpageState createState() => _UserpageState();
 }
 
+//function of background
 void onPressedBackground(context) {
   Navigator.popAndPushNamed(context, '/area');
 }
 
+// card for area
 class CardArea extends StatelessWidget {
   final Area area;
   const CardArea({Key? key, required this.area}) : super(key: key);
@@ -152,6 +155,7 @@ class _UserpageState extends State<Userpage> {
     super.dispose();
   }
 
+//edit text
   Widget _editTitleTextField() {
     if (_isEditingText) {
       return Center(
@@ -208,6 +212,7 @@ class _UserpageState extends State<Userpage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          // profile Info display
                           const CircleAvatar(
                             backgroundImage: AssetImage('web/png/baptiste.png'),
                             radius: 50.0,
@@ -233,6 +238,7 @@ class _UserpageState extends State<Userpage> {
                       ),
                     ),
                   )),
+              //Area List display
               Expanded(
                 child: Container(
                   padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
@@ -240,21 +246,24 @@ class _UserpageState extends State<Userpage> {
                   child: ListView.builder(
                       itemCount: insharea.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return (Dismissible(
-                            key: Key(insharea[index].action),
-                            // Provide a function that tells the app
-                            // what to do after an item has been swiped away.
-                            onDismissed: (direction) {
-                              // Remove the item from the data source.
-                              setState(() {
-                                insharea.removeAt(index);
-                              });
+                        return (
+                            //dismisse Area
+                            Dismissible(
+                                key: Key(insharea[index].action),
+                                // Provide a function that tells the app
+                                // what to do after an item has been swiped away.
+                                onDismissed: (direction) {
+                                  // Remove the item from the data source.
+                                  setState(() {
+                                    insharea.removeAt(index);
+                                  });
 
-                              // Then show a snackbar.
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('dismissed')));
-                            },
-                            child: CardArea(area: insharea[index])));
+                                  // Then show a snackbar.
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content: Text('dismissed')));
+                                },
+                                child: CardArea(area: insharea[index])));
                       }),
                 ),
               ),
@@ -265,6 +274,7 @@ class _UserpageState extends State<Userpage> {
   }
 }
 
+//class area
 class Area {
   int id;
   String action;

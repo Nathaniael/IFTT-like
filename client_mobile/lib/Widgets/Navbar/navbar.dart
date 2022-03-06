@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+//Navbar: top navbar
 class Navbar extends AppBar {
   Navbar({Key? key, required BuildContext context})
       : super(

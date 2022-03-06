@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+//background for login and RegisterPage
 class Background extends StatelessWidget {
   final Widget child;
 
