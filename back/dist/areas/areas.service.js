@@ -40,7 +40,7 @@ let AreasService = class AreasService {
                 let reaction = await this.pool.query((0, slonik_1.sql) `SELECT * FROM reaction WHERE id = ${elem.id_react}`);
                 console.log(reaction);
                 let data = JSON.parse(reaction.rows[0].params.toString());
-                this.httpService.post(`http://localhost:8080/reactions/${reaction.rows[0].reaction_route}`, data).toPromise();
+                this.httpService.post(`http://pantharea.fun:8080/reactions/${reaction.rows[0].reaction_route}`, data).toPromise();
             }
         }
     }
