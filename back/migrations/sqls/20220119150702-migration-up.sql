@@ -57,7 +57,6 @@ CREATE TABLE readictionnary (
 CREATE TABLE action (
     id SERIAL PRIMARY KEY,
     params TEXT NOT NULL,
-    type TEXT NOT NULL,
     dico_id INT NOT NULL,
     CONSTRAINT fk_dico FOREIGN KEY(dico_id) REFERENCES adictionnary(id)
 );
@@ -65,7 +64,6 @@ CREATE TABLE action (
 CREATE TABLE reaction (
     id SERIAL PRIMARY KEY,
     params TEXT NOT NULL,
-    type TEXT NOT NULL,
     reaction_route TEXT NOT NULL,
     dico_id INT NOT NULL,
     CONSTRAINT fk_dico FOREIGN KEY(dico_id) REFERENCES readictionnary(id)
@@ -92,11 +90,11 @@ VALUES ('Gitlab', '1', 'https://gitlab.com/oauth/authorize', 'https://gitlab.com
 -- ACTIONS DICO
 INSERT INTO "adictionnary" ("name", "description", "params", "help", "service_id")
 VALUES ('Any new repository event', 'This trigger reaction every time a new event occurs in a repository.', '[{"string":"url"},{"string":"secret"}]', 'In your github repository webhook, you have to set Payload URL to pantharea.fun:8081/webhooks/Github and to have a Secret code to enter in the parameters above', '3'),
-('Push event', 'This trigger reaction when a push occurs in your repository', '[{"string":"project_id"}]', '', '1'),
-('Merge request event', 'This trigger reaction when a merge request occurs in your repository', '[{"string":"project_id"}]', '', '1'),
-('Issues event', 'This trigger reaction when a Issue occurs in your repository', '[{"string":"project_id"}]', '', '1'),
-('Deployment event', 'This trigger reaction when a Deployment occurs in your repository', '[{"string":"project_id"}]', '', '1'),
-('Confidential issues event', 'This trigger reaction when a confidential issue occurs in your repository', '[{"string":"project_id"}]', '', '1');
+('Push event', 'This trigger reaction when a push occurs in your repository', '[{"number":"project_id"}]', '', '1'),
+('Merge request event', 'This trigger reaction when a merge request occurs in your repository', '[{"number":"project_id"}]', '', '1'),
+('Issues event', 'This trigger reaction when a Issue occurs in your repository', '[{"number":"project_id"}]', '', '1'),
+('Deployment event', 'This trigger reaction when a Deployment occurs in your repository', '[{"number":"project_id"}]', '', '1'),
+('Confidential issues event', 'This trigger reaction when a confidential issue occurs in your repository', '[{"number":"project_id"}]', '', '1');
 
 -- REACTIONS DICO
 INSERT INTO "readictionnary" ("name", "description", "params", "help", "service_id")

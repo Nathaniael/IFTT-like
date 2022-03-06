@@ -6,7 +6,6 @@ const twilio = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWI
 
 @Controller('reactions')
 export class ReactionsController {
-
     @Post('/Mailjet')
     async reactionMail(@Body() config: MailReactionDto) {
         const mailjet = require ('node-mailjet')

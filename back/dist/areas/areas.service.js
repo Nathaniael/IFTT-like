@@ -25,14 +25,16 @@ let AreasService = class AreasService {
         this.httpService = httpService;
         this.actionsService = actionsService;
     }
-    async callReaction(params, type) {
-        var action = await this.pool.query((0, slonik_1.sql) `SELECT * FROM action WHERE params = ${params} AND type = ${type}`);
+    async callReaction(params) {
+        var action = await this.pool.query((0, slonik_1.sql) `SELECT * FROM action WHERE params = ${params.toString()} `);
         if (action.rowCount === 0) {
             return;
         }
         let area = await this.pool.query((0, slonik_1.sql) `SELECT * FROM area WHERE id_act = ${action.rows[0].id}`);
+        console.log(area);
         for (var elem of area.rows) {
             let reaction = await this.pool.query((0, slonik_1.sql) `SELECT * FROM reaction WHERE id = ${elem.id_react}`);
+            console.log(reaction);
             let data = JSON.parse(reaction.rows[0].params.toString());
             this.httpService.post(`http://localhost:8080/reactions/${reaction.rows[0].reaction_route}`, data).toPromise();
         }
@@ -56,12 +58,12 @@ let AreasService = class AreasService {
         const reaction_dico = await (0, queries_1.qFirstFieldsFromWhere)({ pool: this.pool, selectFields: ["service_id", "params"], from: "readictionnary", where: "id", value: body.reaction_id });
         const reaction_service = await (0, queries_1.qFirstFieldsFromWhere)({ pool: this.pool, selectFields: ["name"], from: "service", where: "id", value: reaction_dico["service_id"] });
         const action_dico = await (0, queries_1.qFirstFieldsFromWhere)({ pool: this.pool, selectFields: ["service_id", "params"], from: "adictionnary", where: "id", value: body.action_id });
-        const action = await this.pool.query((0, slonik_1.sql) `INSERT INTO action (params, type, dico_id)
-        VALUES (${JSON.stringify(body.action_params)}, ${JSON.stringify(action_dico["params"])}, ${body.action_id}) RETURNING id;`);
+        const action = await this.pool.query((0, slonik_1.sql) `INSERT INTO action (params, dico_id)
+        VALUES (${JSON.stringify(body.action_params)}, ${body.action_id}) RETURNING id;`);
         const action_service = await (0, queries_1.qFirstFieldsFromWhere)({ pool: this.pool, selectFields: ["*"], from: "service", where: "id", value: action_dico["service_id"] });
         await this.actionsService.createAction(body.action_params, action_service["name"].toString(), userId, action_dico["name"]);
-        const reaction = await this.pool.query((0, slonik_1.sql) `INSERT INTO reaction (params, type, reaction_route,dico_id)
-        VALUES (${JSON.stringify(body.reaction_params)}, ${JSON.stringify(reaction_dico["params"])}, ${reaction_service["name"]} ,${body.reaction_id}) RETURNING id;`);
+        const reaction = await this.pool.query((0, slonik_1.sql) `INSERT INTO reaction (params, reaction_route,dico_id)
+        VALUES (${JSON.stringify(body.reaction_params)}, ${reaction_service["name"]} ,${body.reaction_id}) RETURNING id;`);
         const area = await this.pool.query((0, slonik_1.sql) `INSERT INTO area (
             id_act,
             id_react,
