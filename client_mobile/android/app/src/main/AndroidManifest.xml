@@ -1,9 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.client_mobile">
    <application
-        android:label="client_mobile"
+        android:label="Pantharea"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/baptiste">
         <activity
             android:name=".MainActivity"
             android:exported="true"

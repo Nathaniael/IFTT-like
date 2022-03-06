@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+//Text Widget for home page
 class TextANM extends StatelessWidget {
   final String text;
 

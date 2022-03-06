@@ -33,3 +33,9 @@
     height: 100%;
     cursor: pointer;
 }
+
+@media (width < 800px) {
+    .container {
+        height: 30vh;
+    }
+}

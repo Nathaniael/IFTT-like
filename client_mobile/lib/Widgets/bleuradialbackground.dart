@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 
+//backgroun for all page until login and register
 class BleuRadialBackground extends StatelessWidget {
   final Widget child;
   final Function onPressed;
