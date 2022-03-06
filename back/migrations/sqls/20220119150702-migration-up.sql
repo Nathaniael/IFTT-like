@@ -83,27 +83,30 @@ CREATE TABLE area (
 INSERT INTO "service" ("name", "has_oauth", "query_code", "query_token", "logo", "client_id", "client_secret", "redirect_uri", "scope")
 VALUES ('Gitlab', '1', 'https://gitlab.com/oauth/authorize', 'https://gitlab.com/oauth/token', '/gitlab.png', 'ab602b60dacc5088c4f7ad1426935d458698aece545e352ecb67670f1116d608', '0e54a1fde0860c79a63cfc2f5bf659278bec2f56ed4cc6cc1a9bfa81be2c5009', 'http://localhost:8081', ''), -- ID:1 Gitlab
     ('Mailjet', '0', '', '', '/mail.png', '', '', '', ''), -- ID:2 Mail
-    ('Github', '1', 'https://github.com/login/oauth/authorize', 'https://github.com/login/oauth/access_token', '/github.png', '07ffe0c7a5f5148909e2', '4d758dd8b4e8fcfe9aaf30e353ebc87ad9a069ce', 'http://localhost:8081', ''), -- ID:3 Github
+    ('Area', '0', '', '', '/logo_area.png', '', '', '', ''), -- ID:3 Area
     ('Discord', '0', '', '', '/discord.png', '', '', '', ''), -- ID:4 Discord
     ('Sms', '0', '', '', '/sms.png', '', '', '', ''), -- ID: 5 Sms
     ('Weather', '0', '', '', '/weather.png', '', '', '', ''), --ID: 6 Weather
-    ('Area', '0', '', '', '', '', '', '', ''); -- ID: 7 Area
+    ('Github', '1', 'https://github.com/login/oauth/authorize', 'https://github.com/login/oauth/access_token', '/github.png', '07ffe0c7a5f5148909e2', '4d758dd8b4e8fcfe9aaf30e353ebc87ad9a069ce', 'http://localhost:8081', ''); -- ID: 7 Github
 
 -- ACTIONS DICO
 INSERT INTO "adictionnary" ("name", "description", "params", "help", "service_id")
-VALUES ('Any new repository event', 'This trigger reaction every time a new event occurs in a repository.', '[{"string":"url"},{"string":"secret"}]', 'In your github repository webhook, you have to set Payload URL to pantharea.fun:8081/webhooks/Github and to have a Secret code to enter in the parameters above', '3'),
+VALUES ('Any new repository event', 'This trigger reaction every time a new event occurs in a repository.', '[{"string":"url"},{"string":"secret"}]', 'In your github repository webhook, you have to set Payload URL to pantharea.fun:8081/webhooks/Github and to have a Secret code to enter in the parameters above', '7'),
 ('Push event', 'This trigger reaction when a push occurs in your repository', '[{"number":"project_id"}]', 'No hint available', '1'),
 ('Merge request event', 'This trigger reaction when a merge request occurs in your repository', '[{"number":"project_id"}]', 'No hint available', '1'),
 ('Issues event', 'This trigger reaction when a Issue occurs in your repository', '[{"number":"project_id"}]', 'No hint available', '1'),
 ('Deployment event', 'This trigger reaction when a Deployment occurs in your repository', '[{"number":"project_id"}]', 'No hint available', '1'),
 ('Confidential issues event', 'This trigger reaction when a confidential issue occurs in your repository', '[{"number":"project_id"}]', 'No hint available', '1'),
 ('Change in temperature', 'This trigger a reaction when the temperature in Celsius changes in the defined location', '[{"string":"city"},{"number":"previous_value"},{"service":"weather"}]', 'No hint available', '6'),
-('Area deleted', 'This trigger a reaction when you delete the specified area', '[{"number":"id"}]', 'No hint available', '7'),
-('Area created', 'This trigger a reaction when you create an area', '[]', 'No hint available', '7'),
-('Username change', 'This trigger a reaction when you change your area username', '[]', 'In your profile, click on your username to enable the modification mode', '7');
+('Area deleted', 'This trigger a reaction when you delete the specified area', '[{"number":"id"}]', 'No hint available', '3'),
+('Detect number of areas', 'This trigger a reaction your number of area is equal to the number you will chose', '[{"number":"nb"}]', 'No hint available', '3'),
+('Area created', 'This trigger a reaction when you create an area', '[]', 'No hint available', '3'),
+('Username change', 'This trigger a reaction when you change your area username', '[]', 'In your profile, click on your username to enable the modification mode', '3');
 
 -- REACTIONS DICO
 INSERT INTO "readictionnary" ("name", "description", "params", "help", "service_id")
 VALUES ('Send an email', 'When triggered, send an email to a chosen recipient, a subject and a body', '[{"string":"username"}, {"string":"recipient"},{"string":"subject"}, {"string":"body"}]','' , '2'), -- ID:1
 ('Send a discord message', 'When triggered, send a discord message in your server using Discord webhooks', '[{"string":"url"}, {"string":"hookusername"},{"string":"message"}]', '', '4'), -- ID:2
-('Send a SMS', 'When triggered, send a message to the phone number you set', '[{"string":"number"}, {"string":"message"}]', '','5'); -- ID:3
+('Send a discord embed', 'When triggered, send a discord embed in your server using Discord webhooks', '[{"string":"url"},{"string":"hookusername"},{"string":"message"},{"string":"fieldname"},{"string":"fielddescription"},{"string":"title"}]', '', '4'), -- ID:3
+('Send a SMS', 'When triggered, send a message to the phone number you set', '[{"string":"number"}, {"string":"message"}]', '','5'), -- ID:4
+('Change username', 'When triggered, changes your area username', '[{"string":"newUsername"}]', 'WARNING! DO NOT USE THIS REACTION COMBINED WITH THE "Username changed" action','3'); -- ID:5

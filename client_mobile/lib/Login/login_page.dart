@@ -12,6 +12,7 @@ import 'package:client_mobile/Login/components/input_form.dart';
 import 'package:client_mobile/Login/components/submit_button.dart';
 import 'package:client_mobile/Login/components/page_switch.dart';
 
+//url to Call
 var session = Session();
 var uriRegister = Uri.parse('http://pantharea.fun:8080/auth/login/');
 
@@ -23,11 +24,13 @@ class LoginPage extends StatefulWidget {
   LoginPageState createState() => LoginPageState();
 }
 
+// Login state
 class LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   String error = "";
 
+// call back to login
   Future<bool> login(String email, String password) async {
     LoginRequest body = LoginRequest(email, password);
     Response res = await session.post(uriRegister, body);

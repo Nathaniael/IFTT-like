@@ -13,6 +13,7 @@ import 'package:client_mobile/Login/components/submit_button.dart';
 import 'package:client_mobile/Login/components/title_page.dart';
 import 'package:client_mobile/Login/components/page_switch.dart';
 
+//url to call
 var session = Session();
 var uriRegister = Uri.parse('http://pantharea.fun:8080/auth/register/');
 
@@ -30,6 +31,7 @@ class RegisterPageState extends State<RegisterPage> {
   final passwordController = TextEditingController();
   String error = "";
 
+  //call back to register
   Future<bool> register(String username, String email, String password,
       {String? image}) async {
     RegisterRequest body = image == null

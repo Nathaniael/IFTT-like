@@ -8,6 +8,10 @@ export declare class DiscordMsgReactionDto {
     url: string;
     message: string;
     hookusername: string;
+    embed: boolean;
+    title: string;
+    fieldname: string;
+    fielddescription: string;
 }
 export declare class SmsReactionDto {
     number: string;

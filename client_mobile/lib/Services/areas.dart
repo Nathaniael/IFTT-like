@@ -3,6 +3,7 @@ import 'package:client_mobile/Widgets/Navbar/navbar.dart';
 import 'package:client_mobile/apiprovider.dart';
 import 'package:client_mobile/Services/classes.dart';
 
+//Url to call
 var session = Session();
 var uriServices = Uri.parse('http://pantharea.fun:8080/services/');
 
@@ -14,7 +15,9 @@ class NestedServicesLists extends StatefulWidget {
   NestedServicesListsState createState() => NestedServicesListsState();
 }
 
+//Create 1 placeholder
 Placeholder getOnePlaceHolder(ItemType type) {
+  //I'm the default value nice :|
   const defaultImagePath = 'web/png/baptiste.png';
   return (Placeholder(
       name: type == ItemType.action ? "Action" : "Reaction",
@@ -28,6 +31,7 @@ Placeholder getOnePlaceHolder(ItemType type) {
           image: const AssetImage(defaultImagePath))));
 }
 
+//Get placeholder
 List<Placeholder> getPlaceHolders() {
   return ([
     getOnePlaceHolder(ItemType.action),
@@ -35,6 +39,7 @@ List<Placeholder> getPlaceHolders() {
   ]);
 }
 
+// Call to get list of Service
 Future<List<Service>> getServices() async {
   Response res = await session.get(uriServices);
 
@@ -83,7 +88,7 @@ class NestedServicesListsState extends State<NestedServicesLists>
 
   final GlobalKey _draggableKey = GlobalKey();
 
-//Here
+//Drop placeholder fonction
   void _itemDroppedOnPlaceholderCart({
     required Item item,
     required Placeholder placeholder,
@@ -200,6 +205,7 @@ class NestedServicesListsState extends State<NestedServicesLists>
         ]));
   }
 
+// Put placeholder in a row
   Widget _buildPlaceholderRow() {
     return Container(
       padding: const EdgeInsets.symmetric(
@@ -212,6 +218,7 @@ class NestedServicesListsState extends State<NestedServicesLists>
     );
   }
 
+//create drop zone in placeholder
   Widget _buildPlaceholderWithDropZone(Placeholder placeholder) {
     return Expanded(
         child: Padding(
@@ -247,6 +254,7 @@ class NestedServicesListsState extends State<NestedServicesLists>
   }
 }
 
+//class placeholder
 class PlaceholderCart extends StatefulWidget {
   Placeholder placeholder;
   final bool highlighted;

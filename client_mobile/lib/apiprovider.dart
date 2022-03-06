@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 
+//enum Status possible
 enum Status { success, error }
 
+//class info response request
 class Response {
   Status status;
   String? message;
@@ -22,6 +24,7 @@ class Session {
 
   Map<String, String> headers = {};
 
+//function to update cookie
   void updateCookie(http.Response response) {
     String rawCookie = response.headers['set-cookie'].toString();
     int index = rawCookie.indexOf(';');
@@ -29,6 +32,7 @@ class Session {
         (index == -1) ? rawCookie : rawCookie.substring(0, index);
   }
 
+//function to Get with url
   Future<Response> get(Uri url) async {
     http.Response response;
     try {
@@ -40,6 +44,7 @@ class Session {
     return Response(status: Status.success, data: json.decode(response.body));
   }
 
+//function to Post with url
   Future<Response> post(Uri url, dynamic body) async {
     http.Response response;
     try {

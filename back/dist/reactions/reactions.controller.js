@@ -15,10 +15,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReactionsController = void 0;
 require('dotenv').config();
 const common_1 = require("@nestjs/common");
+const discord_webhook_node_1 = require("discord-webhook-node");
+const user_service_1 = require("../user/user.service");
 const reactions_dto_1 = require("./reactions.dto");
 const { Webhook } = require('discord-webhook-node');
 const twilio = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 let ReactionsController = class ReactionsController {
+    constructor(usersService) {
+        this.usersService = usersService;
+    }
     async reactionMail(config) {
         console.log("JE PASSE ICI");
         const mailjet = require('node-mailjet')
@@ -54,7 +59,19 @@ let ReactionsController = class ReactionsController {
     async reactionDiscord(body) {
         const hook = new Webhook(body.url);
         hook.setUsername(body.hookusername);
+        if (body.title !== null && body.title !== undefined) {
+            const embed = new discord_webhook_node_1.MessageBuilder();
+            embed.setFooter('Sent with :heart: by AREA');
+            embed.setTitle(body.title);
+            embed.addField(body.fieldname, body.fielddescription);
+            embed.setDescription(body.message);
+            hook.send(embed);
+            return;
+        }
         hook.send(body.message);
+    }
+    async changeUsername(body) {
+        this.usersService.changeUsername(body.user_id, body.newUsername);
     }
     async reactionSms(body) {
         twilio.messages
@@ -77,6 +94,13 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ReactionsController.prototype, "reactionDiscord", null);
 __decorate([
+    (0, common_1.Post)('Area'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ReactionsController.prototype, "changeUsername", null);
+__decorate([
     (0, common_1.Post)('Sms'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -84,7 +108,8 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ReactionsController.prototype, "reactionSms", null);
 ReactionsController = __decorate([
-    (0, common_1.Controller)('reactions')
+    (0, common_1.Controller)('reactions'),
+    __metadata("design:paramtypes", [user_service_1.UserService])
 ], ReactionsController);
 exports.ReactionsController = ReactionsController;
 //# sourceMappingURL=reactions.controller.js.map

@@ -17,8 +17,8 @@ function ConnexionPage() {
     return (
         <div className="background">
             <AppBar></AppBar>
-            <div className={styles.logWidget}>
-                <div>
+            <div className={styles.centerRow}>
+                <div className={styles.logWidget}>
                     {!gotAccount ?
                         <Register setGotAccount={setGotAccount} gotAccount={gotAccount}></Register>
                         :

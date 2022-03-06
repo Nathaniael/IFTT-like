@@ -1,17 +1,40 @@
 .appBar {
+    position: fixed;
     width: 100%;
-    height: 6vw;
-    background-color: rgba(255, 255, 255, 0.01);
+    height: 10vh;
+    background: linear-gradient(270deg, rgb(0, 13, 77), rgb(0, 78, 167));
+    background-size: 200% 100%;
+  
+    -webkit-animation: AnimationName 15s ease infinite;
+    -moz-animation: AnimationName 15s ease infinite;
+    animation: AnimationName 15s ease infinite;
+    
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    z-index: 2;
 }
 
 .appBar > a {
     position: relative;
-    height: 6vw;
-    width: 10vw;
     text-decoration: none;
     color: white;
+}
+
+
+@-webkit-keyframes AnimationName {
+    0%{background-position:0% 35%}
+    50%{background-position:100% 66%}
+    100%{background-position:0% 35%}
+}
+@-moz-keyframes AnimationName {
+    0%{background-position:0% 35%}
+    50%{background-position:100% 66%}
+    100%{background-position:0% 35%}
+}
+@keyframes AnimationName {
+    0%{background-position:0% 35%}
+    50%{background-position:100% 66%}
+    100%{background-position:0% 35%}
 }
