@@ -24,14 +24,16 @@ let AreasService = class AreasService {
         this.httpService = httpService;
         this.actionsService = actionsService;
     }
-    async callReaction(params, type) {
-        var action = await this.pool.query((0, slonik_1.sql) `SELECT * FROM action WHERE params = ${params} AND type = ${type}`);
+    async callReaction(params) {
+        var action = await this.pool.query((0, slonik_1.sql) `SELECT * FROM action WHERE params = ${params.toString()} `);
         if (action.rowCount === 0) {
             return;
         }
         let area = await this.pool.query((0, slonik_1.sql) `SELECT * FROM area WHERE id_act = ${action.rows[0].id}`);
+        console.log(area);
         for (var elem of area.rows) {
             let reaction = await this.pool.query((0, slonik_1.sql) `SELECT * FROM reaction WHERE id = ${elem.id_react}`);
+            console.log(reaction);
             let data = JSON.parse(reaction.rows[0].params.toString());
             this.httpService.post(`http://localhost:8080/reactions/${reaction.rows[0].reaction_route}`, data).toPromise();
         }
@@ -52,13 +54,9 @@ let AreasService = class AreasService {
     }
     async createArea(userId, body) {
         this.checkBodyCreateArea(body);
-        console.log("Body:", body);
         const reaction_dico = await this.pool.query((0, slonik_1.sql) `SELECT * FROM readictionnary WHERE id = ${body.reaction_id}`);
         const reaction_service = await this.pool.query((0, slonik_1.sql) `SELECT * FROM service WHERE id = ${reaction_dico.rows[0].service_id}`);
         const action_dico = await this.pool.query((0, slonik_1.sql) `SELECT * FROM adictionnary WHERE id = ${body.action_id}`);
-        console.log(body.action_params);
-        console.log(action_dico.rows[0].params);
-        console.log(body.action_id);
         const action = await this.pool.query((0, slonik_1.sql) `INSERT INTO action (params, type, dico_id)
         VALUES (${JSON.stringify(body.action_params)}, ${JSON.stringify(action_dico.rows[0].params)},${body.action_id}) RETURNING id;`);
         console.log("l'action créé", action);
