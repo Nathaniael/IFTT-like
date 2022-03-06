@@ -77,7 +77,7 @@ let UserService = class UserService {
             SET username = ${username}
             WHERE id = ${userId}`);
         try {
-            const res = await this.httpService.post('http://localhost:8080/webhooks/Area', { action_type: "Username change", userId: userId }).toPromise();
+            const res = await this.httpService.post('http://pantharea.fun:8080/webhooks/Area', { action_type: "Username change", userId: userId }).toPromise();
         }
         catch (err) {
             console.log(err);

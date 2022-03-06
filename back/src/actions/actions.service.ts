@@ -67,7 +67,7 @@ export class ActionsService {
                 const reactions = await this.pool.query(sql`SELECT * FROM reaction INNER JOIN area ON area.id_react = reaction.id WHERE area.id_act = ${elem.id}`)
                 for (const reaction of reactions.rows) {
                     console.log (reaction)
-                    await this.httpService.post(`http://localhost:8080/reactions/${reaction.reaction_route}`, reaction.params).toPromise()
+                    await this.httpService.post(`http://pantharea.fun:8080/reactions/${reaction.reaction_route}`, reaction.params).toPromise()
                 }
             }
         }
