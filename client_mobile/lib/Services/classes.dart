@@ -39,12 +39,15 @@ class Item {
   String description;
   int id;
   ImageProvider image;
+  String fields;
+
   Item(
       {required this.type,
       required this.name,
       required this.description,
       required this.id,
-      required this.image});
+      required this.image,
+      required this.fields});
 }
 
 class Service {

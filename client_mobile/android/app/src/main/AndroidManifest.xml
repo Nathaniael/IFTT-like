@@ -3,7 +3,7 @@
    <application
         android:label="Pantharea"
         android:name="${applicationName}"
-        android:icon="@mipmap/baptiste">
+        android:icon="@mipmap/logo_area">
         <activity
             android:name=".MainActivity"
             android:exported="true"

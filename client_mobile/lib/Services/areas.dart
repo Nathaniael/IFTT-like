@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:client_mobile/Widgets/Navbar/navbar.dart';
 import 'package:client_mobile/apiprovider.dart';
 import 'package:client_mobile/Services/classes.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'dart:convert';
 
 //Url to call
 var session = Session();
@@ -28,7 +30,8 @@ Placeholder getOnePlaceHolder(ItemType type) {
           name: type == ItemType.action ? "No action" : "No reaction",
           description: "",
           id: type == ItemType.action ? 1 : 2,
-          image: const AssetImage(defaultImagePath))));
+          image: const AssetImage(defaultImagePath),
+          fields: "")));
 }
 
 //Get placeholder
@@ -54,7 +57,10 @@ Future<List<Service>> getServices() async {
             name: it["name"],
             description: it["description"],
             id: it["id"],
-            image: AssetImage("web/png" + elem["logo"]));
+            image: AssetImage(
+              "web/png" + elem["logo"],
+            ),
+            fields: it["params"]);
         listItems.add(item);
       }
       for (var it in elem["reactions"]) {
@@ -63,7 +69,8 @@ Future<List<Service>> getServices() async {
             name: it["name"],
             description: it["description"],
             id: it["id"],
-            image: AssetImage("web/png" + elem["logo"]));
+            image: AssetImage("web/png" + elem["logo"]),
+            fields: it["params"]);
         listItems.add(item);
       }
       Service service = Service(
@@ -75,7 +82,6 @@ Future<List<Service>> getServices() async {
     }
     return services;
   } else {
-    print(res.message);
     return [];
   }
 }
@@ -175,7 +181,8 @@ class NestedServicesListsState extends State<NestedServicesLists>
                                       child: Column(
                                         children: [
                                           Padding(
-                                              padding: EdgeInsets.all(10.0),
+                                              padding:
+                                                  const EdgeInsets.all(10.0),
                                               child: Center(
                                                   child: Text(
                                                 _services[serviceIndex]
@@ -187,7 +194,8 @@ class NestedServicesListsState extends State<NestedServicesLists>
                                                     fontFamily: 'AvenirNext'),
                                               ))),
                                           Padding(
-                                              padding: EdgeInsets.all(10.0),
+                                              padding:
+                                                  const EdgeInsets.all(10.0),
                                               child: Center(
                                                 child: Text(
                                                     _services[serviceIndex]
@@ -234,11 +242,8 @@ class NestedServicesListsState extends State<NestedServicesLists>
       ),
       child: GestureDetector(
         onTap: () => {
-          showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return const AlertDialog();
-              })
+          if (placeholder.item.description != "")
+            _openPopupParameters(context, placeholder.item)
         },
         child: DragTarget<Item>(
           builder: (context, candidateItems, rejectedItems) {
@@ -259,6 +264,36 @@ class NestedServicesListsState extends State<NestedServicesLists>
       ),
     ));
   }
+}
+
+_openPopupParameters(context, Item item) {
+  Alert(
+      context: context,
+      title: "LOGIN",
+      content: Column(
+        children: <Widget>[
+          TextField(
+            decoration: InputDecoration(
+                icon: const Icon(Icons.account_circle), labelText: item.fields),
+          ),
+          const TextField(
+            obscureText: true,
+            decoration: InputDecoration(
+              icon: Icon(Icons.lock),
+              labelText: 'Password',
+            ),
+          ),
+        ],
+      ),
+      buttons: [
+        DialogButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text(
+            "Set parameters",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+        )
+      ]).show();
 }
 
 //class placeholder
