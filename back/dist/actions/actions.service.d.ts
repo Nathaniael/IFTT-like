@@ -8,5 +8,9 @@ export declare class ActionsService {
     private readonly oauthService;
     constructor(pool: DatabasePool, httpService: HttpService, oauthService: OauthService);
     createHookGitlab(params: HookCreationDto, userId: string): Promise<void>;
-    createAction(params: any, userId: string): Promise<void>;
+    updateWeather(): Promise<void>;
+    createWeather(params: any, id: any): Promise<void>;
+    createAction(params: any, userId: string, action: {
+        id: number;
+    }): Promise<void>;
 }

@@ -47,9 +47,9 @@ export class AreasService {
         const reaction_dico = await this.pool.query(sql<DicoDto>`SELECT * FROM readictionnary WHERE id = ${body.reaction_id}`)
         const reaction_service = await this.pool.query(sql`SELECT * FROM service WHERE id = ${reaction_dico.rows[0].service_id}`)
         const action_dico = await this.pool.query(sql<DicoDto>`SELECT * FROM adictionnary WHERE id = ${body.action_id}`)
-        const action = await this.pool.query(sql`INSERT INTO action (params, type, dico_id)
+        const action = await this.pool.query(sql<{id: number}>`INSERT INTO action (params, type, dico_id)
         VALUES (${body.action_params}, ${action_dico.rows[0].params},${body.action_id}) RETURNING id;`)
-        this.actionsService.createAction(JSON.parse(body.action_params), userId)
+        this.actionsService.createAction(JSON.parse(body.action_params), userId, action.rows[0])
         const reaction = await this.pool.query(sql`INSERT INTO reaction (params, type, reaction_route,dico_id)
         VALUES (${body.reaction_params}, ${reaction_dico.rows[0].params},${reaction_service.rows[0].name} ,${body.reaction_id}) RETURNING id;`)
 

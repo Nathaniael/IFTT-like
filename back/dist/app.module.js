@@ -24,11 +24,13 @@ const services_service_1 = require("./services/services.service");
 const services_controller_1 = require("./services/services.controller");
 const services_module_1 = require("./services/services.module");
 const actions_module_1 = require("./actions/actions.module");
+const schedule_1 = require("@nestjs/schedule");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            schedule_1.ScheduleModule.forRoot(),
             nestjs_slonik_1.SlonikModule.forRoot({
                 connectionUri: 'postgres://root:root@postgres/root',
             }),

@@ -17,10 +17,12 @@ import { ServicesService } from './services/services.service';
 import { ServicesController } from './services/services.controller';
 import { ServicesModule } from './services/services.module';
 import { ActionsModule } from './actions/actions.module';
+import { ScheduleModule } from '@nestjs/schedule'
 
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     SlonikModule.forRoot({
       connectionUri: 'postgres://root:root@postgres/root',
     }),
