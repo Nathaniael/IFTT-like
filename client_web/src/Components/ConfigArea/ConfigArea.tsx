@@ -66,6 +66,9 @@ function ConfigArea(props: ConfigAreaProps) {
     // Use state to actualize the components everytime a new action / reaction is selected
     const [actionParams, setActionParams] = React.useState([])
     const [reactionParams, setReactionParams] = React.useState([])
+    const [actionHelper, setActionHelper] = React.useState("")
+    const [reactionHelper, setReactionHelper] = React.useState("")
+
     const [errorCreating, setErrorCreating] = React.useState(undefined) as any
 
     React.useEffect(() => {
@@ -115,6 +118,7 @@ function ConfigArea(props: ConfigAreaProps) {
             setErrorCreating(err)
         })
     }
+    console.log(actionParams)
     return (
         <div>
             {/* Return button displayed only if on specific service page */}
@@ -141,6 +145,9 @@ function ConfigArea(props: ConfigAreaProps) {
 
                     {/* Container of the params used to create the AREA */}
                     <CAParams params={actionParams}></CAParams>
+                    <div className={styles.hint} onMouseEnter={() => {setActionHelper(props.action?.help === undefined ? "Drag an action from below to the top placeholder left" : props.action.help)}} onMouseLeave={() => {setActionHelper("")}}>
+                        🛎<div className={styles.helper}>{actionHelper}</div>
+                    </div>
                 </div>
 
                 {/* The add symbol at the middle */}
@@ -165,6 +172,9 @@ function ConfigArea(props: ConfigAreaProps) {
                 
                     {/* Container of the params used to create the AREA */}
                     <CAParams params={reactionParams}></CAParams>
+                    <div className={styles.hint} onMouseEnter={() => {setReactionHelper(props.reaction?.help === undefined ? "Drag a reaction from below to the top placeholder right" : props.reaction.help)}} onMouseLeave={() => {setReactionHelper("")}}>
+                        🛎<div className={styles.helper}>{reactionHelper}</div>
+                    </div>
                 </div>
 
             </div>

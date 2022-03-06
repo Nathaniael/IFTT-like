@@ -5,11 +5,13 @@ import { AuthGuard } from '@nestjs/passport';
 import { User } from 'src/user/user.decorator';
 import { userInfo } from 'os';
 import { UserAuth } from 'src/auth/auth.controller';
+import { HttpService } from '@nestjs/axios';
 
 @Controller('areas')
 export class AreasController {
     constructor(
         private readonly areasServices: AreasService,
+        private readonly httpService: HttpService
     ) { }
 
     @Post('/create')
@@ -21,8 +23,10 @@ export class AreasController {
 
     @Post('/delete')
     @UseGuards(AuthGuard('jwt'))
-    async deleteArea(@User() user, @Body() body: AreaId, @Res() res) {
+    async deleteArea(@User() user: UserAuth, @Body() body: AreaId, @Res() res) {
         await this.areasServices.deleteArea(body.id.toString())
+        const r = await this.httpService.post('http://localhost:8080/webhooks/Area', {action_type: "Area deleted", userId: user.userId, id: body.id}).toPromise()
+        // console.log(r)
         res.status(200).send("Area deleted successfully")
     }
 

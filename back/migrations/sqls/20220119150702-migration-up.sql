@@ -86,17 +86,21 @@ VALUES ('Gitlab', '1', 'https://gitlab.com/oauth/authorize', 'https://gitlab.com
     ('Github', '1', 'https://github.com/login/oauth/authorize', 'https://github.com/login/oauth/access_token', '/github.png', '07ffe0c7a5f5148909e2', '4d758dd8b4e8fcfe9aaf30e353ebc87ad9a069ce', 'http://localhost:8081', ''), -- ID:3 Github
     ('Discord', '0', '', '', '/discord.png', '', '', '', ''), -- ID:4 Discord
     ('Sms', '0', '', '', '/sms.png', '', '', '', ''), -- ID: 5 Sms
-    ('Weather', '0', '', '', '/weather.png', '', '', '', ''); -- ID: 6 Weather
+    ('Weather', '0', '', '', '/weather.png', '', '', '', ''), --ID: 6 Weather
+    ('Area', '0', '', '', '', '', '', '', ''); -- ID: 7 Area
 
 -- ACTIONS DICO
 INSERT INTO "adictionnary" ("name", "description", "params", "help", "service_id")
 VALUES ('Any new repository event', 'This trigger reaction every time a new event occurs in a repository.', '[{"string":"url"},{"string":"secret"}]', 'In your github repository webhook, you have to set Payload URL to pantharea.fun:8081/webhooks/Github and to have a Secret code to enter in the parameters above', '3'),
-('Push event', 'This trigger reaction when a push occurs in your repository', '[{"number":"project_id"}]', '', '1'),
-('Merge request event', 'This trigger reaction when a merge request occurs in your repository', '[{"number":"project_id"}]', '', '1'),
-('Issues event', 'This trigger reaction when a Issue occurs in your repository', '[{"number":"project_id"}]', '', '1'),
-('Deployment event', 'This trigger reaction when a Deployment occurs in your repository', '[{"number":"project_id"}]', '', '1'),
-('Confidential issues event', 'This trigger reaction when a confidential issue occurs in your repository', '[{"number":"project_id"}]', '', '1'),
-('Change in temperature', 'This trigger a reaction when the temperature in Celsius changes in the defined location', '[{"string":"city"},{"number":"previous_value"},{"service":"weather"}]', '', '6');
+('Push event', 'This trigger reaction when a push occurs in your repository', '[{"number":"project_id"}]', 'No hint available', '1'),
+('Merge request event', 'This trigger reaction when a merge request occurs in your repository', '[{"number":"project_id"}]', 'No hint available', '1'),
+('Issues event', 'This trigger reaction when a Issue occurs in your repository', '[{"number":"project_id"}]', 'No hint available', '1'),
+('Deployment event', 'This trigger reaction when a Deployment occurs in your repository', '[{"number":"project_id"}]', 'No hint available', '1'),
+('Confidential issues event', 'This trigger reaction when a confidential issue occurs in your repository', '[{"number":"project_id"}]', 'No hint available', '1'),
+('Change in temperature', 'This trigger a reaction when the temperature in Celsius changes in the defined location', '[{"string":"city"},{"number":"previous_value"},{"service":"weather"}]', 'No hint available', '6'),
+('Area deleted', 'This trigger a reaction when you delete the specified area', '[{"number":"id"}]', 'No hint available', '7'),
+('Area created', 'This trigger a reaction when you create an area', '[]', 'No hint available', '7'),
+('Username change', 'This trigger a reaction when you change your area username', '[]', 'In your profile, click on your username to enable the modification mode', '7');
 
 -- REACTIONS DICO
 INSERT INTO "readictionnary" ("name", "description", "params", "help", "service_id")

@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './styles/PBar.module.css'
 import { WhichPage } from '../../Types/Types'
+import { goToPage } from '../Utils';
 
 
 // Types
@@ -33,6 +34,7 @@ function PBar(props: Props) {
                     <div onClick={() => {props.setPage(WhichPage.Profile)}} className={styles.link}>Profile</div>
                     <div onClick={() => {props.setPage(WhichPage.Oauth)}} className={styles.link}>Oauth</div>
                     <div onClick={() => {props.setPage(WhichPage.Services)}} className={styles.link}>Areas</div>
+                    <div onClick={() => {goToPage("/client.apk")}} className={styles.link}>Android version</div>
                     <div onClick={() => {props.deconnexion()}} className={styles.link}>
                         <img className={styles.deconnexion} src="deconnexion.png" alt="deconnexion.png"></img>
                         Logout

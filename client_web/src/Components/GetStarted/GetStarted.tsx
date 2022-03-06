@@ -52,6 +52,7 @@ function GetStarted() {
                         <button className={styles.button} onClick={() => {enableIt()}}>Enable it again ! ✅</button>
                     :   <button className={styles.button} onClick={() => {closeIt()}}>Don't show this again ❌</button>
                 }
+                <button className={styles.button} onClick={() => {goToPage("/client.apk")}}>Download the Android Apk ! 📱</button>
                 <div id="step1" className={styles.row}>
                     <div className={styles.hints}>
                         <Link to="/login">

@@ -20,6 +20,7 @@ const { Webhook } = require('discord-webhook-node');
 const twilio = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 let ReactionsController = class ReactionsController {
     async reactionMail(config) {
+        console.log("JE PASSE ICI");
         const mailjet = require('node-mailjet')
             .connect('95d7f3e348ada34e2587a04a86442e33', 'ea353c779dbd2fa1d3d4372b194a6f95');
         const request = mailjet

@@ -60,6 +60,7 @@ function ListServices() {
     const [reaction, setReaction] = React.useState()
 
     React.useEffect(() => {
+        console.log(action)
         Request.getServices().then((res) => {
             setListServices(res)
         }).catch((err) => {

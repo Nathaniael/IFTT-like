@@ -33,7 +33,7 @@ input {
   min-height: 100vh;
   padding-bottom: 10vw;
   background: linear-gradient(270deg, rgb(0, 13, 77), rgb(0, 78, 167));
-  background-size: 400% 400%;
+  background-size: 200% 100%;
 
   -webkit-animation: AnimationName 15s ease infinite;
   -moz-animation: AnimationName 15s ease infinite;
