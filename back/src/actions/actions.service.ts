@@ -56,7 +56,7 @@ export class ActionsService {
     async createAction(params: any, service:string ,userId: string, action_name: string) {
         switch (service) {
             case "Gitlab":
-                this.createHookGitlab({project_id: params.project_id, service: "Gitlab", scope: params.scope}, userId, action_name)
+                await this.createHookGitlab({project_id: params.project_id, service: "Gitlab", scope: params.scope}, userId, action_name)
                 break;
             default:
                 console.log("no action found")

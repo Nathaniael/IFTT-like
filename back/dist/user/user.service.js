@@ -77,6 +77,14 @@ let UserService = class UserService {
         return "Username well changed !";
     }
     async deleteUser(userId) {
+        try {
+            await (0, queries_1.qDeleteFieldsFromWhere)({ pool: this.pool, from: "oauth", where: "usr_id", value: userId });
+        }
+        catch (_a) { }
+        try {
+            await (0, queries_1.qDeleteFieldsFromWhere)({ pool: this.pool, from: "area", where: "usr_id", value: userId });
+        }
+        catch (_b) { }
         await (0, queries_1.qDeleteFieldsFromWhere)({ pool: this.pool, from: "usr", where: "id", value: userId });
         return "User deleted";
     }

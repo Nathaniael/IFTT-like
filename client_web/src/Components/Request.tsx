@@ -255,7 +255,6 @@ class RequestApi {
         }
         // Execute request and return status + data
         return await axios.delete(url, headers).then((res) => {
-            console.log(res)
             return res.data
         }).catch((err) => {
             // If there is a custom error message

@@ -64,7 +64,7 @@ function Register(props: Props) {
                 <input
                     className={styles.input}
                     placeholder='Password'
-                    type='text'
+                    type='password'
                     name='password'/>
                 <input
                     className={styles.button}
