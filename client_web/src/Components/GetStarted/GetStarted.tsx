@@ -48,6 +48,10 @@ function GetStarted() {
                     <a href="#step6">6. My areas</a>
                 </div>
                 <br/><br/><br/><br/><br/>
+                {cookies?.closeGetStarted ?
+                        <button className={styles.button} onClick={() => {enableIt()}}>Enable it again ! ✅</button>
+                    :   <button className={styles.button} onClick={() => {closeIt()}}>Don't show this again ❌</button>
+                }
                 <div id="step1" className={styles.row}>
                     <div className={styles.hints}>
                         <Link to="/login">
@@ -60,16 +64,16 @@ function GetStarted() {
                     <div className={styles.imgContainer}>
                         <div className={styles.stepTitle}>1. About the connexion</div>
                         <Link to="/login">
-                            <img className={styles.img} src="started/step_01.png"></img>
+                            <img className={styles.img} src="started/step_01.png" alt="img"></img>
                         </Link>
                     </div>
                 </div>
-                <img className={styles.zigzag} src="started/zigzag_left.png"></img>
+                <img className={styles.zigzag} src="started/zigzag_left.png" alt="img"></img>
                 <div id="step2" className={styles.row}>
                 <div className={styles.imgContainer}>
                         <div className={styles.stepTitle}>2. My profile</div>
                         <Link to="/profile">
-                            <img className={styles.img} src="started/step_02.png"></img>
+                            <img className={styles.img} src="started/step_02.png" alt="img"></img>
                         </Link>
                     </div>
                     <div className={styles.hints}>
@@ -81,7 +85,7 @@ function GetStarted() {
                         <div>2. Click here to access to the grant the Oauth access to services</div>
                     </div>
                 </div>
-                <img className={styles.zigzag} src="started/zigzag_right.png"></img>
+                <img className={styles.zigzag} src="started/zigzag_right.png" alt="img"></img>
                 <div id="step3" className={styles.row}>
                     <div className={styles.hints}>
                         <Link to="/profile">
@@ -94,16 +98,16 @@ function GetStarted() {
                     <div className={styles.imgContainer}>
                         <div className={styles.stepTitle}>3. Oauth access</div>
                         <Link to="/profile">
-                            <img className={styles.img} src="started/step_03.png"></img>
+                            <img className={styles.img} src="started/step_03.png" alt="img"></img>
                         </Link>
                     </div>
                 </div>
-                <img className={styles.zigzag} src="started/zigzag_left.png"></img>
+                <img className={styles.zigzag} src="started/zigzag_left.png" alt="img"></img>
                 <div id="step4" className={styles.row}>
                     <div className={styles.imgContainer}>
                         <div className={styles.stepTitle}>4. The services</div>
                         <Link to="/services">
-                            <img className={styles.img} src="started/step_04.png"></img>
+                            <img className={styles.img} src="started/step_04.png" alt="img"></img>
                         </Link>
                     </div>
                     <div className={styles.hints}>
@@ -115,7 +119,7 @@ function GetStarted() {
                         <div>2. Click here to access to the availables Actions and Reactions of a Service</div>
                     </div>
                 </div>
-                <img className={styles.zigzag} src="started/zigzag_right.png"></img>
+                <img className={styles.zigzag} src="started/zigzag_right.png" alt="img"></img>
                 <div id="step5" className={styles.row}>
                     <div className={styles.hints}>
                         <Link to="/services">
@@ -128,16 +132,16 @@ function GetStarted() {
                     <div className={styles.imgContainer}>
                         <div className={styles.stepTitle}>5. Configure an area</div>
                         <Link to="/services">
-                            <img className={styles.img} src="started/step_05.png"></img>
+                            <img className={styles.img} src="started/step_05.png" alt="img"></img>
                         </Link>
                     </div>
                     </div>
-                <img className={styles.zigzag} src="started/zigzag_left.png"></img>
+                <img className={styles.zigzag} src="started/zigzag_left.png" alt="img"></img>
                 <div id="step6" className={styles.row}>
                     <div className={styles.imgContainer}>
                         <div className={styles.stepTitle}>6. My areas</div>
                         <Link to="/profile">
-                            <img className={styles.img} src="started/step_06.png"></img>
+                            <img className={styles.img} src="started/step_06.png" alt="img"></img>
                         </Link>
                     </div>
                     <div className={styles.hints}>
@@ -149,27 +153,9 @@ function GetStarted() {
                         <div>2. You can also delete unwanted Areas</div>
                     </div>
                 </div>
-                <a href='https://picsum.photos/1080/720' target='_blank'>
+                <a href='https://picsum.photos/1080/720' rel="noreferrer" target='_blank'>
                     <button className={styles.button}>Start your day in a better mood</button>
                 </a>
-                {/* {cookies?.closeGetStarted ?
-                        <button onClick={() => {enableIt()}}>Enable it again ! ✅</button>
-                    :   <button onClick={() => {closeIt()}}>Don't show this again ❌</button>
-                }
-                <div className={styles.title}>STEP ONE : Create an account / login to your account</div>
-                <Link to="/login">
-                    <button className={styles.button}>GO LOGIN</button>
-                </Link>
-                <div className={styles.title}>STEP TWO : Got to your profile and grant access to the oauth services used by our app</div>
-                <Link to="/profile">
-                    <button className={styles.button}>GO PROFILE</button>
-                </Link>
-                <div className={styles.title}>STEP THREE : Go to services and select a service you want to use</div>
-                <div className={styles.title}>STEP FOUR : Select an action from the service</div>
-                <div className={styles.title}>STEP FIVE : Select a reaction from the service or from another service</div>
-                <Link to="/services">
-                    <button className={styles.button}>GO SERVICES</button>
-                </Link> */}
             </div>
         </div>
     )

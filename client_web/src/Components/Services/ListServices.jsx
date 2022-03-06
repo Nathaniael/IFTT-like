@@ -54,7 +54,7 @@ function ServiceWidget({setActiveService, service, onLeft }) {
 
 function ListServices() {
     const [listServices, setListServices] = React.useState([])
-    const [cookies] = useCookies()
+    const [cookies,,removeCookies] = useCookies('closeGetStarted')
     const [activeService, setActiveService] = React.useState()
     const [action, setAction] = React.useState()
     const [reaction, setReaction] = React.useState()
@@ -66,6 +66,10 @@ function ListServices() {
             console.log(err)
         })
     }, [action, reaction])
+
+    function enableIt() {
+        removeCookies('closeGetStarted')
+    }
 
     return (
         <div className="background">
@@ -82,7 +86,7 @@ function ListServices() {
                                 )
                             })}
                         </div>
-                        : <a className={styles.listServices} href='https://picsum.photos/1080/720' target='_blank'>
+                        : <a onClick={() => {enableIt()}} className={styles.listServices} href='https://picsum.photos/1080/720' target='_blank'>
                             <button className={styles.button}>Read the get started !</button>
                         </a>
                     }
