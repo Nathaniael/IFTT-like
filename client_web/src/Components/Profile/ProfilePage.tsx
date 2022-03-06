@@ -66,7 +66,7 @@ function ProfilePage() {
     }, [])
 
     return (
-        <div className={styles.background}>
+        <div className="background">
             <AppBar></AppBar>
             <div className={styles.profilePage}>
                 {page === WhichPage.Profile ?

@@ -6,6 +6,7 @@ import ConfigArea from '../ConfigArea/ConfigArea';
 import Request from '../Request';
 import { useCookies } from 'react-cookie';
 import Service from './Service';
+import { goToPage } from '../Utils';
 
 function SubDescription({ title, list }) {
     return (
@@ -67,7 +68,7 @@ function ListServices() {
     }, [action, reaction])
 
     return (
-        <div className={styles.servicePage}>
+        <div className="background">
             <AppBar></AppBar>
             <ConfigArea activeService={activeService} setActiveService={setActiveService} action={action} reaction={reaction} setAction={setAction} setReaction={setReaction}></ConfigArea>
             {activeService === undefined ?
@@ -81,7 +82,9 @@ function ListServices() {
                                 )
                             })}
                         </div>
-                        : <Link to="/getStarted">GET STARTED</Link>
+                        : <a className={styles.listServices} href='https://picsum.photos/1080/720' target='_blank'>
+                            <button className={styles.button}>Read the get started !</button>
+                        </a>
                     }
                 </div>
                 : <Service setActiveService={setActiveService} service={activeService} setAction={setAction} setReaction={setReaction}></Service>

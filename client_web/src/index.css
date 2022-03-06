@@ -28,3 +28,30 @@ a {
 input {
   outline: none;
 }
+
+.background {
+  min-height: 100vh;
+  padding-bottom: 10vw;
+  background: linear-gradient(270deg, rgb(0, 13, 77), rgb(0, 78, 167));
+  background-size: 400% 400%;
+
+  -webkit-animation: AnimationName 15s ease infinite;
+  -moz-animation: AnimationName 15s ease infinite;
+  animation: AnimationName 15s ease infinite;
+}
+
+@-webkit-keyframes AnimationName {
+  0%{background-position:0% 35%}
+  50%{background-position:100% 66%}
+  100%{background-position:0% 35%}
+}
+@-moz-keyframes AnimationName {
+  0%{background-position:0% 35%}
+  50%{background-position:100% 66%}
+  100%{background-position:0% 35%}
+}
+@keyframes AnimationName {
+  0%{background-position:0% 35%}
+  50%{background-position:100% 66%}
+  100%{background-position:0% 35%}
+}

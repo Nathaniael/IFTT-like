@@ -54,7 +54,7 @@ function Login(props: Props) {
                     className={styles.input}
                     placeholder='email'
                     type='text'
-                    name='email'/>
+                    name='Email'/>
                 <input
                     className={styles.input}
                     placeholder='Password'

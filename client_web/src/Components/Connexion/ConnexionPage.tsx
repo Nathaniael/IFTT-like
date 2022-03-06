@@ -15,7 +15,7 @@ function ConnexionPage() {
     const [gotAccount, setGotAccount] = React.useState(true)
 
     return (
-        <div className={styles.background}>
+        <div className="background">
             <AppBar></AppBar>
             <div className={styles.logWidget}>
                 <div>

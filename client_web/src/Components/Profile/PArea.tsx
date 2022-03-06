@@ -1,6 +1,7 @@
 import React from 'react'
 import Request from '../Request'
 import styles from './styles/PArea.module.css'
+import { goToPage } from '../Utils'
 
 type ServiceCard = {
     name: string,
@@ -95,6 +96,7 @@ function PArea() {
     return (
         <div className={styles.areas}>
             <div className={styles.title}>Your registered Areas ({areas.length})</div>
+            <div className={styles.buttonCreate} onClick={() => {goToPage('/services')}}>Create an Area</div>
             <div className={styles.cardContainer}>
                 {areas.map((elem: any, index: number) => {
                     return (
