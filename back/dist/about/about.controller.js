@@ -14,30 +14,13 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AboutController = void 0;
 const common_1 = require("@nestjs/common");
+const about_service_1 = require("./about.service");
 let AboutController = class AboutController {
+    constructor(aboutService) {
+        this.aboutService = aboutService;
+    }
     async respond(req, res) {
-        res.status(200).json({
-            client: {
-                host: req.ip
-            },
-            server: {
-                current_time: Date.now(),
-                services: [
-                    {
-                        name: 'Github',
-                        actions: [
-                            { name: 'A push arrived', description: 'Create a repository' }
-                        ]
-                    },
-                    {
-                        name: 'Mailjet',
-                        reactions: [
-                            { name: 'Send an email', description: 'Send an email to a chosen recipient with customizable subject/content' },
-                        ]
-                    }
-                ]
-            }
-        });
+        res.status(200).send(await this.aboutService.aboutJson(req.ip));
     }
 };
 __decorate([
@@ -49,7 +32,8 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AboutController.prototype, "respond", null);
 AboutController = __decorate([
-    (0, common_1.Controller)('about.json')
+    (0, common_1.Controller)('about.json'),
+    __metadata("design:paramtypes", [about_service_1.AboutService])
 ], AboutController);
 exports.AboutController = AboutController;
 //# sourceMappingURL=about.controller.js.map

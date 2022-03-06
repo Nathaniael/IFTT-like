@@ -1,11 +1,10 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:client_mobile/Widgets/Navbar/navbar.dart';
 import 'package:client_mobile/apiprovider.dart';
+import 'package:client_mobile/Services/classes.dart';
 
 var session = Session();
-var uriServices = Uri.parse('http://localhost:8080/services/');
+var uriServices = Uri.parse('http://pantharea.fun:8080/services/');
 
 @immutable
 class NestedServicesLists extends StatefulWidget {
@@ -88,7 +87,6 @@ class NestedServicesListsState extends State<NestedServicesLists>
   }) {
     setState(() {
       if (item.type == placeholder.type) {
-        print("DROPPED");
         placeholder.item = item;
         placeholder.imageProvider = item.image;
       }
@@ -99,7 +97,6 @@ class NestedServicesListsState extends State<NestedServicesLists>
   void initState() {
     super.initState();
     getServices().then((services) => {
-          print("Actualize"),
           setState(() => {_services = services})
         });
   }
@@ -203,8 +200,6 @@ class NestedServicesListsState extends State<NestedServicesLists>
   }
 
   Widget _buildPlaceholderRow() {
-    Size size = MediaQuery.of(context).size;
-
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: 0,
@@ -218,10 +213,18 @@ class NestedServicesListsState extends State<NestedServicesLists>
 
   Widget _buildPlaceholderWithDropZone(Placeholder placeholder) {
     return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 6.0,
-        ),
+        child: Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 6.0,
+      ),
+      child: GestureDetector(
+        onTap: () => {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return const AlertDialog();
+              })
+        },
         child: DragTarget<Item>(
           builder: (context, candidateItems, rejectedItems) {
             return PlaceholderCart(
@@ -239,7 +242,7 @@ class NestedServicesListsState extends State<NestedServicesLists>
           },
         ),
       ),
-    );
+    ));
   }
 }
 
@@ -260,12 +263,6 @@ class PlaceholderCart extends StatefulWidget {
 }
 
 class _PlaceholderCartState extends State<PlaceholderCart> {
-  // removeFromPlaceholder() {
-  //   setState(() {
-  //     widget.placeholder = getOnePlaceHolder(widget.placeholder.type);
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     final textColor = widget.highlighted ? Colors.white : Colors.black;
@@ -344,68 +341,6 @@ class _PlaceholderCartState extends State<PlaceholderCart> {
   }
 }
 
-class DraggingListItem extends StatelessWidget {
-  const DraggingListItem({
-    Key? key,
-    required this.dragKey,
-    required this.photoProvider,
-  }) : super(key: key);
-
-  final GlobalKey dragKey;
-  final ImageProvider photoProvider;
-
-  @override
-  Widget build(BuildContext context) {
-    return FractionalTranslation(
-      translation: const Offset(-0.5, -0.5),
-      child: ClipRRect(
-        key: dragKey,
-        borderRadius: BorderRadius.circular(12.0),
-        child: SizedBox(
-          height: 150,
-          width: 150,
-          child: Opacity(
-            opacity: 0.85,
-            child: Image(
-              image: photoProvider,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class Item {
-  ItemType type;
-  String name;
-  String description;
-  int id;
-  ImageProvider image;
-  Item(
-      {required this.type,
-      required this.name,
-      required this.description,
-      required this.id,
-      required this.image});
-}
-
-class Service {
-  int id;
-  String name;
-  ImageProvider logo;
-  List<Item> items;
-  Service(
-      {required this.id,
-      required this.name,
-      required this.logo,
-      required this.items});
-  ImageProvider get getLogo {
-    return logo;
-  }
-}
-
 class Placeholder {
   String name;
   ItemType type;
@@ -420,5 +355,3 @@ class Placeholder {
     return item;
   }
 }
-
-enum ItemType { action, reaction, none }

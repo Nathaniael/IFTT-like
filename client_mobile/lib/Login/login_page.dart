@@ -13,7 +13,7 @@ import 'package:client_mobile/Login/components/submit_button.dart';
 import 'package:client_mobile/Login/components/page_switch.dart';
 
 var session = Session();
-var uriRegister = Uri.parse('http://localhost:8080/auth/login/');
+var uriRegister = Uri.parse('http://pantharea.fun:8080/auth/login/');
 
 @immutable
 class LoginPage extends StatefulWidget {
