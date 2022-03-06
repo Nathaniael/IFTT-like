@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 const defaultProfileImage = "/web/png/baptiste.png";
 
+// register Info
 class RegisterRequest {
   final String username;
   final String email;
@@ -19,6 +20,7 @@ class RegisterRequest {
       };
 }
 
+// Login Info
 class LoginRequest {
   final String email;
   final String password;
