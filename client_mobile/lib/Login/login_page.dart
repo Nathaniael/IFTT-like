@@ -1,4 +1,5 @@
 // Flutter components
+import 'package:client_mobile/Widgets/Text/text_adn.dart';
 import 'package:flutter/material.dart';
 
 // App components
@@ -9,7 +10,6 @@ import 'package:client_mobile/apiprovider.dart';
 import 'package:client_mobile/Login/types.dart';
 import 'package:client_mobile/Login/components/input_form.dart';
 import 'package:client_mobile/Login/components/submit_button.dart';
-import 'package:client_mobile/Login/components/title_page.dart';
 import 'package:client_mobile/Login/components/page_switch.dart';
 
 var session = Session();
@@ -49,7 +49,7 @@ class LoginPageState extends State<LoginPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const TitlePage(labelText: "LOGIN"),
+            const TextANM("LOGIN"),
             InputForm(controller: emailController, labelText: "Email"),
             InputForm(
                 controller: passwordController,

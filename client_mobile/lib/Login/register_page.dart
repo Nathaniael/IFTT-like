@@ -1,4 +1,5 @@
 // Flutter components
+import 'package:client_mobile/Widgets/Text/text_adn.dart';
 import 'package:flutter/material.dart';
 
 // App components
@@ -53,7 +54,7 @@ class RegisterPageState extends State<RegisterPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const TitlePage(labelText: "REGISTER"),
+            const TextANM("REGISTRER"),
             InputForm(controller: usernameController, labelText: "Username"),
             InputForm(controller: emailController, labelText: "Email"),
             InputForm(

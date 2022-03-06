@@ -82,6 +82,7 @@ class CardArea extends StatelessWidget {
                     style: TextStyle(
                       color: Color(0xff000D4D),
                       fontSize: 22.0,
+                      fontFamily: 'AvenirNext',
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -92,6 +93,7 @@ class CardArea extends StatelessWidget {
                   Text(
                     area.action,
                     style: const TextStyle(
+                      fontFamily: 'AvenirNext',
                       fontSize: 20.0,
                       color: Color(0xff007EA7),
                     ),
@@ -105,6 +107,7 @@ class CardArea extends StatelessWidget {
                   const Text(
                     "Reaction",
                     style: TextStyle(
+                      fontFamily: 'AvenirNext',
                       color: Color(0xff000D4D),
                       fontSize: 22.0,
                       fontWeight: FontWeight.bold,
@@ -117,6 +120,7 @@ class CardArea extends StatelessWidget {
                   Text(
                     area.reaction,
                     style: const TextStyle(
+                      fontFamily: 'AvenirNext',
                       fontSize: 20.0,
                       color: Color(0xff007EA7),
                     ),
@@ -172,6 +176,7 @@ class _UserpageState extends State<Userpage> {
         child: Text(
           initialText,
           style: const TextStyle(
+            fontFamily: 'AvenirNext',
             color: Colors.white,
             fontSize: 30.0,
           ),
@@ -219,6 +224,7 @@ class _UserpageState extends State<Userpage> {
                             child: const Text(
                               'Logout',
                               style: TextStyle(
+                                fontFamily: 'AvenirNext',
                                 fontSize: 22.0,
                               ),
                             ),
