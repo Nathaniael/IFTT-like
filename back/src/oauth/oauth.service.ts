@@ -61,6 +61,6 @@ export class OauthService {
         if (tokenList.rowCount >= 1) {
             return tokenList.rows[0]
         }
-        throw new NotFoundException('no token registered for this user and service')
+        throw new NotFoundException('No token registered for this service')
     }
 }

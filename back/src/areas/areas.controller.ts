@@ -22,15 +22,7 @@ export class AreasController {
     @Post('/delete')
     @UseGuards(AuthGuard('jwt'))
     async deleteArea(@User() user, @Body() body: AreaId, @Res() res) {
-        var userId;
-        if (user["payload"]?.userId != undefined) {
-            userId = user["payload"].userId
-        } else if (user.userId != undefined) {
-            userId = user.userId
-        } else {
-            throw new BadRequestException("Can't get user")
-        }
-        this.areasServices.deleteArea(body.id)
+        await this.areasServices.deleteArea(body.id.toString())
         res.status(200).send("Area deleted successfully")
     }
 

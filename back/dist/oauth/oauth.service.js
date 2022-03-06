@@ -47,7 +47,7 @@ let OauthService = class OauthService {
         if (tokenList.rowCount >= 1) {
             return tokenList.rows[0];
         }
-        throw new common_1.NotFoundException('no token registered for this user and service');
+        throw new common_1.NotFoundException('No token registered for this service');
     }
 };
 OauthService = __decorate([

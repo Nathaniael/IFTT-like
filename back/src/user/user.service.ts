@@ -73,6 +73,12 @@ export class UserService {
     }
 
     async deleteUser(userId: string) {
+        try {
+            await qDeleteFieldsFromWhere({ pool: this.pool, from: "oauth", where: "usr_id", value: userId})
+        } catch {}
+        try {
+            await qDeleteFieldsFromWhere({ pool: this.pool, from: "area", where: "usr_id", value: userId})
+        } catch {}
         await qDeleteFieldsFromWhere({ pool: this.pool, from: "usr", where: "id", value: userId})
         return "User deleted"
     }

@@ -86,6 +86,7 @@ function PArea() {
             setAreas(res)
         }).catch((err) => {
             console.log(err)
+            setAreas([])
         })
     }
     React.useEffect(() => {

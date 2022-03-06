@@ -5,7 +5,7 @@ import { DatabasePool, sql } from 'slonik';
 import { ActionsService } from 'src/actions/actions.service';
 import { UserAuth } from 'src/auth/auth.controller';
 import { AreaCreationDto, DicoDto } from './areas.dto';
-import { qFirstFieldsFromWhere } from 'src/queries/queries';
+import { qFirstFieldsFromWhere, qDeleteFieldsFromWhere } from 'src/queries/queries';
 
 @Injectable()
 export class AreasService {
@@ -69,8 +69,8 @@ export class AreasService {
                 ${userId})`)
     }
 
-    async deleteArea(id: number) {
-        const deleted_area = await this.pool.query(sql`DELETE FROM area WHERE id = ${id}`)
+    async deleteArea(id: string) {
+        await qDeleteFieldsFromWhere({ pool: this.pool, from: "area", where: "id", value: id})
     }
 
     async getAreaByUser(usrId: string) {

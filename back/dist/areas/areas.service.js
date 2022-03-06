@@ -71,7 +71,7 @@ let AreasService = class AreasService {
                 ${userId})`);
     }
     async deleteArea(id) {
-        const deleted_area = await this.pool.query((0, slonik_1.sql) `DELETE FROM area WHERE id = ${id}`);
+        await (0, queries_1.qDeleteFieldsFromWhere)({ pool: this.pool, from: "area", where: "id", value: id });
     }
     async getAreaByUser(usrId) {
         const areas = await this.pool.query((0, slonik_1.sql) `SELECT * FROM area WHERE usr_id = ${usrId}`);

@@ -10,6 +10,7 @@ var AorREA;
 ;
 function checkIsThereResult(res, error) {
     if (res.rowCount == 0) {
+        console.log("EXCEPT " + error);
         throw new common_1.BadRequestException(error);
     }
 }
@@ -20,7 +21,7 @@ async function qFirstFieldsFromWhere(props) {
         type: 'SLONIK_TOKEN_SQL',
         values: [props.value]
     });
-    checkIsThereResult(res.rows, "[ERROR] " + props.from + " not found with the given " + props.where);
+    checkIsThereResult(res, "[ERROR] " + props.from + " not found with the given " + props.where);
     return res.rows[0];
 }
 exports.qFirstFieldsFromWhere = qFirstFieldsFromWhere;
@@ -31,7 +32,7 @@ async function qAllFieldsFromWhere(props) {
         type: 'SLONIK_TOKEN_SQL',
         values: [props.value]
     });
-    checkIsThereResult(res.rows, "[ERROR] " + props.from + " not found with the given " + props.where);
+    checkIsThereResult(res, "[ERROR] " + props.from + " not found with the given " + props.where);
     return res.rows;
 }
 exports.qAllFieldsFromWhere = qAllFieldsFromWhere;
