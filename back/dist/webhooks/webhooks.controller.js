@@ -25,10 +25,23 @@ let WebhooksController = class WebhooksController {
         let params = JSON.stringify({ url: body.repository.html_url, secret: req.headers["x-hub-signature"] });
         this.areasServices.callReaction(params);
     }
-    async actionGitlab(req, body) {
+    async actionGitlab(body) {
         const params = JSON.stringify({
             project_id: body.project_id,
         });
+        this.areasServices.callReaction(params);
+    }
+    async actionArea(body) {
+        var params;
+        console.log("HELLO");
+        if (body.action_type === "Area deleted") {
+            console.log("received");
+            params = JSON.stringify({ action_type: body.action_type, user_id: body.userId, id: body.id });
+        }
+        else {
+            params = JSON.stringify({ action_type: body.action_type, user_id: body.userId });
+        }
+        console.log(params);
         this.areasServices.callReaction(params);
     }
 };
@@ -42,12 +55,18 @@ __decorate([
 ], WebhooksController.prototype, "actionGithub", null);
 __decorate([
     (0, common_1.Post)('Gitlab'),
-    __param(0, (0, common_1.Req)()),
-    __param(1, (0, common_1.Body)()),
+    __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], WebhooksController.prototype, "actionGitlab", null);
+__decorate([
+    (0, common_1.Post)('Area'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], WebhooksController.prototype, "actionArea", null);
 WebhooksController = __decorate([
     (0, common_1.Controller)('webhooks'),
     __metadata("design:paramtypes", [webhooks_service_1.WebhooksService,

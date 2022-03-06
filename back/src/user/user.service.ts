@@ -1,16 +1,18 @@
-import { BadRequestException, Injectable, UnauthorizedException, HttpException, HttpStatus } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException, HttpException, HttpStatus, HttpServer } from '@nestjs/common';
 import { InjectPool } from 'nestjs-slonik';
 import { OauthCreationDto, UserCreationDto, UserDto, UserLoginDto } from './user.dto';
 import { DatabasePool, sql } from 'slonik'
 import * as bcrypt from 'bcrypt';
 import { UserAuth } from 'src/auth/auth.controller';
 import { qFirstFieldsFromWhere, qDeleteFieldsFromWhere } from 'src/queries/queries';
+import { HttpModule, HttpService } from '@nestjs/axios';
 
 @Injectable()
 export class UserService {
     constructor(
         @InjectPool()
-        private readonly pool: DatabasePool
+        private readonly pool: DatabasePool,
+        private readonly httpService: HttpService
     ) { }
 
     async registerUser(usr: UserCreationDto) {
@@ -69,7 +71,12 @@ export class UserService {
             sql`UPDATE usr
             SET username = ${username}
             WHERE id = ${userId}`)
-        return "Username well changed !"     
+        try {
+            const res = await this.httpService.post('http://localhost:8080/webhooks/Area', {action_type: "Username change", userId: userId}).toPromise()
+        } catch (err) {
+            console.log(err)
+        }
+        return "Username well changed !"
     }
 
     async deleteUser(userId: string) {

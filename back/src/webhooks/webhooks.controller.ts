@@ -17,10 +17,25 @@ export class WebhooksController {
     }
 
     @Post('Gitlab')
-    async actionGitlab(@Req() req, @Body() body) {
+    async actionGitlab(@Body() body) {
         const params = JSON.stringify({
             project_id: body.project_id,
         })
+        this.areasServices.callReaction(params)
+    }
+
+    @Post('Area')
+    async actionArea(@Body() body) {
+        var params
+        console.log("HELLO")
+        if (body.action_type === "Area deleted") {
+            console.log("received")
+            params = JSON.stringify({action_type: body.action_type, user_id: body.userId, id: body.id})
+        }
+        else {
+            params = JSON.stringify({action_type: body.action_type, user_id: body.userId})
+        }
+        console.log(params)
         this.areasServices.callReaction(params)
     }
 }
