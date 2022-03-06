@@ -72,3 +72,29 @@
     font-size: 1vw;
     text-align: center;
 }
+
+@media (width < 800px) {
+    .profile {
+        width: 90%;
+        height: 90%;
+    }
+
+    .headerText {
+        font-size: 6vw;
+        padding: 3vw;
+    }
+
+    .error {
+        font-size: 6vw;
+        padding: 3vw;
+    }
+
+    .headerRow > input {
+        margin: 10vw 0;
+        font-size: 7vw;
+    }
+    .headerImg {
+        width: 30vw;
+        height: 30vw;
+    }
+}

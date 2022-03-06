@@ -75,6 +75,7 @@ function ListServices() {
     return (
         <div className="background">
             <AppBar></AppBar>
+            <div className={styles.servicesPage}>
             <ConfigArea activeService={activeService} setActiveService={setActiveService} action={action} reaction={reaction} setAction={setAction} setReaction={setReaction}></ConfigArea>
             {activeService === undefined ?
                 <div className={styles.servicePageBody}>
@@ -94,6 +95,7 @@ function ListServices() {
                 </div>
                 : <Service setActiveService={setActiveService} service={activeService} setAction={setAction} setReaction={setReaction}></Service>
             }
+            </div>
         </div>
     )
 }

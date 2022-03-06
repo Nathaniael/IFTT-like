@@ -71,3 +71,16 @@
 .gotAccount:hover {
     color: grey;
 }
+
+@media (width < 800px) {
+    .input {
+        width: 50vw;
+        height: 10vw;
+        margin-bottom: 5vw;
+        font-size: 5vw;
+    }
+
+    .button {
+        font-size: 4vw;
+    }
+}

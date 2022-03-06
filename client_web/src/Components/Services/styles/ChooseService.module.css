@@ -116,3 +116,13 @@
         transform: rotate(5deg);
     }
 }
+
+.servicesPage {
+    padding-top: 15vh;
+}
+
+@media (width < 800px) {
+    .servicesPage {
+        padding-top: 18vh;
+    }
+}
