@@ -15,10 +15,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserAreas = void 0;
 const common_1 = require("@nestjs/common");
 const nestjs_slonik_1 = require("nestjs-slonik");
+const areas_service_1 = require("../areas/areas.service");
 const queries_1 = require("../queries/queries");
 let UserAreas = class UserAreas {
-    constructor(pool) {
+    constructor(pool, areaService) {
         this.pool = pool;
+        this.areaService = areaService;
     }
     async getActionOrReactionInfos(area, aor) {
         const elem_id = aor === queries_1.AorREA.Action ? area["id_act"] : area["id_react"];
@@ -50,11 +52,20 @@ let UserAreas = class UserAreas {
         }
         return res;
     }
+    async AreaNumber(userId) {
+        const areas = await this.getAreas(userId);
+        const params = {
+            action_type: "Detect number of areas",
+            user_id: userId,
+            nb: areas.length
+        };
+        this.areaService.callReaction(JSON.stringify(params));
+    }
 };
 UserAreas = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, nestjs_slonik_1.InjectPool)()),
-    __metadata("design:paramtypes", [Object])
+    __metadata("design:paramtypes", [Object, areas_service_1.AreasService])
 ], UserAreas);
 exports.UserAreas = UserAreas;
 //# sourceMappingURL=user.areas.js.map

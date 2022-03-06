@@ -11,6 +11,7 @@ const axios_1 = require("@nestjs/axios");
 const common_1 = require("@nestjs/common");
 const actions_service_1 = require("../actions/actions.service");
 const oauth_service_1 = require("../oauth/oauth.service");
+const user_areas_1 = require("../user/user.areas");
 const areas_controller_1 = require("./areas.controller");
 const areas_service_1 = require("./areas.service");
 let AreasModule = class AreasModule {
@@ -18,7 +19,7 @@ let AreasModule = class AreasModule {
 AreasModule = __decorate([
     (0, common_1.Module)({
         imports: [axios_1.HttpModule],
-        providers: [areas_service_1.AreasService, actions_service_1.ActionsService, oauth_service_1.OauthService],
+        providers: [areas_service_1.AreasService, actions_service_1.ActionsService, oauth_service_1.OauthService, user_areas_1.UserAreas],
         controllers: [areas_controller_1.AreasController]
     })
 ], AreasModule);

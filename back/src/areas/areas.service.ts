@@ -13,7 +13,7 @@ export class AreasService {
         @InjectPool()
         private readonly pool: DatabasePool,
         private readonly httpService: HttpService,
-        private readonly actionsService: ActionsService
+        private readonly actionsService: ActionsService,
     ) { }
 
     async callReaction(params: string) {
@@ -22,14 +22,17 @@ export class AreasService {
             console.log("PARAMS", params)
             return
         }
-        console.log("nonono")
-        let area = await this.pool.query(sql`SELECT * FROM area WHERE id_act = ${action.rows[0].id}`)
-        console.log(area)
-        for (var elem of area.rows) {
-            let reaction = await this.pool.query(sql`SELECT * FROM reaction WHERE id = ${elem.id_react}`)
-            console.log(reaction)
-            let data = JSON.parse(reaction.rows[0].params.toString())
-            this.httpService.post(`http://localhost:8080/reactions/${reaction.rows[0].reaction_route}`, data).toPromise()
+        console.log(action.rows)
+        for (var test of action.rows) {
+            let area = await this.pool.query(sql`SELECT * FROM area WHERE id_act = ${test.id}`)
+            console.log(area)
+            for (var elem of area.rows) {
+                console.log("REACTION")
+                let reaction = await this.pool.query(sql`SELECT * FROM reaction WHERE id = ${elem.id_react}`)
+                console.log(reaction)
+                let data = JSON.parse(reaction.rows[0].params.toString())
+                this.httpService.post(`http://localhost:8080/reactions/${reaction.rows[0].reaction_route}`, data).toPromise()
+            }
         }
     }
 
@@ -61,8 +64,11 @@ export class AreasService {
 
         await this.actionsService.createAction(body.action_params, action_service["name"].toString(), userId, action_dico["name"], action.rows[0])
 
-        const reaction = await this.pool.query(sql`INSERT INTO reaction (params, reaction_route,dico_id)
+        const reaction = await this.pool.query(sql<{id: number}>`INSERT INTO reaction (params, reaction_route,dico_id)
         VALUES (${JSON.stringify(body.reaction_params)}, ${reaction_service["name"]} ,${body.reaction_id}) RETURNING id;`)
+        console.log("EH JE PASSE ICI")
+        const reaction_params = await this.createReaction(reaction_service["name"], userId, reaction.rows[0].id)
+        console.log("EH JE PASSE ICI AUSSI ")
         const area = await this.pool.query(sql`INSERT INTO area (
             id_act,
             id_react,
@@ -70,6 +76,17 @@ export class AreasService {
                 ${action.rows[0].id},
                 ${reaction.rows[0].id},
                 ${userId})`)
+    }
+
+    async createReaction(serviceName: string, user_id: string, id: number) {
+        console.log(id)
+        if (serviceName === "Area") {
+            const reaction = await this.pool.query(sql<{params: string}>`SELECT params FROM reaction WHERE id = ${id}`)
+            const tmp = JSON.parse(reaction.rows[0].params)
+            tmp.user_id = user_id
+            await this.pool.query(sql`UPDATE reaction SET params = ${JSON.stringify(tmp)} WHERE id = ${id}`)
+            return
+        }
     }
 
     async deleteArea(id: string) {

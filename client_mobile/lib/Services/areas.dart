@@ -1,12 +1,11 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:client_mobile/Widgets/Navbar/navbar.dart';
 import 'package:client_mobile/apiprovider.dart';
+import 'package:client_mobile/Services/classes.dart';
 
 //Url to call
 var session = Session();
-var uriServices = Uri.parse('http://localhost:8080/services/');
+var uriServices = Uri.parse('http://pantharea.fun:8080/services/');
 
 @immutable
 class NestedServicesLists extends StatefulWidget {
@@ -43,8 +42,10 @@ List<Placeholder> getPlaceHolders() {
 // Call to get list of Service
 Future<List<Service>> getServices() async {
   Response res = await session.get(uriServices);
+
   List<Service> services = [];
   if (res.status == Status.success) {
+    print(res.data);
     for (var elem in res.data) {
       List<Item> listItems = [];
       for (var it in elem["actions"]) {
@@ -74,6 +75,7 @@ Future<List<Service>> getServices() async {
     }
     return services;
   } else {
+    print(res.message);
     return [];
   }
 }
@@ -93,7 +95,6 @@ class NestedServicesListsState extends State<NestedServicesLists>
   }) {
     setState(() {
       if (item.type == placeholder.type) {
-        print("DROPPED");
         placeholder.item = item;
         placeholder.imageProvider = item.image;
       }
@@ -104,7 +105,6 @@ class NestedServicesListsState extends State<NestedServicesLists>
   void initState() {
     super.initState();
     getServices().then((services) => {
-          print("Actualize"),
           setState(() => {_services = services})
         });
   }
@@ -228,10 +228,18 @@ class NestedServicesListsState extends State<NestedServicesLists>
 //create drop zone in placeholder
   Widget _buildPlaceholderWithDropZone(Placeholder placeholder) {
     return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 6.0,
-        ),
+        child: Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 6.0,
+      ),
+      child: GestureDetector(
+        onTap: () => {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return const AlertDialog();
+              })
+        },
         child: DragTarget<Item>(
           builder: (context, candidateItems, rejectedItems) {
             return PlaceholderCart(
@@ -249,7 +257,7 @@ class NestedServicesListsState extends State<NestedServicesLists>
           },
         ),
       ),
-    );
+    ));
   }
 }
 
@@ -271,12 +279,6 @@ class PlaceholderCart extends StatefulWidget {
 }
 
 class _PlaceholderCartState extends State<PlaceholderCart> {
-  // removeFromPlaceholder() {
-  //   setState(() {
-  //     widget.placeholder = getOnePlaceHolder(widget.placeholder.type);
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     final textColor = widget.highlighted ? Colors.white : Colors.black;
@@ -355,72 +357,6 @@ class _PlaceholderCartState extends State<PlaceholderCart> {
   }
 }
 
-//Create drag list item
-class DraggingListItem extends StatelessWidget {
-  const DraggingListItem({
-    Key? key,
-    required this.dragKey,
-    required this.photoProvider,
-  }) : super(key: key);
-
-  final GlobalKey dragKey;
-  final ImageProvider photoProvider;
-
-  @override
-  Widget build(BuildContext context) {
-    return FractionalTranslation(
-      translation: const Offset(-0.5, -0.5),
-      child: ClipRRect(
-        key: dragKey,
-        borderRadius: BorderRadius.circular(12.0),
-        child: SizedBox(
-          height: 150,
-          width: 150,
-          child: Opacity(
-            opacity: 0.85,
-            child: Image(
-              image: photoProvider,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-//class of Item
-class Item {
-  ItemType type;
-  String name;
-  String description;
-  int id;
-  ImageProvider image;
-  Item(
-      {required this.type,
-      required this.name,
-      required this.description,
-      required this.id,
-      required this.image});
-}
-
-//class of Service
-class Service {
-  int id;
-  String name;
-  ImageProvider logo;
-  List<Item> items;
-  Service(
-      {required this.id,
-      required this.name,
-      required this.logo,
-      required this.items});
-  ImageProvider get getLogo {
-    return logo;
-  }
-}
-
-// class Placeholder
 class Placeholder {
   String name;
   ItemType type;
@@ -435,5 +371,3 @@ class Placeholder {
     return item;
   }
 }
-
-enum ItemType { action, reaction, none }

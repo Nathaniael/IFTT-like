@@ -15,7 +15,7 @@ import 'package:client_mobile/Login/components/page_switch.dart';
 
 //url to call
 var session = Session();
-var uriRegister = Uri.parse('http://localhost:8080/auth/register/');
+var uriRegister = Uri.parse('http://pantharea.fun:8080/auth/register/');
 
 @immutable
 class RegisterPage extends StatefulWidget {

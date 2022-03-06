@@ -44,6 +44,25 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], DiscordMsgReactionDto.prototype, "hookusername", void 0);
+__decorate([
+    (0, class_validator_1.IsBoolean)(),
+    __metadata("design:type", Boolean)
+], DiscordMsgReactionDto.prototype, "embed", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], DiscordMsgReactionDto.prototype, "title", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], DiscordMsgReactionDto.prototype, "fieldname", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], DiscordMsgReactionDto.prototype, "fielddescription", void 0);
 exports.DiscordMsgReactionDto = DiscordMsgReactionDto;
 class SmsReactionDto {
 }

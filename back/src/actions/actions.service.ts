@@ -76,7 +76,7 @@ export class ActionsService {
     async createWeather(params: any, id) {
         console.log(params)
         const res = await this.httpService.get(`http://api.weatherapi.com/v1/current.json?key=bc3eb83b600343afb4e184537220503&q=${params.city}&aqi=no`).toPromise()
-        
+
         const tmp = params
         tmp.previous_value = res.data.current.temp_c
         const newparams = JSON.stringify(tmp)
@@ -88,6 +88,9 @@ export class ActionsService {
         var params = JSON.stringify({action_type: action_name, user_id: user_id})
         if (action_name === "Area deleted") {
             params = JSON.stringify({action_type: action_name, user_id: user_id, id: param.id})
+        }
+        if (action_name === "Detect number of areas") {
+            params = JSON.stringify({action_type: action_name, user_id: user_id, nb: param.nb})
         }
         this.pool.query(sql`UPDATE action SET params = ${params} WHERE id = ${id}`)
     }

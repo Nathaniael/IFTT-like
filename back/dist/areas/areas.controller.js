@@ -20,17 +20,21 @@ const passport_1 = require("@nestjs/passport");
 const user_decorator_1 = require("../user/user.decorator");
 const auth_controller_1 = require("../auth/auth.controller");
 const axios_1 = require("@nestjs/axios");
+const user_areas_1 = require("../user/user.areas");
 let AreasController = class AreasController {
-    constructor(areasServices, httpService) {
+    constructor(areasServices, httpService, usersArea) {
         this.areasServices = areasServices;
         this.httpService = httpService;
+        this.usersArea = usersArea;
     }
     async createArea(user, body, res) {
         await this.areasServices.createArea(user.userId, body);
+        await this.usersArea.AreaNumber(user.userId);
         res.status(200).send("Area well created");
     }
     async deleteArea(user, body, res) {
         await this.areasServices.deleteArea(body.id.toString());
+        await this.usersArea.AreaNumber(user.userId);
         const r = await this.httpService.post('http://localhost:8080/webhooks/Area', { action_type: "Area deleted", userId: user.userId, id: body.id }).toPromise();
         res.status(200).send("Area deleted successfully");
     }
@@ -82,7 +86,8 @@ __decorate([
 AreasController = __decorate([
     (0, common_1.Controller)('areas'),
     __metadata("design:paramtypes", [areas_service_1.AreasService,
-        axios_1.HttpService])
+        axios_1.HttpService,
+        user_areas_1.UserAreas])
 ], AreasController);
 exports.AreasController = AreasController;
 //# sourceMappingURL=areas.controller.js.map

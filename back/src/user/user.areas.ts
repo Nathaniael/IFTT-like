@@ -1,14 +1,17 @@
 import { Injectable } from '@nestjs/common';
+import { CallTracker } from 'assert/strict';
 import { access } from 'fs';
 import { InjectPool } from 'nestjs-slonik';
 import { DatabasePool, sql } from 'slonik'
+import { AreasService } from 'src/areas/areas.service';
 import { qFirstFieldsFromWhere, qAllFieldsFromWhere, AorREA } from 'src/queries/queries';
 
 @Injectable()
 export class UserAreas {
     constructor(
         @InjectPool()
-        private readonly pool: DatabasePool
+        private readonly pool: DatabasePool,
+        private readonly areaService: AreasService
     ) { }
 
     async getActionOrReactionInfos(area: any, aor: AorREA) {
@@ -49,5 +52,15 @@ export class UserAreas {
             res.push(elem)
         }
         return res
+    }
+
+    async AreaNumber(userId: string) {
+        const areas = await this.getAreas(userId)
+        const params = {
+            action_type: "Detect number of areas",
+            user_id: userId,
+            nb: areas.length
+        }
+        this.areaService.callReaction(JSON.stringify(params))
     }
 }

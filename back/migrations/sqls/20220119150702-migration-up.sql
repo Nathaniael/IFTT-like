@@ -99,6 +99,7 @@ VALUES ('Any new repository event', 'This trigger reaction every time a new even
 ('Confidential issues event', 'This trigger reaction when a confidential issue occurs in your repository', '[{"number":"project_id"}]', 'No hint available', '1'),
 ('Change in temperature', 'This trigger a reaction when the temperature in Celsius changes in the defined location', '[{"string":"city"},{"number":"previous_value"},{"service":"weather"}]', 'No hint available', '6'),
 ('Area deleted', 'This trigger a reaction when you delete the specified area', '[{"number":"id"}]', 'No hint available', '3'),
+('Detect number of areas', 'This trigger a reaction your number of area is equal to the number you will chose', '[{"number":"nb"}]', 'No hint available', '3'),
 ('Area created', 'This trigger a reaction when you create an area', '[]', 'No hint available', '3'),
 ('Username change', 'This trigger a reaction when you change your area username', '[]', 'In your profile, click on your username to enable the modification mode', '3');
 
@@ -106,4 +107,6 @@ VALUES ('Any new repository event', 'This trigger reaction every time a new even
 INSERT INTO "readictionnary" ("name", "description", "params", "help", "service_id")
 VALUES ('Send an email', 'When triggered, send an email to a chosen recipient, a subject and a body', '[{"string":"username"}, {"string":"recipient"},{"string":"subject"}, {"string":"body"}]','' , '2'), -- ID:1
 ('Send a discord message', 'When triggered, send a discord message in your server using Discord webhooks', '[{"string":"url"}, {"string":"hookusername"},{"string":"message"}]', '', '4'), -- ID:2
-('Send a SMS', 'When triggered, send a message to the phone number you set', '[{"string":"number"}, {"string":"message"}]', '','5'); -- ID:3
+('Send a discord embed', 'When triggered, send a discord embed in your server using Discord webhooks', '[{"string":"url"},{"string":"hookusername"},{"string":"message"},{"string":"fieldname"},{"string":"fielddescription"},{"string":"title"}]', '', '4'), -- ID:3
+('Send a SMS', 'When triggered, send a message to the phone number you set', '[{"string":"number"}, {"string":"message"}]', '','5'), -- ID:4
+('Change username', 'When triggered, changes your area username', '[{"string":"newUsername"}]', 'WARNING! DO NOT USE THIS REACTION COMBINED WITH THE "Username changed" action','3'); -- ID:5

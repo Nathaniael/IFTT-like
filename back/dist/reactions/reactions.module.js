@@ -7,13 +7,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReactionsModule = void 0;
+const axios_1 = require("@nestjs/axios");
 const common_1 = require("@nestjs/common");
+const user_service_1 = require("../user/user.service");
 const reactions_controller_1 = require("./reactions.controller");
 let ReactionsModule = class ReactionsModule {
 };
 ReactionsModule = __decorate([
     (0, common_1.Module)({
-        controllers: [reactions_controller_1.ReactionsController]
+        controllers: [reactions_controller_1.ReactionsController],
+        providers: [user_service_1.UserService],
+        imports: [axios_1.HttpModule]
     })
 ], ReactionsModule);
 exports.ReactionsModule = ReactionsModule;
