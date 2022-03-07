@@ -37,7 +37,7 @@ export class ActionsService {
         }
         const token = await this.oauthService.getTokenForService(userId, params.service)
         const url = `http://pantharea.fun:8080/webhooks/${params.service}`
-        let project_id = (typeof(params.project_id) == "string") ? params.project_id : params.project_id
+        let project_id = (typeof(params.project_id) == "string") ? params.project_id : params.project_id.toString()
         var data = `{"id": ${project_id},"url": ${url},${event}:true}`;
         var config: AxiosRequestConfig = {
             method: 'post',
