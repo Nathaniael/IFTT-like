@@ -3,59 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:client_mobile/Widgets/Navbar/navbar.dart';
 import 'package:client_mobile/Widgets/bleuradialbackground.dart';
-import 'package:client_mobile/apiprovider.dart';
 
 import 'package:client_mobile/User/types.dart';
 import 'package:client_mobile/User/card_area.dart';
-
-var session = Session();
-var uriProfile = Uri.parse('http://pantharea.fun:8080/user/profile/');
-
-//create List area
-List<Area> listarea = [
-  Area(
-    id: 0,
-    action: 'Je suis une belle action sexyyyyyyyyyyyyyyyyyyyyy',
-    logoa: const AssetImage('web/png/kilian.png'),
-    reaction: 'Moi je peux flex parce que je suis une belle reaction',
-    logorea: const AssetImage('web/png/emile.png'),
-  ),
-  Area(
-    id: 1,
-    action: 'Je suis une belle action sexy',
-    logoa: const AssetImage('web/png/kilian.png'),
-    reaction: 'Moi je peux flex parce que je suis une belle reaction',
-    logorea: const AssetImage('web/png/emile.png'),
-  ),
-  Area(
-    id: 2,
-    action: 'je suis pas aussi beau mais quand meme',
-    logoa: const AssetImage('web/png/github.png'),
-    reaction: 'Moi je peux flex par contre je suis une sacré reaction',
-    logorea: const AssetImage('web/png/kilian.png'),
-  ),
-  Area(
-    id: 3,
-    action: 'Je suis une belle action sexyyyyyyyyyyyyyyyyyyyyy',
-    logoa: const AssetImage('web/png/kilian.png'),
-    reaction: 'Moi je peux flex parce que je suis une belle reaction',
-    logorea: const AssetImage('web/png/emile.png'),
-  ),
-  Area(
-    id: 4,
-    action: 'Je suis une belle action sexy',
-    logoa: const AssetImage('web/png/kilian.png'),
-    reaction: 'Moi je peux flex parce que je suis une belle reaction',
-    logorea: const AssetImage('web/png/emile.png'),
-  ),
-  Area(
-    id: 5,
-    action: 'je suis pas aussi beau mais quand meme',
-    logoa: const AssetImage('web/png/github.png'),
-    reaction: 'Moi je peux flex par contre je suis une sacré reaction',
-    logorea: const AssetImage('web/png/kilian.png'),
-  )
-];
+import 'package:client_mobile/User/request.dart';
 
 class Userpage extends StatefulWidget {
   final List<Area> area = listarea;
@@ -70,34 +21,20 @@ void onPressedBackground(context) {
   Navigator.popAndPushNamed(context, '/area');
 }
 
-Profile defaultProfile() {
-  Profile profile = Profile(username: "Undefined", image: const AssetImage(""));
-  return profile;
-}
-
 class _UserpageState extends State<Userpage> {
   bool _isEditingText = false;
   late TextEditingController _editingController;
   Profile _profile = defaultProfile();
-
-  Future<Profile> getProfile() async {
-    Response res = await session.get(uriProfile);
-
-    if (res.status == Status.success) {
-      Profile profile = Profile(
-          username: res.data["username"], image: AssetImage(res.data["image"]));
-      return profile;
-    } else {
-      Profile profile = defaultProfile();
-      return profile;
-    }
-  }
+  List<Area> _areas = [];
 
   @override
   void initState() {
     super.initState();
     getProfile().then((profile) => {
           setState(() => {_profile = profile})
+        });
+    getAreas().then((areas) => {
+          setState(() => {_areas = areas})
         });
     _editingController = TextEditingController(text: _profile.username);
   }
@@ -140,7 +77,6 @@ class _UserpageState extends State<Userpage> {
         ));
   }
 
-  List<Area> insharea = listarea;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -197,26 +133,26 @@ class _UserpageState extends State<Userpage> {
                   padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
                   margin: const EdgeInsets.all(10),
                   child: ListView.builder(
-                      itemCount: insharea.length,
+                      itemCount: _areas.length,
                       itemBuilder: (BuildContext context, int index) {
                         return (
                             //dismisse Area
                             Dismissible(
-                                key: Key(insharea[index].action),
+                                key: Key(_areas[index].action),
                                 // Provide a function that tells the app
                                 // what to do after an item has been swiped away.
                                 onDismissed: (direction) {
                                   // Remove the item from the data source.
+                                  deleteArea(_areas[index].id);
                                   setState(() {
-                                    insharea.removeAt(index);
+                                    _areas.removeAt(index);
                                   });
-
                                   // Then show a snackbar.
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
-                                          content: Text('dismissed')));
+                                          content: Text('Area deleted')));
                                 },
-                                child: CardArea(area: insharea[index])));
+                                child: CardArea(area: _areas[index])));
                       }),
                 ),
               ),

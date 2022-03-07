@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:client_mobile/User/types.dart';
+import 'package:client_mobile/User/request.dart';
 
 // card for area
 class CardArea extends StatelessWidget {
   final Area area;
+
   const CardArea({Key? key, required this.area}) : super(key: key);
 
   @override

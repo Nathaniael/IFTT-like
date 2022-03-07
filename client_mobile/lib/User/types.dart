@@ -28,3 +28,12 @@ class Profile {
     required this.image,
   });
 }
+
+// Login Info
+class DeleteRequest {
+  final int id;
+
+  DeleteRequest(this.id);
+
+  Map toJson() => {"id": id.toString()};
+}

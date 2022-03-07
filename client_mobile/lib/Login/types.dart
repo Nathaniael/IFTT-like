@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const defaultProfileImage = "web/png/newbie.png";
+const defaultProfileImage = "/newbie.png";
 
 // register Info
 class RegisterRequest {
