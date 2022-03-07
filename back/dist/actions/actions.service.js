@@ -43,15 +43,10 @@ let ActionsService = class ActionsService {
         }
         const token = await this.oauthService.getTokenForService(userId, params.service);
         const url = `http://pantharea.fun:8080/webhooks/${params.service}`;
-        console.log(typeof (params.project_id));
-        console.log(typeof (params.project_id) == "string");
-        console.log(params.project_id);
-        console.log(params.project_id.toString());
-        let project_id = (typeof (params.project_id) == "string") ? params.project_id : params.project_id.toString();
-        var data = `{"id": ${project_id},"url": ${url},${event}:true}`;
+        var data = `{"id": ${params.project_id},"url": ${url},${event}:true}`;
         var config = {
             method: 'post',
-            url: `https://gitlab.com/api/v4/projects/${project_id}/hooks?url=${url}`,
+            url: `https://gitlab.com/api/v4/projects/${params.project_id}/hooks?url=${url}`,
             headers: {
                 'Authorization': `Bearer ${token.token}`,
                 'Content-Type': 'application/json'
@@ -59,7 +54,7 @@ let ActionsService = class ActionsService {
             data: data
         };
         try {
-            const a = await this.httpService.post(`https://gitlab.com/api/v4/projects/${project_id}/hooks?url=${url}`, data, config).toPromise();
+            const a = await this.httpService.post(`https://gitlab.com/api/v4/projects/${params.project_id}/hooks?url=${url}`, data, config).toPromise();
         }
         catch (error) {
             console.log(error);
