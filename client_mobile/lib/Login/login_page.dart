@@ -33,7 +33,7 @@ class LoginPageState extends State<LoginPage> {
 // call back to login
   Future<bool> login(String email, String password) async {
     LoginRequest body = LoginRequest(email, password);
-    Response res = await session.post(uriRegister, body);
+    Response res = await session.post(uriRegister, body, getCookies: true);
     if (res.status == Status.success) {
       return true;
     }
@@ -52,7 +52,8 @@ class LoginPageState extends State<LoginPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const TextANM("LOGIN"),
+            const TextANM("LOGIN",
+                color: Color(0xff007EA7), fontWeight: FontWeight.bold),
             InputForm(controller: emailController, labelText: "Email"),
             InputForm(
                 controller: passwordController,

@@ -111,6 +111,7 @@ class NestedServicesListsState extends State<NestedServicesLists>
   void initState() {
     super.initState();
     getServices().then((services) => {
+          print(services),
           setState(() => {_services = services})
         });
   }

@@ -3,16 +3,27 @@ import 'package:flutter/material.dart';
 //Text Widget for home page
 class TextANM extends StatelessWidget {
   final String text;
+  final Color color;
+  final double fontSize;
+  final FontWeight fontWeight;
 
-  const TextANM(this.text, {Key? key}) : super(key: key);
+  const TextANM(this.text,
+      {Key? key,
+      this.color = Colors.white,
+      this.fontSize = 40,
+      this.fontWeight = FontWeight.normal})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
       textAlign: TextAlign.center,
-      style: const TextStyle(
-          color: Colors.white, fontSize: 40, fontFamily: 'AvenirNext'),
+      style: TextStyle(
+          color: color,
+          fontSize: fontSize,
+          fontWeight: fontWeight,
+          fontFamily: 'AvenirNext'),
     );
   }
 }

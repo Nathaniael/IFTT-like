@@ -37,7 +37,7 @@ class RegisterPageState extends State<RegisterPage> {
     RegisterRequest body = image == null
         ? RegisterRequest(username, email, password)
         : RegisterRequest(username, email, password, image: image);
-    Response res = await session.post(uriRegister, body);
+    Response res = await session.post(uriRegister, body, getCookies: true);
     if (res.status == Status.success) {
       return true;
     }
@@ -56,7 +56,8 @@ class RegisterPageState extends State<RegisterPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const TextANM("REGISTRER"),
+            const TextANM("REGISTRER",
+                color: Color(0xff007EA7), fontWeight: FontWeight.bold),
             InputForm(controller: usernameController, labelText: "Username"),
             InputForm(controller: emailController, labelText: "Email"),
             InputForm(

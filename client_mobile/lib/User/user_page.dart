@@ -1,6 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:client_mobile/Widgets/Navbar/navbar.dart';
 import 'package:client_mobile/Widgets/bleuradialbackground.dart';
+import 'package:client_mobile/apiprovider.dart';
+
+import 'package:client_mobile/User/types.dart';
+import 'package:client_mobile/User/card_area.dart';
+
+var session = Session();
+var uriProfile = Uri.parse('http://pantharea.fun:8080/user/profile/');
 
 //create List area
 List<Area> listarea = [
@@ -61,92 +70,36 @@ void onPressedBackground(context) {
   Navigator.popAndPushNamed(context, '/area');
 }
 
-// card for area
-class CardArea extends StatelessWidget {
-  final Area area;
-  const CardArea({Key? key, required this.area}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
-      clipBehavior: Clip.antiAlias,
-      color: Colors.white,
-      elevation: 5.0,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 22.0),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                children: [
-                  const Text(
-                    "Action",
-                    style: TextStyle(
-                      color: Color(0xff000D4D),
-                      fontSize: 22.0,
-                      fontFamily: 'AvenirNext',
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 5.0,
-                  ),
-                  CircleAvatar(backgroundImage: area.logoa),
-                  Text(
-                    area.action,
-                    style: const TextStyle(
-                      fontFamily: 'AvenirNext',
-                      fontSize: 20.0,
-                      color: Color(0xff007EA7),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Expanded(
-              child: Column(
-                children: [
-                  const Text(
-                    "Reaction",
-                    style: TextStyle(
-                      fontFamily: 'AvenirNext',
-                      color: Color(0xff000D4D),
-                      fontSize: 22.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 5.0,
-                  ),
-                  CircleAvatar(backgroundImage: area.logorea),
-                  Text(
-                    area.reaction,
-                    style: const TextStyle(
-                      fontFamily: 'AvenirNext',
-                      fontSize: 20.0,
-                      color: Color(0xff007EA7),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+Profile defaultProfile() {
+  Profile profile = Profile(username: "Undefined", image: const AssetImage(""));
+  return profile;
 }
 
 class _UserpageState extends State<Userpage> {
   bool _isEditingText = false;
   late TextEditingController _editingController;
-  String initialText = "NAME ICI MGL";
+  Profile _profile = defaultProfile();
+
+  Future<Profile> getProfile() async {
+    Response res = await session.get(uriProfile);
+
+    if (res.status == Status.success) {
+      Profile profile = Profile(
+          username: res.data["username"], image: AssetImage(res.data["image"]));
+      return profile;
+    } else {
+      Profile profile = defaultProfile();
+      return profile;
+    }
+  }
 
   @override
   void initState() {
     super.initState();
-    _editingController = TextEditingController(text: initialText);
+    getProfile().then((profile) => {
+          setState(() => {_profile = profile})
+        });
+    _editingController = TextEditingController(text: _profile.username);
   }
 
   @override
@@ -162,7 +115,7 @@ class _UserpageState extends State<Userpage> {
         child: TextField(
           onSubmitted: (newValue) {
             setState(() {
-              initialText = newValue;
+              _profile.username = newValue;
               _isEditingText = false;
             });
           },
@@ -178,7 +131,7 @@ class _UserpageState extends State<Userpage> {
           });
         },
         child: Text(
-          initialText,
+          _profile.username,
           style: const TextStyle(
             fontFamily: 'AvenirNext',
             color: Colors.white,
@@ -213,8 +166,8 @@ class _UserpageState extends State<Userpage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           // profile Info display
-                          const CircleAvatar(
-                            backgroundImage: AssetImage('web/png/baptiste.png'),
+                          CircleAvatar(
+                            backgroundImage: _profile.image,
                             radius: 50.0,
                           ),
                           const SizedBox(
@@ -271,24 +224,5 @@ class _UserpageState extends State<Userpage> {
           ),
           onPressed: onPressedBackground,
         ));
-  }
-}
-
-//class area
-class Area {
-  int id;
-  String action;
-  ImageProvider logoa;
-  String reaction;
-  ImageProvider logorea;
-  Area({
-    required this.id,
-    required this.action,
-    required this.logoa,
-    required this.reaction,
-    required this.logorea,
-  });
-  ImageProvider get getLogo {
-    return logoa;
   }
 }

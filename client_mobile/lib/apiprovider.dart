@@ -33,19 +33,22 @@ class Session {
   }
 
 //function to Get with url
-  Future<Response> get(Uri url) async {
+  Future<Response> get(Uri url, {bool getCookies = false}) async {
     http.Response response;
     try {
       response = await http.get(url, headers: headers);
     } on SocketException {
       return Response(status: Status.error, message: "Unexpected error");
     }
-    updateCookie(response);
+    if (getCookies) {
+      updateCookie(response);
+    }
     return Response(status: Status.success, data: json.decode(response.body));
   }
 
 //function to Post with url
-  Future<Response> post(Uri url, dynamic body) async {
+  Future<Response> post(Uri url, dynamic body,
+      {bool getCookies = false}) async {
     http.Response response;
     try {
       response = await http.post(url, headers: headers, body: body.toJson());
@@ -56,7 +59,9 @@ class Session {
       return Response(
           status: Status.error, message: json.decode(response.body)["message"]);
     }
-    updateCookie(response);
+    if (getCookies) {
+      updateCookie(response);
+    }
     return Response(status: Status.success, data: json.decode(response.body));
   }
 }

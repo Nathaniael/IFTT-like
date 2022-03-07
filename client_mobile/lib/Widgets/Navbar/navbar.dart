@@ -8,16 +8,11 @@ class Navbar extends AppBar {
           actions: <Widget>[
             IconButton(
                 icon: const Icon(Icons.account_tree),
-                onPressed: () =>
-                    {Navigator.popAndPushNamed(context, '/services')}),
+                onPressed: () => {Navigator.popAndPushNamed(context, '/area')}),
             IconButton(
                 icon: const Icon(Icons.account_box),
                 onPressed: () =>
                     {Navigator.popAndPushNamed(context, '/profile')}),
-            IconButton(
-                icon: const Icon(Icons.manage_accounts),
-                onPressed: () =>
-                    {Navigator.popAndPushNamed(context, '/login')}),
           ],
           backgroundColor: const Color(0xff000D4D),
           title: const Text('Area', style: TextStyle(fontFamily: 'AvenirNext')),
