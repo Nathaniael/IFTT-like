@@ -37,7 +37,7 @@ export class ActionsService {
         }
         const token = await this.oauthService.getTokenForService(userId, params.service)
         const url = `http://pantharea.fun:8080/webhooks/${params.service}`
-        var data = `{"id": ${params.project_id.toString()},"url": ${url},${event}:true}`;
+        var data = `{"id": ${params.project_id},"url": ${url},${event}:true}`;
         var config: AxiosRequestConfig = {
             method: 'post',
             url: `https://gitlab.com/api/v4/projects/${params.project_id}/hooks?url=${url}`,
