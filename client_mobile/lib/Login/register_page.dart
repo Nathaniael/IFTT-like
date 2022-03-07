@@ -12,6 +12,7 @@ import 'package:client_mobile/Login/components/input_form.dart';
 import 'package:client_mobile/Login/components/submit_button.dart';
 import 'package:client_mobile/Login/components/title_page.dart';
 import 'package:client_mobile/Login/components/page_switch.dart';
+import 'package:localstorage/localstorage.dart';
 
 //url to call
 var session = Session();
@@ -30,6 +31,7 @@ class RegisterPageState extends State<RegisterPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   String error = "";
+  final LocalStorage storage = LocalStorage("auth");
 
   //call back to register
   Future<bool> register(String username, String email, String password,
@@ -39,11 +41,13 @@ class RegisterPageState extends State<RegisterPage> {
         : RegisterRequest(username, email, password, image: image);
     Response res = await session.post(uriRegister, body, getCookies: true);
     if (res.status == Status.success) {
+      storage.setItem("isLogged", true);
       return true;
     }
     setState(() {
       error = res.message!;
     });
+    storage.setItem("isLogged", false);
     return false;
   }
 

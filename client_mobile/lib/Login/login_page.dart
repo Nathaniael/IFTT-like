@@ -1,6 +1,7 @@
 // Flutter components
 import 'package:client_mobile/Widgets/Text/text_adn.dart';
 import 'package:flutter/material.dart';
+import 'package:localstorage/localstorage.dart';
 
 // App components
 import 'package:client_mobile/Widgets/background.dart';
@@ -29,17 +30,20 @@ class LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   String error = "";
+  final LocalStorage storage = LocalStorage('auth');
 
 // call back to login
   Future<bool> login(String email, String password) async {
     LoginRequest body = LoginRequest(email, password);
     Response res = await session.post(uriRegister, body, getCookies: true);
     if (res.status == Status.success) {
+      storage.setItem("isLogged", true);
       return true;
     }
     setState(() {
       error = res.message!;
     });
+    storage.setItem("isLogged", false);
     return false;
   }
 

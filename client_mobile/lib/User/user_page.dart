@@ -1,4 +1,4 @@
-import 'dart:convert';
+import 'package:localstorage/localstorage.dart';
 
 import 'package:flutter/material.dart';
 import 'package:client_mobile/Widgets/Navbar/navbar.dart';
@@ -79,6 +79,7 @@ class _UserpageState extends State<Userpage> {
   bool _isEditingText = false;
   late TextEditingController _editingController;
   Profile _profile = defaultProfile();
+  LocalStorage storage = LocalStorage("auth");
 
   Future<Profile> getProfile() async {
     Response res = await session.get(uriProfile);
@@ -178,7 +179,9 @@ class _UserpageState extends State<Userpage> {
                             height: 40.0,
                           ),
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              storage.setItem("isLogged", false);
+                            },
                             child: const Text(
                               'Logout',
                               style: TextStyle(
