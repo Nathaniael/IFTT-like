@@ -35,7 +35,7 @@ function Register(props: Props) {
         const password = e.target.children.password.value
 
         // Register request to the database by Request
-        Request.register({username: username, email: email, password: password, image: "newbie.png"}).then((res) => {
+        Request.register({username: username, email: email, password: password, image: "/newbie.png"}).then((res) => {
             // Set the cookies to know that the user is now logged
             setCookies('logged', true)
             // Redirect to profile page

@@ -12,10 +12,12 @@ import 'package:client_mobile/Login/components/input_form.dart';
 import 'package:client_mobile/Login/components/submit_button.dart';
 import 'package:client_mobile/Login/components/title_page.dart';
 import 'package:client_mobile/Login/components/page_switch.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 //url to call
 var session = Session();
 var uriRegister = Uri.parse('http://pantharea.fun:8080/auth/register/');
+final Future<SharedPreferences> _storage = SharedPreferences.getInstance();
 
 @immutable
 class RegisterPage extends StatefulWidget {
@@ -38,12 +40,15 @@ class RegisterPageState extends State<RegisterPage> {
         ? RegisterRequest(username, email, password)
         : RegisterRequest(username, email, password, image: image);
     Response res = await session.post(uriRegister, body, getCookies: true);
+    final storage = await _storage;
     if (res.status == Status.success) {
+      storage.setBool("logged", true);
       return true;
     }
     setState(() {
       error = res.message!;
     });
+    storage.setBool("logged", false);
     return false;
   }
 

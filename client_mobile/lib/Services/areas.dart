@@ -1,9 +1,16 @@
+import 'package:client_mobile/Widgets/background.dart';
+import 'package:client_mobile/Widgets/bleuradialbackground.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:client_mobile/Widgets/Navbar/navbar.dart';
 import 'package:client_mobile/apiprovider.dart';
 import 'package:client_mobile/Services/classes.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:client_mobile/Services/request.dart';
+
+final Future<SharedPreferences> _storage = SharedPreferences.getInstance();
 
 //Url to call
 var session = Session();
@@ -48,7 +55,6 @@ Future<List<Service>> getServices() async {
 
   List<Service> services = [];
   if (res.status == Status.success) {
-    print(res.data);
     for (var elem in res.data) {
       List<Item> listItems = [];
       for (var it in elem["actions"]) {
@@ -58,7 +64,7 @@ Future<List<Service>> getServices() async {
             description: it["description"],
             id: it["id"],
             image: AssetImage(
-              "web/png" + elem["logo"],
+              "web/png/" + elem["logo"],
             ),
             fields: it["params"]);
         listItems.add(item);
@@ -86,6 +92,23 @@ Future<List<Service>> getServices() async {
   }
 }
 
+resetItemActionAndReaction(ItemType type) async {
+  final storage = await _storage;
+
+  if (type == ItemType.action) {
+    storage.remove("action");
+    storage.remove("actionId");
+  } else if (type == ItemType.reaction) {
+    storage.remove("reaction");
+    storage.remove("reactionId");
+  }
+
+  print(storage.getString("action"));
+  print(storage.getString("reaction"));
+  print(storage.getInt("actionId"));
+  print(storage.getInt("reactionId"));
+}
+
 class NestedServicesListsState extends State<NestedServicesLists>
     with TickerProviderStateMixin {
   List<Service> _services = [];
@@ -101,6 +124,7 @@ class NestedServicesListsState extends State<NestedServicesLists>
   }) {
     setState(() {
       if (item.type == placeholder.type) {
+        resetItemActionAndReaction(item.type);
         placeholder.item = item;
         placeholder.imageProvider = item.image;
       }
@@ -111,127 +135,179 @@ class NestedServicesListsState extends State<NestedServicesLists>
   void initState() {
     super.initState();
     getServices().then((services) => {
-          print(services),
           setState(() => {_services = services})
         });
   }
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: Navbar(context: context),
-        backgroundColor: Colors.white,
-        body: Column(children: [
-          Expanded(
-              child: ListView.separated(
-            separatorBuilder: (context, index) {
-              return const SizedBox(
-                height: 12.0,
-              );
-            },
-            shrinkWrap: true,
-            itemCount: _services.length,
-            itemBuilder: (context, serviceIndex) {
-              return Column(
-                children: [
-                  Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(4),
-                      margin: const EdgeInsets.only(left: 8, top: 8, right: 8),
-                      child: Card(
-                          color: const Color(0xff000D4D),
+        body: BleuRadialBackground(
+            onPressed: () {},
+            child: Column(children: [
+              Expanded(
+                  child: ListView.separated(
+                separatorBuilder: (context, index) {
+                  return const SizedBox(
+                    height: 12.0,
+                  );
+                },
+                shrinkWrap: true,
+                itemCount: _services.length,
+                itemBuilder: (context, serviceIndex) {
+                  return Column(
+                    children: [
+                      Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(4),
+                          margin:
+                              const EdgeInsets.only(left: 8, top: 8, right: 8),
                           child: Row(
                             children: [
                               Image(
                                   image: _services[serviceIndex].logo,
-                                  height: 45,
-                                  width: 45),
-                              Text(
-                                _services[serviceIndex].name,
-                                style: const TextStyle(
-                                    fontSize: 24,
-                                    color: Colors.white,
-                                    fontFamily: 'AvenirNext'),
-                              ),
+                                  height: 50,
+                                  width: 50),
+                              const SizedBox(width: 15),
+                              Card(
+                                  child: Row(
+                                children: [
+                                  Container(
+                                      height: size.height * 0.055,
+                                      width: size.width * 0.75,
+                                      child: Center(
+                                        child: Text(
+                                          _services[serviceIndex].name,
+                                          style: const TextStyle(
+                                              fontSize: 28,
+                                              fontWeight: FontWeight.bold,
+                                              color: Color(0xff000D4D),
+                                              fontFamily: 'AvenirNext'),
+                                        ),
+                                      ))
+                                ],
+                              ))
                             ],
-                          ))),
-                  Container(
-                    color: Colors.white,
-                    margin: const EdgeInsets.only(left: 8, right: 8),
-                    height: 175,
-                    child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: _services[serviceIndex].items.length,
-                        itemBuilder: (context, indexItem) {
-                          return SizedBox(
-                              width: 200,
-                              child: Padding(
-                                  padding: const EdgeInsets.all(5.0),
-                                  child: Center(
-                                      child: LongPressDraggable(
-                                    data: _services[serviceIndex]
-                                        .items[indexItem],
-                                    dragAnchorStrategy:
-                                        pointerDragAnchorStrategy,
-                                    feedback: DraggingListItem(
-                                        dragKey: _draggableKey,
-                                        photoProvider:
-                                            _services[serviceIndex].logo),
-                                    child: Card(
-                                      color: const Color(0xff007EA7),
-                                      child: Column(
-                                        children: [
-                                          Padding(
-                                              padding:
-                                                  const EdgeInsets.all(10.0),
-                                              child: Center(
-                                                  child: Text(
-                                                _services[serviceIndex]
-                                                    .items[indexItem]
-                                                    .name,
-                                                style: const TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 20.0,
-                                                    fontFamily: 'AvenirNext'),
-                                              ))),
-                                          Padding(
-                                              padding:
-                                                  const EdgeInsets.all(10.0),
-                                              child: Center(
-                                                child: Text(
+                          )),
+                      Container(
+                        margin: const EdgeInsets.only(left: 16, right: 16),
+                        height: 175,
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: _services[serviceIndex].items.length,
+                            itemBuilder: (context, indexItem) {
+                              return SizedBox(
+                                  width: 200,
+                                  child: Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Center(
+                                          child: LongPressDraggable(
+                                        data: _services[serviceIndex]
+                                            .items[indexItem],
+                                        dragAnchorStrategy:
+                                            pointerDragAnchorStrategy,
+                                        feedback: DraggingListItem(
+                                            dragKey: _draggableKey,
+                                            photoProvider:
+                                                _services[serviceIndex].logo),
+                                        child: Card(
+                                          color: const Color.fromARGB(
+                                              210, 255, 255, 255),
+                                          child: Column(
+                                            children: [
+                                              Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      10.0),
+                                                  child: Center(
+                                                      child: Text(
                                                     _services[serviceIndex]
                                                         .items[indexItem]
-                                                        .description,
+                                                        .name,
                                                     style: const TextStyle(
-                                                        color: Colors.white,
+                                                        color: const Color(
+                                                            0xff000D4D),
+                                                        fontSize: 20.0,
+                                                        fontWeight:
+                                                            FontWeight.bold,
                                                         fontFamily:
-                                                            'AvenirNext')),
-                                              ))
-                                        ],
-                                      ),
-                                    ),
-                                  ))));
-                        }),
-                  ),
-                ],
-              );
-            },
-          )),
-          _buildPlaceholderRow()
-        ]));
+                                                            'AvenirNext'),
+                                                  ))),
+                                              Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      10.0),
+                                                  child: Center(
+                                                    child: Text(
+                                                        _services[serviceIndex]
+                                                            .items[indexItem]
+                                                            .description,
+                                                        style: const TextStyle(
+                                                            color: Color(
+                                                                0xff007EA7),
+                                                            fontFamily:
+                                                                'AvenirNext')),
+                                                  ))
+                                            ],
+                                          ),
+                                        ),
+                                      ))));
+                            }),
+                      ),
+                    ],
+                  );
+                },
+              )),
+              _buildPlaceholderRow()
+            ])));
+  }
+
+  createArea() async {
+    final storage = await _storage;
+    final action = storage.getString("action");
+    final reaction = storage.getString("reaction");
+    final actionId = storage.getInt("actionId");
+    final reactionId = storage.getInt("reactionId");
+    if (action == null) {
+      throw Exception("No action set");
+    } else if (reaction == null) {
+      throw Exception("No reaction set");
+    } else if (actionId == null) {
+      throw Exception("No action id set");
+    } else if (reactionId == null) {
+      throw Exception("No reaction id set");
+    }
+    RequestCreationArea body =
+        RequestCreationArea(actionId, action, reactionId, reaction);
+    print(body.toJson());
+    session
+        .post(uriProfile, body)
+        .then((res) => {})
+        .catchError((onError) => {throw Exception(onError.toString())});
   }
 
 // Put placeholder in a row
   Widget _buildPlaceholderRow() {
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 0,
-        vertical: 20.0,
-      ),
-      child: Row(
-        children: _placeholder.map(_buildPlaceholderWithDropZone).toList(),
-      ),
-    );
+        padding: const EdgeInsets.symmetric(
+          horizontal: 0,
+          vertical: 20.0,
+        ),
+        child: Column(
+          children: [
+            Row(
+              children:
+                  _placeholder.map(_buildPlaceholderWithDropZone).toList(),
+            ),
+            TextButton(
+                onPressed: () => {
+                      createArea().then(
+                          (res) => {Navigator.pushNamed(context, "/profile")})
+                    },
+                child: const Text("CREATE AREA",
+                    style: TextStyle(color: Colors.white, fontSize: 20)))
+          ],
+        ));
   }
 
 //create drop zone in placeholder
@@ -267,28 +343,69 @@ class NestedServicesListsState extends State<NestedServicesLists>
   }
 }
 
+List<ParamModel> getParamsFromItemFields(String fields) {
+  List<ParamModel> params = [];
+  dynamic dFields = json.decode(fields);
+
+  for (var field in dFields) {
+    if (field["string"] != null) {
+      params.add(ParamModel(
+          "string", field["string"], TextEditingController(text: "")));
+    } else if (field["number"] != null) {
+      params.add(ParamModel(
+          "number", field["number"], TextEditingController(text: "")));
+    }
+  }
+  return params;
+}
+
+class InputParam extends StatelessWidget {
+  const InputParam({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
+setActionOrReaction(Item item, List<ParamModel> models) async {
+  Map<String, String> actionOrReaction = {};
+
+  for (var model in models) {
+    actionOrReaction[model.name] = model.controller.text;
+  }
+  final storage = await _storage;
+  if (item.type == ItemType.action) {
+    storage.setString("action", actionOrReaction.toString());
+    storage.setInt("actionId", item.id);
+  } else if (item.type == ItemType.reaction) {
+    storage.setString("reaction", actionOrReaction.toString());
+    storage.setInt("reactionId", item.id);
+  }
+}
+
 _openPopupParameters(context, Item item) {
+  List<ParamModel> paramsModel = getParamsFromItemFields(item.fields);
   Alert(
       context: context,
-      title: "LOGIN",
+      title: item.name,
       content: Column(
         children: <Widget>[
-          TextField(
-            decoration: InputDecoration(
-                icon: const Icon(Icons.account_circle), labelText: item.fields),
-          ),
-          const TextField(
-            obscureText: true,
-            decoration: InputDecoration(
-              icon: Icon(Icons.lock),
-              labelText: 'Password',
-            ),
-          ),
+          for (var paramModel in paramsModel)
+            TextField(
+              decoration: InputDecoration(
+                  hintText: paramModel.name,
+                  icon: Icon(paramModel.getType() == ParamType.number
+                      ? Icons.numbers
+                      : Icons.rtt)),
+              controller: paramModel.controller,
+            )
         ],
       ),
       buttons: [
         DialogButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () =>
+              {setActionOrReaction(item, paramsModel), Navigator.pop(context)},
           child: const Text(
             "Set parameters",
             style: TextStyle(color: Colors.white, fontSize: 20),
@@ -324,7 +441,9 @@ class _PlaceholderCartState extends State<PlaceholderCart> {
       child: Material(
         elevation: widget.highlighted ? 8.0 : 4.0,
         borderRadius: BorderRadius.circular(22.0),
-        color: widget.highlighted ? const Color(0xff007EA7) : Colors.white,
+        color: widget.highlighted
+            ? Colors.white
+            : Color.fromARGB(210, 255, 255, 255),
         child: Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 12.0,
@@ -333,17 +452,6 @@ class _PlaceholderCartState extends State<PlaceholderCart> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Align(
-                    alignment: Alignment.topRight,
-                    child: GestureDetector(
-                      onTap: () => {
-                        setState(() => {
-                              widget.placeholder =
-                                  getOnePlaceHolder(widget.placeholder.type)
-                            })
-                      },
-                      child: const Icon(Icons.delete, color: Colors.grey),
-                    )),
                 ClipOval(
                   child: SizedBox(
                     width: 46,

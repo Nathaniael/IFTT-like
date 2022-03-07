@@ -65,4 +65,42 @@ class Service {
   }
 }
 
+enum ParamType { string, number, undefined }
+
+class ParamModel {
+  String type;
+  String name;
+  TextEditingController controller;
+  ParamModel(this.type, this.name, this.controller);
+
+  getType() {
+    if (type == "string") {
+      return ParamType.string;
+    } else if (type == "number") {
+      return ParamType.number;
+    } else {
+      return ParamType.undefined;
+    }
+  }
+}
+
+class RequestCreationArea {
+  int actionId;
+  String actionParams;
+  int reactionId;
+  String reactionParams;
+
+  RequestCreationArea(
+      this.actionId, this.actionParams, this.reactionId, this.reactionParams);
+
+  Map<String, dynamic> toJson() {
+    return {
+      "action_id": actionId,
+      "action_params": actionParams,
+      "reaction_id": reactionId,
+      "reaction_params": reactionParams
+    };
+  }
+}
+
 enum ItemType { action, reaction, none }

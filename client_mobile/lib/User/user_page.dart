@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:client_mobile/Widgets/Navbar/navbar.dart';
 import 'package:client_mobile/Widgets/bleuradialbackground.dart';
@@ -7,9 +5,12 @@ import 'package:client_mobile/Widgets/bleuradialbackground.dart';
 import 'package:client_mobile/User/types.dart';
 import 'package:client_mobile/User/card_area.dart';
 import 'package:client_mobile/User/request.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+final Future<SharedPreferences> _storage = SharedPreferences.getInstance();
 
 class Userpage extends StatefulWidget {
-  final List<Area> area = listarea;
+  final List<Area> area = [];
   Userpage({Key? key}) : super(key: key);
 
   @override
@@ -17,9 +18,7 @@ class Userpage extends StatefulWidget {
 }
 
 //function of background
-void onPressedBackground(context) {
-  Navigator.popAndPushNamed(context, '/area');
-}
+void onPressedBackground(context) {}
 
 class _UserpageState extends State<Userpage> {
   bool _isEditingText = false;
@@ -77,6 +76,13 @@ class _UserpageState extends State<Userpage> {
         ));
   }
 
+  logout() async {
+    final storage = await _storage;
+    storage.setBool("logged", false);
+    Navigator.popUntil(context, ModalRoute.withName("/"));
+    print("HHHHHqqqqqq");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -114,12 +120,27 @@ class _UserpageState extends State<Userpage> {
                             height: 40.0,
                           ),
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              logout();
+                            },
                             child: const Text(
                               'Logout',
                               style: TextStyle(
                                 fontFamily: 'AvenirNext',
                                 fontSize: 22.0,
+                              ),
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              deleteAccount(context);
+                            },
+                            child: const Text(
+                              'Delete account',
+                              style: TextStyle(
+                                fontFamily: 'AvenirNext',
+                                fontSize: 22.0,
+                                color: Colors.red,
                               ),
                             ),
                           ),
@@ -144,9 +165,8 @@ class _UserpageState extends State<Userpage> {
                                 onDismissed: (direction) {
                                   // Remove the item from the data source.
                                   deleteArea(_areas[index].id);
-                                  setState(() {
-                                    _areas.removeAt(index);
-                                  });
+                                  Navigator.popAndPushNamed(
+                                      context, "/profile");
                                   // Then show a snackbar.
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
